@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lana, 50 ECTS?</title>
+<style>
+  :root {
+    --bg: #14111f;
+    --fg: #f5f1ff;
+    --muted: #b9b0d6;
+    --gold: #f6c945;
+    --gold-dark: #c98f12;
+    --yes: #2fb67c;
+    --no: #e0475b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: radial-gradient(circle at 50% 30%, #2a2145 0%, var(--bg) 70%);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+  .screen { display: none; width: 100%; max-width: 560px; text-align: center; }
+  .screen.active { display: block; animation: fade .4s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  h1 { font-size: clamp(1.6rem, 6vw, 2.4rem); line-height: 1.25; margin: 0 0 32px; }
+  .buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  button {
+    font: inherit;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    border: 0;
+    border-radius: 14px;
+    padding: 14px 44px;
+    cursor: pointer;
+    transition: transform .12s ease, filter .12s ease;
+  }
+  button:hover { transform: scale(1.05); filter: brightness(1.1); }
+  button:active { transform: scale(.97); }
+  #btn-ja { background: var(--yes); }
+  #btn-nein { background: var(--no); }
+
+  .crown { width: min(260px, 70vw); height: auto; filter: drop-shadow(0 0 24px rgba(246, 201, 69, .55)); animation: float 3s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-10px) rotate(-2deg); } }
+  .title {
+    font-size: clamp(1.8rem, 7vw, 3rem);
+    font-weight: 800;
+    margin: 20px 0 0;
+    background: linear-gradient(90deg, var(--gold), #fff3c4, var(--gold));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+  }
+  @keyframes shine { to { background-position: 200% center; } }
+
+  video { width: 100%; max-height: 80vh; border-radius: 12px; background: #000; }
+
+  .back {
+    margin-top: 24px;
+    background: none;
+    color: var(--muted);
+    font-size: .95rem;
+    font-weight: 400;
+    padding: 6px 12px;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<section id="frage" class="screen active">
+  <h1>Lana, hast du 50 ECTS geschafft?</h1>
+  <div class="buttons">
+    <button id="btn-ja" type="button">Ja</button>
+    <button id="btn-nein" type="button">Nein</button>
+  </div>
+</section>
+
+<section id="ja" class="screen">
+  <svg class="crown" viewBox="0 0 200 160" aria-hidden="true">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe680"/>
+        <stop offset="1" stop-color="#c98f12"/>
+      </linearGradient>
+    </defs>
+    <path d="M20 130 L10 45 L60 85 L100 20 L140 85 L190 45 L180 130 Z" fill="url(#g)" stroke="#8a5d00" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="18" y="128" width="164" height="22" rx="6" fill="url(#g)" stroke="#8a5d00" stroke-width="4"/>
+    <circle cx="10" cy="45" r="9" fill="#ffe680" stroke="#8a5d00" stroke-width="3"/>
+    <circle cx="100" cy="20" r="10" fill="#ffe680" stroke="#8a5d00" stroke-width="3"/>
+    <circle cx="190" cy="45" r="9" fill="#ffe680" stroke="#8a5d00" stroke-width="3"/>
+    <circle cx="100" cy="100" r="12" fill="#e0475b" stroke="#8a1f2c" stroke-width="3"/>
+    <circle cx="55" cy="108" r="8" fill="#4f8cff" stroke="#1f3f8a" stroke-width="3"/>
+    <circle cx="145" cy="108" r="8" fill="#2fb67c" stroke="#16603f" stroke-width="3"/>
+  </svg>
+  <p class="title">Queen of Physics and Astronomy</p>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="nein" class="screen">
+  <video id="video" src="nein.mp4" playsinline loop controls preload="auto"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<script>
+  const video = document.getElementById('video');
+
+  function show(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+    if (id !== 'nein') video.pause();
+  }
+
+  function go(id) {
+    show(id);
+    history.pushState({ id }, '', '#' + id);
+  }
+
+  document.getElementById('btn-ja').addEventListener('click', () => go('ja'));
+  document.getElementById('btn-nein').addEventListener('click', () => {
+    go('nein');
+    video.currentTime = 0;
+    // play() inside the click handler so the browser allows sound
+    video.play().catch(() => {});
+  });
+  document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
+
+  window.addEventListener('popstate', e => show(e.state?.id || 'frage'));
+  history.replaceState({ id: 'frage' }, '', location.pathname);
+</script>
+</body>
+</html>
