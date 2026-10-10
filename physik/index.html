@@ -3,36 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physik/Astronomie?</title>
+<title>Physik heute?</title>
 <style>
   :root {
-    --pink-1: #ffe1ef;
-    --pink-2: #ffb8d9;
-    --pink-3: #ff8fc4;
-    --text: #7a1f4f;
+    --text: #5a1a3d;
+    --accent: #e0247a;
     --yes: #2fb67c;
     --no: #e0475b;
+    --want: #8a5cf6;
+    --bg: radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%);
   }
   * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
+  html, body { margin: 0; }
   body {
-    background: radial-gradient(circle at 50% 35%, var(--pink-1) 0%, var(--pink-2) 60%, var(--pink-3) 100%);
+    min-height: 100vh;
+    min-height: 100dvh;
     color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 16px;
-    overflow: hidden;
+    overflow-x: hidden;
+    background: #ffb8d9;
   }
 
-  /* floating cute animals in the background */
-  #animals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-  .animal {
+  /* themed background with floating emoji */
+  #bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); overflow: hidden; }
+  .deco {
     position: absolute;
     animation: bob var(--dur) ease-in-out var(--delay) infinite alternate;
     opacity: .85;
     user-select: none;
+    line-height: 1;
   }
   @keyframes bob {
     from { transform: translateY(0) rotate(-8deg); }
@@ -44,16 +47,22 @@
   @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
   .card {
-    background: rgba(255, 255, 255, .7);
+    background: rgba(255, 255, 255, .78);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border-radius: 24px;
-    padding: 32px 20px;
-    box-shadow: 0 10px 30px rgba(196, 60, 130, .25);
+    padding: 28px 20px 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
   }
-  .heute { color: #e0247a; text-decoration: underline wavy #ff8fc4; text-underline-offset: 6px; }
+
+  .date { font-size: .95rem; opacity: .75; margin: 0; }
+  .greeting { font-size: clamp(1.2rem, 4.5vw, 1.5rem); font-weight: 700; margin: 4px 0 18px; }
+  .heute { color: var(--accent); text-decoration: underline wavy currentColor; text-underline-offset: 6px; text-decoration-thickness: 2px; }
   h1 { font-size: clamp(1.6rem, 6vw, 2.4rem); line-height: 1.25; margin: 0 0 28px; }
-  .buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  h2 { font-size: clamp(1.3rem, 5vw, 1.8rem); line-height: 1.3; margin: 0 0 6px; }
+  .sub { margin: 0 0 24px; opacity: .8; }
+
+  .buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   button {
     font: inherit;
     font-size: 1.3rem;
@@ -65,21 +74,43 @@
     cursor: pointer;
     transition: transform .12s ease, filter .12s ease;
   }
-  button:hover { transform: scale(1.06); filter: brightness(1.08); }
+  button:hover { transform: scale(1.05); filter: brightness(1.08); }
   button:active { transform: scale(.96); }
   #btn-ja { background: var(--yes); }
   #btn-nein { background: var(--no); }
+  #btn-will { background: var(--want); font-size: 1.15rem; padding: 12px 28px; flex-basis: 100%; max-width: 320px; }
 
-  video { display: block; width: 100%; max-height: 75vh; border-radius: 16px; background: #000; box-shadow: 0 10px 30px rgba(196, 60, 130, .35); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .fach {
+    background: #fff;
+    color: var(--text);
+    border: 2px solid rgba(138, 92, 246, .35);
+    border-radius: 18px;
+    padding: 16px 10px;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .fach .icon { font-size: 2rem; line-height: 1; }
+  .fach:hover { border-color: var(--want); }
+
+  .hilfe-icon { font-size: 3rem; line-height: 1; margin-bottom: 8px; }
+  .hilfe-body { text-align: left; line-height: 1.5; margin-top: 16px; }
+  .soon { text-align: center; opacity: .7; font-style: italic; }
+
+  video { display: block; width: 100%; max-height: 75vh; border-radius: 16px; background: #000; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
 
   .back {
-    margin-top: 20px;
-    background: none;
+    margin-top: 18px;
+    background: rgba(255, 255, 255, .85);
     color: var(--text);
     font-size: .95rem;
-    font-weight: 500;
-    padding: 6px 12px;
-    text-decoration: underline;
+    font-weight: 600;
+    padding: 8px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
   }
 
   /* flying thumbs */
@@ -94,14 +125,17 @@
 </head>
 <body>
 
-<div id="animals" aria-hidden="true"></div>
+<div id="bg" aria-hidden="true"></div>
 
 <section id="frage" class="screen active">
   <div class="card">
+    <p class="date" id="date"></p>
+    <p class="greeting" id="greeting"></p>
     <h1>Hast du <span class="heute">heute</span> Physik/Astronomie geschafft?</h1>
     <div class="buttons">
       <button id="btn-ja" type="button">Ja</button>
       <button id="btn-nein" type="button">Nein</button>
+      <button id="btn-will" type="button">Nein, aber ich will</button>
     </div>
   </div>
 </section>
@@ -116,24 +150,110 @@
   <button class="back" type="button">zurück</button>
 </section>
 
+<section id="faecher" class="screen">
+  <div class="card">
+    <h2>Kein Zugang zu Astronomie – also nur Physik</h2>
+    <p class="sub">Womit fangen wir an?</p>
+    <div class="grid" id="grid"></div>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="hilfe" class="screen">
+  <div class="card">
+    <div class="hilfe-icon" id="hilfe-icon"></div>
+    <h2 id="hilfe-title"></h2>
+    <div class="hilfe-body" id="hilfe-body"></div>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
 <script>
-  // background animals
-  const ANIMALS = ['🐰', '🐱', '🐇', '🐈', '🐶', '🐹', '🐼', '🐨', '🦊', '🐻', '🐥', '🦄', '🐭', '🐾'];
-  const layer = document.getElementById('animals');
-  const count = Math.round(Math.min(28, Math.max(14, innerWidth * innerHeight / 22000)));
+  // ---------- subjects: content for each option goes into `html` ----------
+  const FAECHER = {
+    tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', html: '' },
+    ana3:   { icon: '∫',  title: 'Analysis 3',            html: '' },
+    labor:  { icon: '🧪', title: 'Laborpraktikum',        html: '' },
+    schach: { icon: '♟️', title: 'Schach',                html: '' },
+  };
+
+  // ---------- background theme per weekday ----------
+  const THEMES = {
+    tiere:   { bg: 'radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%)', base: '#ffb8d9',
+               emoji: ['🐰', '🐱', '🐇', '🐈', '🐶', '🐹', '🐼', '🐨', '🦊', '🐻', '🐥', '🦄', '🐭', '🐾'] },
+    geld:    { bg: 'linear-gradient(160deg, #e6f7ec 0%, #a9e3bf 55%, #5fbf8a 100%)', base: '#a9e3bf',
+               emoji: ['💰', '💵', '💶', '💸', '📈', '📊', '📉', '💼', '🏦', '💳', '🪙', '🖥️', '📅', '🤑'] },
+    physik:  { bg: 'radial-gradient(circle at 50% 30%, #2d3f8f 0%, #16205a 55%, #0a0f30 100%)', base: '#16205a',
+               emoji: ['🧑‍🔬', '👩‍🔬', '👨‍🔬', '👩‍🚀', '🔭', '🔬', '⚛️', '🧪', '🧲', '🪐', '🌌', '🚀', '☄️', '🌍', '🧮', '⭐'] },
+    muede:   { bg: 'linear-gradient(160deg, #f3eee7 0%, #ddd2c4 55%, #b9aa98 100%)', base: '#ddd2c4',
+               emoji: ['😩', '😫', '🥱', '😮‍💨', '😵‍💫', '🫠', '😑', '😤', '🙄', '🥴', '😵', '🫥'] },
+    traurig: { bg: 'linear-gradient(180deg, #e3ebf5 0%, #b5c6dc 55%, #8197b5 100%)', base: '#b5c6dc',
+               emoji: ['😭', '😢', '😿', '🥺', '😞', '😔', '🥲', '😥', '💧', '☔', '🌧️', '💔'] },
+    tod:     { bg: 'radial-gradient(circle at 50% 35%, #4a1f2a 0%, #2a1018 55%, #120608 100%)', base: '#2a1018',
+               emoji: ['💀', '☠️', '🦴', '🤬', '🪦', '👻', '⚰️', '😈', '💢', '🔥'] },
+    schlaf:  { bg: 'radial-gradient(circle at 50% 30%, #5a4fa8 0%, #352c78 55%, #1c1648 100%)', base: '#352c78',
+               emoji: ['😴', '💤', '🛏️', '🛌', '🌙', '🌜', '⭐', '🥱', '🧸', '😪', '🌛', '✨'] },
+    party:   { bg: 'radial-gradient(circle at 50% 35%, #ff5fae 0%, #9b2d9e 55%, #3d0d52 100%)', base: '#9b2d9e',
+               emoji: ['🍺', '🍻', '🍷', '🥂', '🍾', '🍸', '🍹', '🥃', '🎉', '🪩', '🎶', '💃', '🕺', '🎊'] },
+  };
+  // index = Date.getDay(): 0 Sonntag … 6 Samstag; Friday picks one of two at random
+  const WEEK = [['party'], ['geld'], ['physik'], ['muede'], ['traurig'], ['tiere', 'tod'], ['schlaf']];
+  const TAG_PARAM = { so: 0, mo: 1, di: 2, mi: 3, do: 4, fr: 5, sa: 6 };
+
+  const now = new Date();
+  const params = new URLSearchParams(location.search);
+  const day = params.get('tag') in TAG_PARAM ? TAG_PARAM[params.get('tag')] : now.getDay();
+  const options = WEEK[day];
+  const themeName = THEMES[params.get('thema')] ? params.get('thema') : options[Math.floor(Math.random() * options.length)];
+  const theme = THEMES[themeName];
+
+  const bg = document.getElementById('bg');
+  document.documentElement.style.setProperty('--bg', theme.bg);
+  document.body.style.background = theme.base;
+  // positions/sizes are random on every visit, so the background never looks the same twice
+  const count = Math.round(Math.min(30, Math.max(14, innerWidth * innerHeight / 21000)));
+  const pool = [...theme.emoji].sort(() => Math.random() - .5);
   for (let i = 0; i < count; i++) {
-    const a = document.createElement('span');
-    a.className = 'animal';
-    a.textContent = ANIMALS[i % ANIMALS.length];
-    a.style.left = (Math.random() * 94) + '%';
-    a.style.top = (Math.random() * 94) + '%';
-    a.style.fontSize = (22 + Math.random() * 26) + 'px';
-    a.style.setProperty('--dur', (2 + Math.random() * 2.5) + 's');
-    a.style.setProperty('--delay', (-Math.random() * 3) + 's');
-    layer.appendChild(a);
+    const d = document.createElement('span');
+    d.className = 'deco';
+    d.textContent = pool[i % pool.length];
+    d.style.left = (Math.random() * 94) + '%';
+    d.style.top = (Math.random() * 94) + '%';
+    d.style.fontSize = (22 + Math.random() * 28) + 'px';
+    d.style.setProperty('--dur', (2 + Math.random() * 2.5) + 's');
+    d.style.setProperty('--delay', (-Math.random() * 3) + 's');
+    bg.appendChild(d);
   }
 
-  // thumbs flying out of the video edges while it plays
+  // ---------- date + greeting ----------
+  const dateFmt = new Intl.DateTimeFormat('de-AT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const timeFmt = new Intl.DateTimeFormat('de-AT', { hour: '2-digit', minute: '2-digit' });
+  function greetingFor(h) {
+    if (h >= 5 && h < 11) return 'Guten Morgen! ☀️';
+    if (h >= 11 && h < 18) return 'Guten Tag! 🌤️';
+    if (h >= 18 && h < 23) return 'Guten Abend! 🌆';
+    return 'Gute Nacht! 🌙';
+  }
+  function updateClock() {
+    const t = new Date();
+    document.getElementById('date').textContent = dateFmt.format(t) + ' · ' + timeFmt.format(t);
+    document.getElementById('greeting').textContent = greetingFor(t.getHours());
+  }
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // ---------- subject buttons ----------
+  const grid = document.getElementById('grid');
+  for (const [key, f] of Object.entries(FAECHER)) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'fach';
+    b.innerHTML = `<span class="icon">${f.icon}</span><span>${f.title}</span>`;
+    b.addEventListener('click', () => go({ id: 'hilfe', fach: key }));
+    grid.appendChild(b);
+  }
+
+  // ---------- thumbs flying out of the video edges while it plays ----------
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let thumbTimer = null;
 
@@ -184,19 +304,31 @@
     thumbTimer = null;
   }
 
-  // navigation
+  // ---------- navigation ----------
   const videos = { ja: document.getElementById('video-ja'), nein: document.getElementById('video-nein') };
   const thumbs = { ja: '👍', nein: '👎' };
 
-  function show(id) {
+  function show(state) {
+    const id = state.id;
+    if (id === 'hilfe') {
+      const f = FAECHER[state.fach];
+      document.getElementById('hilfe-icon').textContent = f.icon;
+      document.getElementById('hilfe-title').textContent = f.title;
+      document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald ✨</p>';
+    }
     document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
     for (const [key, v] of Object.entries(videos)) if (key !== id) v.pause();
     if (videos[id]) startThumbs(videos[id], thumbs[id]); else stopThumbs();
+    scrollTo(0, 0);
+  }
+
+  function go(state) {
+    show(state);
+    history.pushState(state, '', '#' + (state.fach || state.id));
   }
 
   function answer(id) {
-    show(id);
-    history.pushState({ id }, '', '#' + id);
+    go({ id });
     const v = videos[id];
     v.currentTime = 0;
     // play() inside the click handler so the browser allows sound
@@ -205,10 +337,11 @@
 
   document.getElementById('btn-ja').addEventListener('click', () => answer('ja'));
   document.getElementById('btn-nein').addEventListener('click', () => answer('nein'));
+  document.getElementById('btn-will').addEventListener('click', () => go({ id: 'faecher' }));
   document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
 
-  window.addEventListener('popstate', e => show(e.state?.id || 'frage'));
-  history.replaceState({ id: 'frage' }, '', location.pathname);
+  window.addEventListener('popstate', e => show(e.state || { id: 'frage' }));
+  history.replaceState({ id: 'frage' }, '', location.pathname + location.search);
 </script>
 </body>
 </html>
