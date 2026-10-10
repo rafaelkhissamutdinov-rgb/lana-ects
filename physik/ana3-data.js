@@ -1,0 +1,1514 @@
+// Analysis III – generated from the study notes (RU) + German translation. Do not edit by hand.
+window.ANA3 = {
+ "meta": {
+  "hero": {
+   "ru": "Базовые понятия скрипта Hörmann (WS 2026/27), без формальной брони. У каждого понятия четыре слоя: <b>суть</b> простыми словами, <b>формула</b>, которую надо помнить, <b>как проверить</b> свой ответ за минуту и <b>рецепт</b> для типовой задачи. Конвенции (знаки, множители 2π) как в скрипте.",
+   "de": "Die Grundbegriffe aus dem Skriptum von Hörmann (WS 2026/27), ohne formale Rüstung. Jeder Begriff hat vier Ebenen: der <b>Kern</b> in einfachen Worten, die <b>Formel</b>, die man können muss, der <b>Check</b>, mit dem du deine Antwort in einer Minute prüfst, und das <b>Rezept</b> für die typische Aufgabe. Konventionen (Vorzeichen, Faktoren 2π) wie im Skriptum."
+  },
+  "map": [
+   {
+    "title": {
+     "ru": "A → всё остальное",
+     "de": "A → alles andere"
+    },
+    "html": {
+     "ru": "Вычеты считают интегралы Фурье. Голоморфность объясняет, почему ряды сходятся там, где сходятся.",
+     "de": "Residuen berechnen Fourier-Integrale. Holomorphie erklärt, warum Reihen genau dort konvergieren, wo sie konvergieren."
+    }
+   },
+   {
+    "title": {
+     "ru": "Лебег → Фурье → δ",
+     "de": "Lebesgue → Fourier → δ"
+    },
+    "html": {
+     "ru": "Лебег даёт право менять предел и интеграл. Фурье превращает производные в умножение. Дистрибуции разрешают дифференцировать что угодно.",
+     "de": "Lebesgue erlaubt, Grenzwert und Integral zu vertauschen. Fourier macht aus Ableitungen Multiplikation. Distributionen erlauben, alles abzuleiten."
+    }
+   },
+   {
+    "title": {
+     "ru": "δ → фундам. решение → PDE",
+     "de": "δ → Fundamentallösung → PDE"
+    },
+    "html": {
+     "ru": "Реши уравнение для точечного источника δ, и решение для любого источника — свёртка.",
+     "de": "Löse die Gleichung einmal für eine Punktquelle δ – die Lösung für jede beliebige Quelle ist dann eine Faltung."
+    }
+   },
+   {
+    "title": {
+     "ru": "Разделение → собств. значения → D",
+     "de": "Separation → Eigenwerte → D"
+    },
+    "html": {
+     "ru": "Синусы в струне — это собственные векторы оператора. Часть D объясняет это в общем виде и даёт язык КМ.",
+     "de": "Die Sinus-Schwingungen der Saite sind Eigenvektoren eines Operators. Teil D erklärt das allgemein und liefert die Sprache der QM."
+    }
+   }
+  ],
+  "parts": [
+   {
+    "tag": "Teil A",
+    "title": {
+     "ru": "Комплексный анализ",
+     "de": "Komplexe Analysis"
+    },
+    "intro": {
+     "ru": "Главная идея всей части: комплексно-дифференцируемая функция настолько жёсткая, что её значения внутри области полностью определены значениями на границе. Отсюда все чудеса: интеграл по замкнутой кривой равен нулю или сумме вычетов.",
+     "de": "Die Hauptidee des ganzen Teils: Eine komplex differenzierbare Funktion ist so starr, dass ihre Werte im Inneren eines Gebiets komplett durch die Werte am Rand festgelegt sind. Daher kommen alle Wunder: Das Integral über eine geschlossene Kurve ist null oder die Summe der Residuen."
+    },
+    "topics": [
+     "holo",
+     "curve",
+     "cauchy",
+     "cif",
+     "series",
+     "log",
+     "sing",
+     "res",
+     "realint"
+    ]
+   },
+   {
+    "tag": "Teil B",
+    "title": {
+     "ru": "Фурье и дистрибуции",
+     "de": "Fourier und Distributionen"
+    },
+    "intro": {
+     "ru": "Главная идея: любой сигнал — это смесь чистых волн $e^{ixy}$. В «волновом» мире дифференцирование превращается в умножение, и дифференциальные уравнения становятся алгебраическими. Дистрибуции нужны, чтобы это работало и для «плохих» объектов вроде δ.",
+     "de": "Die Hauptidee: Jedes Signal ist eine Mischung aus reinen Wellen $e^{ixy}$. In der „Wellenwelt“ wird Ableiten zu Multiplizieren, und Differentialgleichungen werden algebraisch. Distributionen braucht man, damit das auch für „schlimme“ Objekte wie δ funktioniert."
+    },
+    "topics": [
+     "leb",
+     "fourier",
+     "conv",
+     "schwartz",
+     "distr",
+     "dderiv",
+     "fund"
+    ]
+   },
+   {
+    "tag": "Teil C",
+    "title": {
+     "ru": "Классические линейные PDE",
+     "de": "Klassische lineare PDE"
+    },
+    "intro": {
+     "ru": "Три уравнения, три характера: равновесие (Лаплас), растекание (теплопроводность), распространение (волна). Почти каждая задача решается одним из двух методов: разделение переменных (ограниченная область) или свёртка с ядром (всё пространство).",
+     "de": "Drei Gleichungen, drei Charaktere: Gleichgewicht (Laplace), Ausbreitung durch Verschmieren (Wärmeleitung), Ausbreitung als Welle (Wellengleichung). Fast jede Aufgabe löst man mit einer von zwei Methoden: Separation der Variablen (beschränktes Gebiet) oder Faltung mit einem Kern (ganzer Raum)."
+    },
+    "topics": [
+     "three",
+     "sep",
+     "laplace",
+     "weak",
+     "heat",
+     "wave"
+    ]
+   },
+   {
+    "tag": "Teil D",
+    "title": {
+     "ru": "Операторы на гильбертовых пространствах",
+     "de": "Operatoren auf Hilberträumen"
+    },
+    "intro": {
+     "ru": "Главная идея: функции — это векторы в бесконечномерном пространстве, а дифференциальные операторы — это бесконечные матрицы. Почти вся линейная алгебра (скалярное произведение, базис, собственные векторы, диагонализация) переносится, но с поправками, и именно поправки — суть этой части. Это и есть математический язык квантовой механики.",
+     "de": "Die Hauptidee: Funktionen sind Vektoren in einem unendlichdimensionalen Raum, Differentialoperatoren sind unendliche Matrizen. Fast die ganze lineare Algebra (Skalarprodukt, Basis, Eigenvektoren, Diagonalisierung) überträgt sich – aber mit Korrekturen, und genau diese Korrekturen sind der Kern dieses Teils. Das ist die mathematische Sprache der Quantenmechanik."
+    },
+    "topics": [
+     "hilbert",
+     "onb",
+     "ops",
+     "spec",
+     "spthm",
+     "qm",
+     "unb"
+    ]
+   }
+  ]
+ },
+ "topics": {
+  "toolkit": {
+   "emoji": "🧰",
+   "ref": "",
+   "title": {
+    "ru": "Универсальная проверка любого ответа",
+    "de": "Universal-Check für jede Antwort"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "Почти любую задачу этого курса можно проверить, не повторяя решение. Вот пять тестов, которые ловят 90% ошибок.",
+      "de": "Fast jede Aufgabe dieses Kurses lässt sich prüfen, ohne die Lösung zu wiederholen. Hier sind fünf Tests, die 90 % der Fehler finden."
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Пять тестов",
+      "de": "Fünf Tests"
+     },
+     "html": {
+      "ru": "<ul> <li><b>Подставь обратно.</b> Нашёл $u$ — подставь в уравнение, граничные и начальные условия. Это и есть доказательство, что $u$ — решение.</li> <li><b>Частный случай.</b> Положи $t=0$, $n=1$, $a=0$, $k=0$: формула должна дать то, что ты знаешь заранее.</li> <li><b>Симметрия и знак.</b> Интеграл от положительной функции должен быть положительным и вещественным. Чётная функция → чётная Фурье-образ.</li> <li><b>Предел.</b> $t\\to0^+$, $t\\to\\infty$, $R\\to\\infty$: ответ должен вести себя физически осмысленно (тепло растекается, волна уходит).</li> <li><b>Численно.</b> Один вызов <code>scipy.integrate.quad</code> или WolframAlpha проверяет любой определённый интеграл до 6 знаков.</li> </ul>",
+      "de": "<ul> <li><b>Zurück einsetzen.</b> Du hast $u$ gefunden – setz es in die Gleichung, die Rand- und die Anfangsbedingungen ein. Genau das ist der Beweis, dass $u$ eine Lösung ist.</li> <li><b>Spezialfall.</b> Setz $t=0$, $n=1$, $a=0$, $k=0$: Die Formel muss liefern, was du schon vorher weißt.</li> <li><b>Symmetrie und Vorzeichen.</b> Das Integral einer positiven Funktion muss positiv und reell sein. Gerade Funktion → gerade Fouriertransformierte.</li> <li><b>Grenzwert.</b> $t\\to0^+$, $t\\to\\infty$, $R\\to\\infty$: Die Antwort muss sich physikalisch sinnvoll verhalten (Wärme verteilt sich, die Welle läuft weg).</li> <li><b>Numerisch.</b> Ein Aufruf von <code>scipy.integrate.quad</code> oder WolframAlpha prüft jedes bestimmte Integral auf 6 Stellen.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "holo": {
+   "emoji": "🌀",
+   "ref": "§1.4–1.5",
+   "title": {
+    "ru": "Голоморфность и уравнения Коши–Римана",
+    "de": "Holomorphie und Cauchy-Riemann-Gleichungen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Вещественная производная говорит «растяни в $f'$ раз». Комплексная производная — это комплексное число, а умножение на комплексное число означает <b>поворот + растяжение</b>. Значит, голоморфная функция вблизи каждой точки выглядит как поворот с растяжением: маленькие квадратики переходят в маленькие квадратики, а не в параллелограммы. Это сильное ограничение, поэтому голоморфных функций «мало» и они очень хорошо себя ведут.",
+      "de": "Die reelle Ableitung sagt „streck um den Faktor $f'$“. Die komplexe Ableitung ist eine komplexe Zahl, und Multiplizieren mit einer komplexen Zahl heißt <b>Drehen + Strecken</b>. Eine holomorphe Funktion sieht also in der Nähe jedes Punkts wie eine Drehstreckung aus: Kleine Quadrate werden auf kleine Quadrate abgebildet, nicht auf Parallelogramme. Das ist eine starke Einschränkung – deshalb gibt es „wenige“ holomorphe Funktionen, und sie verhalten sich sehr brav."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$f=u+iv \\text{ голоморфна} \\iff u_x=v_y,\\quad u_y=-v_x \\quad(\\text{и } u,v\\in C^1)$$ $$\\text{Короче: } f \\text{ зависит только от } z, \\text{ а не от } \\bar z:\\quad \\frac{\\partial f}{\\partial \\bar z}=\\tfrac12(\\partial_x+i\\partial_y)f=0$$",
+      "de": "$$f=u+iv \\text{ holomorph} \\iff u_x=v_y,\\quad u_y=-v_x \\quad(\\text{und } u,v\\in C^1)$$ $$\\text{Kurz: } f \\text{ hängt nur von } z \\text{ ab}, \\text{ nicht von } \\bar z:\\quad \\frac{\\partial f}{\\partial \\bar z}=\\tfrac12(\\partial_x+i\\partial_y)f=0$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить за 30 секунд",
+      "de": "Check in 30 Sekunden"
+     },
+     "html": {
+      "ru": "<ul> <li>Запиши $f$ через $z$ и $\\bar z$ (подставь $x=\\frac{z+\\bar z}2$, $y=\\frac{z-\\bar z}{2i}$). Если $\\bar z$ исчез — голоморфна. $z^2,\\ e^z,\\ \\sin z$ — да. $\\bar z,\\ |z|^2=z\\bar z,\\ \\operatorname{Re} z$ — нет.</li> <li>Следствие: $u$ и $v$ гармоничны, $\\Delta u=\\Delta v=0$. Если $\\Delta u\\neq0$, то такой $u$ не может быть вещественной частью голоморфной функции.</li> </ul>",
+      "de": "<ul> <li>Schreib $f$ mit $z$ und $\\bar z$ (setz $x=\\frac{z+\\bar z}2$, $y=\\frac{z-\\bar z}{2i}$ ein). Ist $\\bar z$ verschwunden – holomorph. $z^2,\\ e^z,\\ \\sin z$ – ja. $\\bar z,\\ |z|^2=z\\bar z,\\ \\operatorname{Re} z$ – nein.</li> <li>Folgerung: $u$ und $v$ sind harmonisch, $\\Delta u=\\Delta v=0$. Ist $\\Delta u\\neq0$, kann so ein $u$ nicht Realteil einer holomorphen Funktion sein.</li> </ul>"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Рецепт: «найди $v$, если дано $u$»",
+      "de": "Rezept: „Finde $v$, wenn $u$ gegeben ist“"
+     },
+     "html": {
+      "ru": "<ol> <li>Проверь $\\Delta u=0$.</li><li>Из $v_y=u_x$ проинтегрируй по $y$: $v=\\int u_x\\,dy+C(x)$.</li><li>Подставь в $v_x=-u_y$, найди $C'(x)$.</li><li>Проверка: $u+iv$ должно записываться только через $z$.</li></ol>",
+      "de": "<ol> <li>Prüfe $\\Delta u=0$.</li><li>Aus $v_y=u_x$ nach $y$ integrieren: $v=\\int u_x\\,dy+C(x)$.</li><li>In $v_x=-u_y$ einsetzen, $C'(x)$ bestimmen.</li><li>Check: $u+iv$ muss sich allein durch $z$ schreiben lassen.</li></ol>"
+     }
+    }
+   ]
+  },
+  "curve": {
+   "emoji": "🐌",
+   "ref": "§1.6–1.7",
+   "title": {
+    "ru": "Комплексный интеграл по кривой",
+    "de": "Komplexes Kurvenintegral"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Идёшь по пути $\\gamma$ маленькими шагами $dz$, в каждой точке умножаешь значение $f$ на шаг и складываешь. Чтобы посчитать, путь параметризуют, и всё сводится к обычному интегралу по $t$.",
+      "de": "Du gehst den Weg $\\gamma$ in kleinen Schritten $dz$, multiplizierst an jedem Punkt den Wert von $f$ mit dem Schritt und summierst. Zum Ausrechnen parametrisiert man den Weg, und alles wird zu einem gewöhnlichen Integral über $t$."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\int_\\gamma f(z)\\,dz=\\int_a^b f(\\gamma(t))\\,\\gamma'(t)\\,dt$$ $$\\boxed{\\oint_{|z-a|=r}(z-a)^n\\,dz=\\begin{cases}2\\pi i,& n=-1\\\\ 0,& n\\neq-1\\end{cases}}$$",
+      "de": "$$\\int_\\gamma f(z)\\,dz=\\int_a^b f(\\gamma(t))\\,\\gamma'(t)\\,dt$$ $$\\boxed{\\oint_{|z-a|=r}(z-a)^n\\,dz=\\begin{cases}2\\pi i,& n=-1\\\\ 0,& n\\neq-1\\end{cases}}$$"
+     }
+    },
+    {
+     "type": "text",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "Эту формулу в рамке надо знать как таблицу умножения: на ней держится вся теория вычетов. Доказательство в одну строку: $z=a+re^{it}$, $dz=ire^{it}dt$, получаем $ir^{n+1}\\int_0^{2\\pi}e^{i(n+1)t}dt$, а это $2\\pi i$ при $n=-1$ и $0$ иначе.",
+      "de": "Die Formel im Kasten musst du kennen wie das Einmaleins: Auf ihr ruht die ganze Residuentheorie. Beweis in einer Zeile: $z=a+re^{it}$, $dz=ire^{it}dt$, also $ir^{n+1}\\int_0^{2\\pi}e^{i(n+1)t}dt$, und das ist $2\\pi i$ für $n=-1$ und sonst $0$."
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Если у $f$ есть первообразная $F$ (§1.7), то $\\int_\\gamma f\\,dz=F(\\text{конец})-F(\\text{начало})$, а по замкнутому пути получается $0$. У $1/z$ первообразной на $\\mathbb C\\setminus\\{0\\}$ нет (логарифм многозначен), поэтому $2\\pi i$.</li> <li>Оценка: $\\left|\\int_\\gamma f\\,dz\\right|\\le \\max_\\gamma|f|\\cdot L(\\gamma)$. Ответ больше этой границы означает ошибку.</li> </ul>",
+      "de": "<ul> <li>Hat $f$ eine Stammfunktion $F$ (§1.7), dann ist $\\int_\\gamma f\\,dz=F(\\text{Ende})-F(\\text{Anfang})$, und über einen geschlossenen Weg kommt $0$ heraus. $1/z$ hat auf $\\mathbb C\\setminus\\{0\\}$ keine Stammfunktion (der Logarithmus ist mehrdeutig) – deshalb $2\\pi i$.</li> <li>Abschätzung: $\\left|\\int_\\gamma f\\,dz\\right|\\le \\max_\\gamma|f|\\cdot L(\\gamma)$. Ist deine Antwort größer als diese Schranke, ist etwas falsch.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "cauchy": {
+   "emoji": "🍩",
+   "ref": "§1.11–1.12",
+   "title": {
+    "ru": "Интегральная теорема Коши",
+    "de": "Cauchyscher Integralsatz"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Если внутри замкнутой петли у функции нет ни одной «дырки» (особенности), то интеграл по петле равен нулю. Как работа силы без источников по замкнутому пути. Петлю можно сколько угодно деформировать, не задевая особенностей, и интеграл не изменится.",
+      "de": "Hat die Funktion innerhalb einer geschlossenen Schleife kein einziges „Loch“ (keine Singularität), dann ist das Integral über die Schleife null. Wie die Arbeit einer quellenfreien Kraft entlang eines geschlossenen Wegs. Die Schleife darf man beliebig verformen, solange man keine Singularität berührt – das Integral ändert sich nicht."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$f \\text{ голоморфна в односвязной } \\Omega,\\ \\gamma \\text{ замкнута в } \\Omega \\;\\Longrightarrow\\; \\oint_\\gamma f\\,dz=0$$",
+      "de": "$$f \\text{ holomorph im einfach zusammenhängenden } \\Omega,\\ \\gamma \\text{ geschlossen in } \\Omega \\;\\Longrightarrow\\; \\oint_\\gamma f\\,dz=0$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Нарисуй контур и отметь все нули знаменателя. Ни один не попал внутрь — ответ $0$, считать нечего.</li> <li>Морера (§1.14, обратное утверждение): если интеграл по каждому маленькому треугольнику равен 0 и $f$ непрерывна, то $f$ голоморфна.</li> </ul>",
+      "de": "<ul> <li>Zeichne den Weg und markiere alle Nullstellen des Nenners. Liegt keine innen – die Antwort ist $0$, nichts zu rechnen.</li> <li>Morera (§1.14, die Umkehrung): Ist das Integral über jedes kleine Dreieck 0 und $f$ stetig, dann ist $f$ holomorph.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "cif": {
+   "emoji": "🎯",
+   "ref": "§1.12–1.13",
+   "title": {
+    "ru": "Интегральная формула Коши",
+    "de": "Cauchysche Integralformel"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Значение в центре полностью определено значениями на окружности: $f(a)$ — это «среднее» $f$ по окружности вокруг $a$. Знаешь границу — знаешь всё внутри. Отсюда же: голоморфная функция автоматически бесконечно дифференцируема.",
+      "de": "Der Wert in der Mitte ist komplett durch die Werte auf dem Kreis bestimmt: $f(a)$ ist der „Mittelwert“ von $f$ auf einem Kreis um $a$. Kennst du den Rand, kennst du alles innen. Und daraus folgt: Eine holomorphe Funktion ist automatisch unendlich oft differenzierbar."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$f(a)=\\frac1{2\\pi i}\\oint_\\gamma\\frac{f(z)}{z-a}\\,dz,\\qquad f^{(n)}(a)=\\frac{n!}{2\\pi i}\\oint_\\gamma\\frac{f(z)}{(z-a)^{n+1}}\\,dz$$",
+      "de": "$$f(a)=\\frac1{2\\pi i}\\oint_\\gamma\\frac{f(z)}{z-a}\\,dz,\\qquad f^{(n)}(a)=\\frac{n!}{2\\pi i}\\oint_\\gamma\\frac{f(z)}{(z-a)^{n+1}}\\,dz$$"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Рецепт: интеграл вида $\\oint \\frac{g(z)}{(z-a)^{m}}dz$",
+      "de": "Rezept: Integral der Form $\\oint \\frac{g(z)}{(z-a)^{m}}dz$"
+     },
+     "html": {
+      "ru": "<ol> <li>Убедись, что $g$ голоморфна внутри контура, а $a$ лежит внутри.</li> <li>Ответ: $2\\pi i\\cdot\\dfrac{g^{(m-1)}(a)}{(m-1)!}$.</li> <li>Пример: $\\oint_{|z|=1}\\frac{e^z}{z^3}dz=2\\pi i\\cdot\\frac{e^0}{2!}=\\pi i$.</li></ol>",
+      "de": "<ol> <li>Stell sicher, dass $g$ im Inneren holomorph ist und $a$ innen liegt.</li> <li>Antwort: $2\\pi i\\cdot\\dfrac{g^{(m-1)}(a)}{(m-1)!}$.</li> <li>Beispiel: $\\oint_{|z|=1}\\frac{e^z}{z^3}dz=2\\pi i\\cdot\\frac{e^0}{2!}=\\pi i$.</li></ol>"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul><li>Разложи $g$ в ряд Тейлора вокруг $a$, подели на $(z-a)^m$ и найди коэффициент при $(z-a)^{-1}$. Умноженный на $2\\pi i$, он должен совпасть с ответом. Это та же формула в рамке из предыдущего пункта.</li></ul>",
+      "de": "<ul><li>Entwickle $g$ in eine Taylorreihe um $a$, teile durch $(z-a)^m$ und such den Koeffizienten vor $(z-a)^{-1}$. Mal $2\\pi i$ muss er mit der Antwort übereinstimmen. Das ist dieselbe Formel im Kasten aus dem vorigen Thema.</li></ul>"
+     }
+    }
+   ]
+  },
+  "series": {
+   "emoji": "⭕",
+   "ref": "§1.2, 1.10, 1.13",
+   "title": {
+    "ru": "Голоморфна = аналитична, радиус сходимости",
+    "de": "Holomorph = analytisch, Konvergenzradius"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Голоморфная функция везде раскладывается в степенной ряд, и ряд сходится в самом большом круге, который помещается до ближайшей особенности. Именно поэтому ряд для $\\frac1{1+x^2}$ на вещественной оси сходится только при $|x|<1$, хотя сама функция на $\\mathbb R$ гладкая: в комплексной плоскости в точках $\\pm i$ сидят полюсы на расстоянии 1.",
+      "de": "Eine holomorphe Funktion lässt sich überall in eine Potenzreihe entwickeln, und die Reihe konvergiert im größten Kreis, der bis zur nächsten Singularität passt. Genau deshalb konvergiert die Reihe für $\\frac1{1+x^2}$ auf der reellen Achse nur für $|x|<1$, obwohl die Funktion auf $\\mathbb R$ glatt ist: In der komplexen Ebene sitzen bei $\\pm i$ Pole im Abstand 1."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{или}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{ближайшая особенность})$$",
+      "de": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{oder}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{nächste Singularität})$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Посчитай радиус двумя способами: по формуле и как расстояние до ближайшего нуля знаменателя. Должно совпасть.</li> <li>На границе круга ничего общего сказать нельзя, каждую точку проверяй отдельно (пример из скрипта: $\\sum\\frac{(-1)^{n-1}}nz^n$ сходится при $z=1$ и расходится при $z=-1$).</li> <li>Теорема единственности: две голоморфные функции, совпадающие на отрезке, совпадают везде в области. Поэтому $\\sin^2z+\\cos^2z=1$ на $\\mathbb C$ следует из вещественного случая.</li> </ul>",
+      "de": "<ul> <li>Berechne den Radius auf zwei Wegen: mit der Formel und als Abstand zur nächsten Nullstelle des Nenners. Es muss übereinstimmen.</li> <li>Auf dem Rand des Kreises kann man nichts Allgemeines sagen, jeden Punkt einzeln prüfen (Beispiel aus dem Skriptum: $\\sum\\frac{(-1)^{n-1}}nz^n$ konvergiert bei $z=1$ und divergiert bei $z=-1$).</li> <li>Identitätssatz: Zwei holomorphe Funktionen, die auf einer Strecke übereinstimmen, stimmen im ganzen Gebiet überein. Deshalb folgt $\\sin^2z+\\cos^2z=1$ auf $\\mathbb C$ aus dem reellen Fall.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "log": {
+   "emoji": "✂️",
+   "ref": "§1.8",
+   "title": {
+    "ru": "Ветви логарифма и корня",
+    "de": "Zweige von Logarithmus und Wurzel"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Угол точки определён с точностью до $2\\pi$: обошёл ноль по кругу, и угол вырос на $2\\pi$, хотя точка та же. Логарифм «помнит» угол, поэтому после обхода его значение сдвигается на $2\\pi i$. Чтобы получить нормальную функцию, плоскость разрезают лучом из нуля и запрещают его пересекать. Выбор разреза и есть выбор ветви.",
+      "de": "Der Winkel eines Punkts ist nur bis auf $2\\pi$ bestimmt: Geh einmal um die Null herum, und der Winkel ist um $2\\pi$ gewachsen, obwohl der Punkt derselbe ist. Der Logarithmus „merkt sich“ den Winkel, deshalb verschiebt sich sein Wert nach einem Umlauf um $2\\pi i$. Um eine ordentliche Funktion zu bekommen, schneidet man die Ebene entlang eines Strahls aus der Null auf und verbietet, ihn zu überqueren. Die Wahl des Schnitts ist die Wahl des Zweigs."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\log z=\\ln|z|+i\\arg z,\\qquad \\sqrt z=e^{\\frac12\\log z}\\quad(\\text{главная ветвь: } \\arg z\\in(-\\pi,\\pi),\\ \\text{разрез }(-\\infty,0])$$",
+      "de": "$$\\log z=\\ln|z|+i\\arg z,\\qquad \\sqrt z=e^{\\frac12\\log z}\\quad(\\text{Hauptzweig: } \\arg z\\in(-\\pi,\\pi),\\ \\text{Schnitt }(-\\infty,0])$$"
+     }
+    },
+    {
+     "type": "falle",
+     "label": {
+      "ru": "Ловушка",
+      "de": "Falle"
+     },
+     "html": {
+      "ru": "$\\log(zw)\\neq\\log z+\\log w$ в общем случае. Пример: $z=w=e^{i\\,3\\pi/4}$. Справа получается $i\\,3\\pi/2$, а это вне главной ветви. В задачах с вычетами разрез выбирают так, чтобы он не пересекал контур.",
+      "de": "$\\log(zw)\\neq\\log z+\\log w$ im Allgemeinen. Beispiel: $z=w=e^{i\\,3\\pi/4}$. Rechts kommt $i\\,3\\pi/2$ heraus, und das liegt außerhalb des Hauptzweigs. Bei Residuen-Aufgaben wählt man den Schnitt so, dass er den Integrationsweg nicht kreuzt."
+     }
+    }
+   ]
+  },
+  "sing": {
+   "emoji": "💥",
+   "ref": "§2.1–2.4",
+   "title": {
+    "ru": "Изолированные особенности и ряд Лорана",
+    "de": "Isolierte Singularitäten und Laurentreihe"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Ряд Лорана — это ряд Тейлора, которому разрешили отрицательные степени. Отрицательная часть описывает, «насколько плохо» функция ведёт себя в точке. Три типа: дырку можно заделать (устранимая), функция уходит в бесконечность контролируемо (полюс), или творится хаос (существенная).",
+      "de": "Die Laurentreihe ist eine Taylorreihe, die auch negative Potenzen haben darf. Der negative Teil beschreibt, „wie schlimm“ sich die Funktion im Punkt verhält. Drei Typen: Das Loch lässt sich stopfen (hebbar), die Funktion geht kontrolliert gegen unendlich (Pol), oder es herrscht Chaos (wesentlich)."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$f(z)=\\sum_{n=-\\infty}^{\\infty}a_n(z-a)^n,\\qquad \\operatorname{Res}_a f=a_{-1}$$",
+      "de": "$$f(z)=\\sum_{n=-\\infty}^{\\infty}a_n(z-a)^n,\\qquad \\operatorname{Res}_a f=a_{-1}$$"
+     }
+    },
+    {
+     "type": "tabelle",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "<table> <tr><th>Тип</th><th>Отрицательная часть</th><th>Критерий без ряда</th><th>Пример в 0</th></tr> <tr><td>Устранимая</td><td>нет</td><td>$\\lim f$ конечен (или $f$ ограничена рядом)</td><td>$\\frac{\\sin z}{z}$</td></tr> <tr><td>Полюс порядка $m$</td><td>конечна, до $(z-a)^{-m}$</td><td>$|f|\\to\\infty$; $(z-a)^mf$ имеет конечный ненулевой предел</td><td>$\\frac1{z^2}$, $m=2$</td></tr> <tr><td>Существенная</td><td>бесконечна</td><td>ни то ни другое; рядом $f$ подходит сколь угодно близко к любому числу (Казорати–Вейерштрасс)</td><td>$e^{1/z}$</td></tr> </table>",
+      "de": "<table> <tr><th>Typ</th><th>Negativer Teil</th><th>Kriterium ohne Reihe</th><th>Beispiel in 0</th></tr> <tr><td>Hebbar</td><td>keiner</td><td>$\\lim f$ endlich (oder $f$ in der Nähe beschränkt)</td><td>$\\frac{\\sin z}{z}$</td></tr> <tr><td>Pol der Ordnung $m$</td><td>endlich, bis $(z-a)^{-m}$</td><td>$|f|\\to\\infty$; $(z-a)^mf$ hat einen endlichen Grenzwert ungleich null</td><td>$\\frac1{z^2}$, $m=2$</td></tr> <tr><td>Wesentlich</td><td>unendlich</td><td>weder noch; in der Nähe kommt $f$ jeder Zahl beliebig nahe (Casorati–Weierstraß)</td><td>$e^{1/z}$</td></tr> </table>"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Рецепт: Лоран для дроби, например $\\frac1{z(1-z)}$ (§2.2)",
+      "de": "Rezept: Laurentreihe eines Bruchs, z. B. $\\frac1{z(1-z)}$ (§2.2)"
+     },
+     "html": {
+      "ru": "<ol> <li>Определи кольцо: $0<|z|<1$ или $|z|>1$. В разных кольцах ряды разные.</li> <li>Для $|z|<1$: $\\frac1{1-z}=\\sum z^n$, итого $\\frac1z+1+z+z^2+\\dots$</li> <li>Для $|z|>1$: $\\frac1{1-z}=-\\frac1z\\cdot\\frac1{1-1/z}=-\\sum_{n\\ge1}z^{-n}$, итого $-\\frac1{z^2}-\\frac1{z^3}-\\dots$</li> <li>Проверка: перемножь первые члены ряда со знаменателем, должно получиться $1+O(\\cdot)$.</li></ol>",
+      "de": "<ol> <li>Bestimme den Kreisring: $0<|z|<1$ oder $|z|>1$. In verschiedenen Ringen sind die Reihen verschieden.</li> <li>Für $|z|<1$: $\\frac1{1-z}=\\sum z^n$, insgesamt $\\frac1z+1+z+z^2+\\dots$</li> <li>Für $|z|>1$: $\\frac1{1-z}=-\\frac1z\\cdot\\frac1{1-1/z}=-\\sum_{n\\ge1}z^{-n}$, insgesamt $-\\frac1{z^2}-\\frac1{z^3}-\\dots$</li> <li>Check: Multiplizier die ersten Glieder der Reihe mit dem Nenner, es muss $1+O(\\cdot)$ herauskommen.</li></ol>"
+     }
+    }
+   ]
+  },
+  "res": {
+   "emoji": "👂",
+   "ref": "§2.5",
+   "title": {
+    "ru": "Теорема о вычетах",
+    "de": "Residuensatz"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Интеграл по петле не видит ничего, кроме особенностей внутри. От каждой особенности он «слышит» только одно число — коэффициент при $\\frac1{z-a}$, потому что все остальные степени интегрируются в ноль (формула в рамке выше). Сложи эти числа и умножь на $2\\pi i$.",
+      "de": "Das Integral über eine Schleife sieht nichts außer den Singularitäten im Inneren. Von jeder Singularität „hört“ es nur eine Zahl – den Koeffizienten vor $\\frac1{z-a}$, weil alle anderen Potenzen zu null integrieren (Formel im Kasten oben). Summier diese Zahlen und multiplizier mit $2\\pi i$."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\oint_\\gamma f\\,dz=2\\pi i\\sum_{a_k \\text{ внутри}}\\operatorname{Res}_{a_k}f$$ $$\\text{Простой полюс: } \\operatorname{Res}_a f=\\lim_{z\\to a}(z-a)f(z);\\qquad f=\\tfrac gh,\\ h(a)=0,\\ h'(a)\\ne0:\\ \\operatorname{Res}_a f=\\frac{g(a)}{h'(a)}$$ $$\\text{Полюс порядка } m:\\ \\operatorname{Res}_a f=\\frac1{(m-1)!}\\lim_{z\\to a}\\frac{d^{m-1}}{dz^{m-1}}\\big[(z-a)^mf(z)\\big]$$",
+      "de": "$$\\oint_\\gamma f\\,dz=2\\pi i\\sum_{a_k \\text{ innen}}\\operatorname{Res}_{a_k}f$$ $$\\text{Einfacher Pol: } \\operatorname{Res}_a f=\\lim_{z\\to a}(z-a)f(z);\\qquad f=\\tfrac gh,\\ h(a)=0,\\ h'(a)\\ne0:\\ \\operatorname{Res}_a f=\\frac{g(a)}{h'(a)}$$ $$\\text{Pol der Ordnung } m:\\ \\operatorname{Res}_a f=\\frac1{(m-1)!}\\lim_{z\\to a}\\frac{d^{m-1}}{dz^{m-1}}\\big[(z-a)^mf(z)\\big]$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Посчитай вычет двумя способами: по формуле $g/h'$ и через начало ряда Лорана.</li> <li>Сумма <i>всех</i> вычетов рациональной функции вместе с вычетом в $\\infty$ равна 0. Если $\\deg Q\\ge\\deg P+2$, то вычет в $\\infty$ равен нулю и сумма конечных вычетов тоже 0. Хорошая контрольная сумма.</li> </ul>",
+      "de": "<ul> <li>Berechne das Residuum auf zwei Wegen: mit der Formel $g/h'$ und über den Anfang der Laurentreihe.</li> <li>Die Summe <i>aller</i> Residuen einer rationalen Funktion zusammen mit dem Residuum in $\\infty$ ist 0. Ist $\\deg Q\\ge\\deg P+2$, dann ist das Residuum in $\\infty$ null, und die Summe der endlichen Residuen ist auch 0. Gute Kontrollsumme.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "realint": {
+   "emoji": "🌈",
+   "ref": "§2.6",
+   "title": {
+    "ru": "Вещественные интегралы через вычеты",
+    "de": "Reelle Integrale mit Residuen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Реальную ось замыкаем большой полуокружностью в верхней полуплоскости. Если функция убывает достаточно быстро, вклад дуги стремится к нулю, и интеграл по прямой равен $2\\pi i\\cdot$(вычеты сверху).",
+      "de": "Die reelle Achse schließt man mit einem großen Halbkreis in der oberen Halbebene. Fällt die Funktion schnell genug ab, geht der Beitrag des Bogens gegen null, und das Integral über die Gerade ist $2\\pi i\\cdot$(Residuen oben)."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\int_{-\\infty}^\\infty\\frac{P(x)}{Q(x)}dx=2\\pi i\\!\\!\\sum_{\\operatorname{Im}a>0}\\!\\!\\operatorname{Res}_a\\frac PQ\\quad(\\deg Q\\ge\\deg P+2,\\ Q\\ne0 \\text{ на } \\mathbb R)$$ $$\\int_0^{2\\pi}R(\\cos t,\\sin t)\\,dt:\\ z=e^{it},\\ \\cos t=\\tfrac{z+z^{-1}}2,\\ \\sin t=\\tfrac{z-z^{-1}}{2i},\\ dt=\\tfrac{dz}{iz},\\ \\text{контур } |z|=1$$ $$\\int_{-\\infty}^\\infty f(x)e^{ikx}dx,\\ k>0:\\ \\text{вверх (лемма Жордана хватает } \\deg Q\\ge\\deg P+1);\\ k<0:\\ \\text{вниз, со знаком минус}$$",
+      "de": "$$\\int_{-\\infty}^\\infty\\frac{P(x)}{Q(x)}dx=2\\pi i\\!\\!\\sum_{\\operatorname{Im}a>0}\\!\\!\\operatorname{Res}_a\\frac PQ\\quad(\\deg Q\\ge\\deg P+2,\\ Q\\ne0 \\text{ auf } \\mathbb R)$$ $$\\int_0^{2\\pi}R(\\cos t,\\sin t)\\,dt:\\ z=e^{it},\\ \\cos t=\\tfrac{z+z^{-1}}2,\\ \\sin t=\\tfrac{z-z^{-1}}{2i},\\ dt=\\tfrac{dz}{iz},\\ \\text{Weg } |z|=1$$ $$\\int_{-\\infty}^\\infty f(x)e^{ikx}dx,\\ k>0:\\ \\text{nach oben (mit Jordan-Lemma reicht } \\deg Q\\ge\\deg P+1);\\ k<0:\\ \\text{nach unten, mit Minuszeichen}$$"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Пример целиком",
+      "de": "Komplettes Beispiel"
+     },
+     "html": {
+      "ru": "<ol> <li>$\\int_{-\\infty}^\\infty\\frac{dx}{1+x^2}$. Полюсы $\\pm i$, сверху только $i$.</li> <li>$\\operatorname{Res}_i=\\frac{1}{(z^2+1)'}\\big|_i=\\frac1{2i}$.</li> <li>Ответ: $2\\pi i\\cdot\\frac1{2i}=\\pi$. Проверка: $[\\arctan x]_{-\\infty}^{\\infty}=\\pi$. ✓</li></ol>",
+      "de": "<ol> <li>$\\int_{-\\infty}^\\infty\\frac{dx}{1+x^2}$. Pole bei $\\pm i$, oben liegt nur $i$.</li> <li>$\\operatorname{Res}_i=\\frac{1}{(z^2+1)'}\\big|_i=\\frac1{2i}$.</li> <li>Antwort: $2\\pi i\\cdot\\frac1{2i}=\\pi$. Check: $[\\arctan x]_{-\\infty}^{\\infty}=\\pi$. ✓</li></ol>"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Подынтегральное выражение вещественное → ответ обязан быть вещественным. Остался $i$ — потерял знак или не тот полюс.</li> <li>Подынтегральное выражение положительное → ответ положительный.</li> <li>Численная проверка за 5 секунд: <code>quad(lambda x: 1/(1+x**2), -inf, inf)</code>.</li> </ul>",
+      "de": "<ul> <li>Der Integrand ist reell → die Antwort muss reell sein. Ist ein $i$ übrig geblieben, hast du ein Vorzeichen oder den falschen Pol erwischt.</li> <li>Der Integrand ist positiv → die Antwort ist positiv.</li> <li>Numerischer Check in 5 Sekunden: <code>quad(lambda x: 1/(1+x**2), -inf, inf)</code>.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "leb": {
+   "emoji": "🪙",
+   "ref": "§3",
+   "title": {
+    "ru": "Интеграл Лебега и сходимость",
+    "de": "Lebesgue-Integral und Konvergenz"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Риман считает деньги, раскладывая монеты по порядку: слева направо. Лебег сначала сортирует монеты по номиналу: «сколько места занимают точки, где $f\\approx y$», и складывает по номиналам. Результат для нормальных функций тот же, но Лебег справляется с намного более дикими функциями. Множества меры нуль (точки, счётные множества) не влияют на интеграл. Поэтому функции, различающиеся на множестве меры нуль, считаются одинаковыми («fast überall»).",
+      "de": "Riemann zählt Geld, indem er die Münzen der Reihe nach durchgeht: von links nach rechts. Lebesgue sortiert die Münzen zuerst nach ihrem Wert: „Wie viel Platz nehmen die Punkte ein, an denen $f\\approx y$“, und summiert dann nach Werten. Für normale Funktionen ist das Ergebnis dasselbe, aber Lebesgue kommt mit viel wilderen Funktionen klar. Nullmengen (Punkte, abzählbare Mengen) beeinflussen das Integral nicht. Deshalb gelten Funktionen, die sich nur auf einer Nullmenge unterscheiden, als gleich („fast überall“)."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\text{Мажорированная сходимость: } f_n\\to f \\text{ f.ü.},\\ |f_n|\\le g,\\ \\int g<\\infty\\ \\Longrightarrow\\ \\lim\\int f_n=\\int\\lim f_n$$",
+      "de": "$$\\text{Majorisierte Konvergenz: } f_n\\to f \\text{ f.ü.},\\ |f_n|\\le g,\\ \\int g<\\infty\\ \\Longrightarrow\\ \\lim\\int f_n=\\int\\lim f_n$$"
+     }
+    },
+    {
+     "type": "text",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "Это главный рабочий инструмент: он разрешает менять местами предел и интеграл, а также дифференцировать под знаком интеграла (параметрические интегралы, все доказательства про Фурье).",
+      "de": "Das ist das wichtigste Arbeitswerkzeug: Es erlaubt, Grenzwert und Integral zu vertauschen und unter dem Integral abzuleiten (Parameterintegrale, alle Beweise rund um Fourier)."
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить, что теорему можно применять",
+      "de": "Check, ob man den Satz anwenden darf"
+     },
+     "html": {
+      "ru": "<ul> <li>Найди одну интегрируемую $g$, которая <b>не зависит от $n$</b> и бьёт все $|f_n|$.</li> <li>Контрпример, который стоит помнить: $f_n=n\\cdot\\mathbf 1_{(0,1/n)}$. Поточечно $f_n\\to0$, но $\\int f_n=1$ для всех $n$. Общей мажоранты нет, и теорема не работает.</li> <li>$L^1$: $\\int|f|<\\infty$. $L^2$: $\\int|f|^2<\\infty$ (энергия конечна). На $\\mathbb R$ ни одно не содержит другое: $\\frac1{1+|x|}\\in L^2\\setminus L^1$.</li> </ul>",
+      "de": "<ul> <li>Finde eine integrierbare $g$, die <b>nicht von $n$ abhängt</b> und alle $|f_n|$ schlägt.</li> <li>Gegenbeispiel, das man kennen sollte: $f_n=n\\cdot\\mathbf 1_{(0,1/n)}$. Punktweise gilt $f_n\\to0$, aber $\\int f_n=1$ für alle $n$. Es gibt keine gemeinsame Majorante, und der Satz greift nicht.</li> <li>$L^1$: $\\int|f|<\\infty$. $L^2$: $\\int|f|^2<\\infty$ (endliche Energie). Auf $\\mathbb R$ enthält keiner den anderen: $\\frac1{1+|x|}\\in L^2\\setminus L^1$.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "fourier": {
+   "emoji": "🎚️",
+   "ref": "§4.0–4.3",
+   "title": {
+    "ru": "Преобразование Фурье",
+    "de": "Fouriertransformation"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "$\\hat u(y)$ отвечает на вопрос «сколько в сигнале $u$ волны с частотой $y$». Как эквалайзер в плеере: показывает, сколько баса и сколько высоких. Ключевой трюк: производная от волны $e^{ixy}$ — это та же волна, умноженная на $iy$. Поэтому $\\frac{d}{dx}$ в частотах превращается в умножение на $iy$.",
+      "de": "$\\hat u(y)$ beantwortet die Frage „Wie viel Welle mit Frequenz $y$ steckt im Signal $u$“. Wie der Equalizer im Musikplayer: Er zeigt, wie viel Bass und wie viel Höhen drin sind. Der Haupttrick: Die Ableitung der Welle $e^{ixy}$ ist dieselbe Welle, mal $iy$. Deshalb wird $\\frac{d}{dx}$ im Frequenzraum zur Multiplikation mit $iy$."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\hat u(y)=\\frac1{(2\\pi)^{n/2}}\\int_{\\mathbb R^n}e^{-i\\langle x,y\\rangle}u(x)\\,dx,\\qquad u(x)=\\frac1{(2\\pi)^{n/2}}\\int e^{+i\\langle x,y\\rangle}\\hat u(y)\\,dy$$",
+      "de": "$$\\hat u(y)=\\frac1{(2\\pi)^{n/2}}\\int_{\\mathbb R^n}e^{-i\\langle x,y\\rangle}u(x)\\,dx,\\qquad u(x)=\\frac1{(2\\pi)^{n/2}}\\int e^{+i\\langle x,y\\rangle}\\hat u(y)\\,dy$$"
+     }
+    },
+    {
+     "type": "tabelle",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "<table> <tr><th>В пространстве $x$</th><th>В частотах $y$</th><th>Интуиция</th></tr> <tr><td>$\\partial_j u$</td><td>$iy_j\\,\\hat u$</td><td>производная = умножение</td></tr> <tr><td>$x_j u$</td><td>$i\\,\\partial_{y_j}\\hat u$</td><td>и наоборот</td></tr> <tr><td>$u(x-a)$</td><td>$e^{-i\\langle a,y\\rangle}\\hat u$</td><td>сдвиг = фаза</td></tr> <tr><td>$u(\\lambda x)$</td><td>$\\lambda^{-n}\\hat u(y/\\lambda)$</td><td>сжал сигнал → спектр расширился</td></tr> <tr><td>$e^{-t|x|^2}$</td><td>$(2t)^{-n/2}e^{-|y|^2/4t}$</td><td>гаусс → гаусс; $e^{-x^2/2}$ переходит сам в себя</td></tr> <tr><td>$\\mathbf 1_{[-a,a]}$ ($n=1$)</td><td>$\\sqrt{\\tfrac2\\pi}\\,\\tfrac{\\sin ay}{y}$</td><td>щель → дифракционная картина</td></tr> </table>",
+      "de": "<table> <tr><th>Im Ortsraum $x$</th><th>Im Frequenzraum $y$</th><th>Intuition</th></tr> <tr><td>$\\partial_j u$</td><td>$iy_j\\,\\hat u$</td><td>Ableitung = Multiplikation</td></tr> <tr><td>$x_j u$</td><td>$i\\,\\partial_{y_j}\\hat u$</td><td>und umgekehrt</td></tr> <tr><td>$u(x-a)$</td><td>$e^{-i\\langle a,y\\rangle}\\hat u$</td><td>Verschiebung = Phase</td></tr> <tr><td>$u(\\lambda x)$</td><td>$\\lambda^{-n}\\hat u(y/\\lambda)$</td><td>Signal gestaucht → Spektrum gestreckt</td></tr> <tr><td>$e^{-t|x|^2}$</td><td>$(2t)^{-n/2}e^{-|y|^2/4t}$</td><td>Gauß → Gauß; $e^{-x^2/2}$ geht in sich selbst über</td></tr> <tr><td>$\\mathbf 1_{[-a,a]}$ ($n=1$)</td><td>$\\sqrt{\\tfrac2\\pi}\\,\\tfrac{\\sin ay}{y}$</td><td>Spalt → Beugungsbild</td></tr> </table>"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$\\hat u(0)=\\frac1{(2\\pi)^{n/2}}\\int u$. Посчитай площадь под $u$ и сравни.</li> <li>$u$ чётная и вещественная → $\\hat u$ чётная и вещественная. $u$ нечётная и вещественная → $\\hat u$ чисто мнимая.</li> <li>Ширина $u$ × ширина $\\hat u$ ≈ const: узкий импульс должен давать широкий спектр.</li> <li>Лемма Римана–Лебега: для $u\\in L^1$ образ $\\hat u(y)\\to0$ при $|y|\\to\\infty$ и непрерывен. Если не стремится — ошибка.</li> <li>Гладкость ↔ убывание: чем глаже $u$, тем быстрее убывает $\\hat u$. Скачок в $u$ → $\\hat u\\sim 1/y$.</li> </ul>",
+      "de": "<ul> <li>$\\hat u(0)=\\frac1{(2\\pi)^{n/2}}\\int u$. Berechne die Fläche unter $u$ und vergleiche.</li> <li>$u$ gerade und reell → $\\hat u$ gerade und reell. $u$ ungerade und reell → $\\hat u$ rein imaginär.</li> <li>Breite von $u$ × Breite von $\\hat u$ ≈ const: Ein schmaler Impuls muss ein breites Spektrum geben.</li> <li>Riemann-Lebesgue-Lemma: Für $u\\in L^1$ gilt $\\hat u(y)\\to0$ für $|y|\\to\\infty$, und die Transformierte ist stetig. Geht es nicht gegen null – Fehler.</li> <li>Glattheit ↔ Abfall: Je glatter $u$, desto schneller fällt $\\hat u$ ab. Ein Sprung in $u$ → $\\hat u\\sim 1/y$.</li> </ul>"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Как доказать формулу для гаусса (метод скрипта)",
+      "de": "So beweist man die Formel für den Gauß (Methode aus dem Skriptum)"
+     },
+     "html": {
+      "ru": "<ol> <li>$v_0=e^{-x^2/2}$ удовлетворяет ОДУ $v_0'=-xv_0$, $v_0(0)=1$.</li> <li>Применяем Фурье по таблице: $\\hat v_0$ удовлетворяет той же ОДУ, а $\\hat v_0(0)=\\frac1{\\sqrt{2\\pi}}\\int e^{-x^2/2}=1$.</li> <li>Единственность решения ОДУ даёт $\\hat v_0=v_0$. Общий случай получается масштабированием.</li></ol>",
+      "de": "<ol> <li>$v_0=e^{-x^2/2}$ erfüllt die ODE $v_0'=-xv_0$, $v_0(0)=1$.</li> <li>Fourier laut Tabelle anwenden: $\\hat v_0$ erfüllt dieselbe ODE, und $\\hat v_0(0)=\\frac1{\\sqrt{2\\pi}}\\int e^{-x^2/2}=1$.</li> <li>Die Eindeutigkeit der ODE-Lösung liefert $\\hat v_0=v_0$. Den allgemeinen Fall bekommt man durch Skalieren.</li></ol>"
+     }
+    }
+   ]
+  },
+  "conv": {
+   "emoji": "🖌️",
+   "ref": "§4.4",
+   "title": {
+    "ru": "Свёртка",
+    "de": "Faltung"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "$u*v$ — это «размазать $u$ кисточкой формы $v$»: в каждую точку кладём копию $v$ с весом $u$ и складываем. Размытие фото, отклик системы на сигнал, распространение тепла — всё это свёртки. В частотах свёртка превращается в обычное произведение.",
+      "de": "$u*v$ heißt „$u$ mit einem Pinsel der Form $v$ verwischen“: An jeden Punkt legt man eine Kopie von $v$ mit Gewicht $u$ und summiert. Unscharfe Fotos, die Antwort eines Systems auf ein Signal, Wärmeausbreitung – alles Faltungen. Im Frequenzraum wird die Faltung zu einem gewöhnlichen Produkt."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$(u*v)(x)=\\int u(x-y)v(y)\\,dy,\\qquad \\widehat{u*v}=(2\\pi)^{n/2}\\,\\hat u\\,\\hat v$$",
+      "de": "$$(u*v)(x)=\\int u(x-y)v(y)\\,dy,\\qquad \\widehat{u*v}=(2\\pi)^{n/2}\\,\\hat u\\,\\hat v$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$\\int(u*v)=\\int u\\cdot\\int v$ (площади перемножаются). Это частный случай формулы выше в точке $y=0$.</li> <li>Носитель: если $u$ живёт на $[a,b]$, а $v$ на $[c,d]$, то $u*v$ живёт на $[a+c,\\,b+d]$.</li> <li>$u*\\delta=u$: свёртка с δ ничего не меняет.</li> </ul>",
+      "de": "<ul> <li>$\\int(u*v)=\\int u\\cdot\\int v$ (die Flächen multiplizieren sich). Das ist der Spezialfall der Formel oben im Punkt $y=0$.</li> <li>Träger: Lebt $u$ auf $[a,b]$ und $v$ auf $[c,d]$, dann lebt $u*v$ auf $[a+c,\\,b+d]$.</li> <li>$u*\\delta=u$: Faltung mit δ ändert nichts.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "schwartz": {
+   "emoji": "✨",
+   "ref": "§4.5–4.6",
+   "title": {
+    "ru": "Пространство Шварца и Фурье на $L^2$",
+    "de": "Schwartzraum und Fourier auf $L^2$"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "$\\mathcal S$ — «идеальные» функции: бесконечно гладкие, и они сами и все их производные убывают быстрее любой степени. Пример: гаусс. На $\\mathcal S$ Фурье — идеальная биекция: туда и обратно без потерь. Дальше по непрерывности Фурье распространяется на $L^2$, и там он сохраняет энергию.",
+      "de": "$\\mathcal S$ sind die „idealen“ Funktionen: unendlich glatt, und sie selbst sowie alle Ableitungen fallen schneller ab als jede Potenz. Beispiel: der Gauß. Auf $\\mathcal S$ ist Fourier eine perfekte Bijektion: hin und zurück ohne Verluste. Danach setzt man Fourier stetig auf $L^2$ fort, und dort erhält er die Energie."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\text{Планшерель: } \\|\\hat u\\|_{L^2}=\\|u\\|_{L^2},\\qquad \\langle\\hat u,\\hat v\\rangle=\\langle u,v\\rangle$$",
+      "de": "$$\\text{Plancherel: } \\|\\hat u\\|_{L^2}=\\|u\\|_{L^2},\\qquad \\langle\\hat u,\\hat v\\rangle=\\langle u,v\\rangle$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Посчитай $\\int|u|^2$ и $\\int|\\hat u|^2$. Не совпали — потерял множитель $2\\pi$ где-то в нормировке.</li> <li>Двойное применение: $\\hat{\\hat u}(x)=u(-x)$. Удобный тест для таблиц.</li> <li>Обратный трюк: $\\int_{-\\infty}^\\infty\\frac{\\sin^2 ay}{y^2}dy$ легко получить через Планшереля из образа щели: $\\frac\\pi2\\cdot\\int\\mathbf 1^2=\\frac\\pi2\\cdot2a=\\pi a$.</li> </ul>",
+      "de": "<ul> <li>Berechne $\\int|u|^2$ und $\\int|\\hat u|^2$. Stimmen sie nicht überein, ist irgendwo in der Normierung ein Faktor $2\\pi$ verloren gegangen.</li> <li>Doppelte Anwendung: $\\hat{\\hat u}(x)=u(-x)$. Praktischer Test für Tabellen.</li> <li>Umkehrtrick: $\\int_{-\\infty}^\\infty\\frac{\\sin^2 ay}{y^2}dy$ bekommt man leicht mit Plancherel aus der Transformierten des Spalts: $\\frac\\pi2\\cdot\\int\\mathbf 1^2=\\frac\\pi2\\cdot2a=\\pi a$.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "distr": {
+   "emoji": "🌡️",
+   "ref": "§5.1–5.3",
+   "title": {
+    "ru": "Дистрибуции и δ-функция",
+    "de": "Distributionen und die δ-Funktion"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Термометр не измеряет температуру в точке: он всегда немного усредняет по своему объёму. Идея дистрибуций: объект определяется не значениями в точках, а тем, что он даёт при усреднении с каждой гладкой «пробной» функцией $\\varphi$. Тогда δ — это «прибор», который из любой $\\varphi$ выдаёт её значение в нуле. Как функция δ не существует, как правило усреднения — вполне.",
+      "de": "Ein Thermometer misst die Temperatur nicht in einem Punkt: Es mittelt immer ein bisschen über sein Volumen. Die Idee der Distributionen: Ein Objekt wird nicht durch Werte in Punkten festgelegt, sondern dadurch, was es beim Mitteln mit jeder glatten „Testfunktion“ $\\varphi$ liefert. Dann ist δ ein „Messgerät“, das aus jedem $\\varphi$ seinen Wert in null macht. Als Funktion gibt es δ nicht, als Mittelungsregel sehr wohl."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$T:\\ \\varphi\\mapsto\\langle T,\\varphi\\rangle \\text{ линейно и непрерывно};\\qquad \\langle u,\\varphi\\rangle=\\int u\\varphi \\ (\\text{обычная функция});\\qquad \\langle\\delta_a,\\varphi\\rangle=\\varphi(a)$$ $$T_k\\to T \\iff \\langle T_k,\\varphi\\rangle\\to\\langle T,\\varphi\\rangle\\ \\ \\forall\\varphi$$",
+      "de": "$$T:\\ \\varphi\\mapsto\\langle T,\\varphi\\rangle \\text{ linear und stetig};\\qquad \\langle u,\\varphi\\rangle=\\int u\\varphi \\ (\\text{gewöhnliche Funktion});\\qquad \\langle\\delta_a,\\varphi\\rangle=\\varphi(a)$$ $$T_k\\to T \\iff \\langle T_k,\\varphi\\rangle\\to\\langle T,\\varphi\\rangle\\ \\ \\forall\\varphi$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить, что последовательность сходится к δ",
+      "de": "Check, ob eine Folge gegen δ konvergiert"
+     },
+     "html": {
+      "ru": "<ul> <li>Три условия δ-последовательности: $g_k\\ge0$, $\\int g_k=1$, масса собирается к нулю ($\\int_{|x|>\\varepsilon}g_k\\to0$). Пример: $g_k=\\frac{k}{\\sqrt\\pi}e^{-k^2x^2}$.</li> <li>Проверка сходимости всегда одна и та же: проинтегрируй с $\\varphi$ и перейди к пределу (часто через замену $x=s/k$ и мажорированную сходимость).</li> </ul>",
+      "de": "<ul> <li>Drei Bedingungen für eine δ-Folge: $g_k\\ge0$, $\\int g_k=1$, die Masse sammelt sich bei null ($\\int_{|x|>\\varepsilon}g_k\\to0$). Beispiel: $g_k=\\frac{k}{\\sqrt\\pi}e^{-k^2x^2}$.</li> <li>Der Konvergenz-Check ist immer derselbe: mit $\\varphi$ integrieren und zum Grenzwert übergehen (oft mit der Substitution $x=s/k$ und majorisierter Konvergenz).</li> </ul>"
+     }
+    }
+   ]
+  },
+  "dderiv": {
+   "emoji": "🪜",
+   "ref": "§5.4–5.5",
+   "title": {
+    "ru": "Производная дистрибуции",
+    "de": "Ableitung von Distributionen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Перекидываем производную на гладкую пробную функцию через интегрирование по частям. Граничных членов нет, потому что $\\varphi$ обращается в нуль далеко. Так любая функция становится бесконечно дифференцируемой. Скачок на высоту $h$ в точке $a$ даёт в производной слагаемое $h\\,\\delta_a$.",
+      "de": "Man schiebt die Ableitung per partieller Integration auf die glatte Testfunktion. Randterme gibt es keine, weil $\\varphi$ weit draußen verschwindet. So wird jede Funktion unendlich oft differenzierbar. Ein Sprung der Höhe $h$ im Punkt $a$ liefert in der Ableitung den Summanden $h\\,\\delta_a$."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\langle T',\\varphi\\rangle:=-\\langle T,\\varphi'\\rangle,\\qquad H'=\\delta,\\quad |x|'=\\operatorname{sgn}x,\\quad |x|''=2\\delta,\\quad \\langle\\delta',\\varphi\\rangle=-\\varphi'(0)$$",
+      "de": "$$\\langle T',\\varphi\\rangle:=-\\langle T,\\varphi'\\rangle,\\qquad H'=\\delta,\\quad |x|'=\\operatorname{sgn}x,\\quad |x|''=2\\delta,\\quad \\langle\\delta',\\varphi\\rangle=-\\varphi'(0)$$"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Рецепт для кусочно гладкой $u$",
+      "de": "Rezept für stückweise glatte $u$"
+     },
+     "html": {
+      "ru": "<ol> <li>Возьми классическую производную на каждом куске.</li> <li>В каждой точке разрыва добавь (скачок справа минус слева)·$\\delta_a$.</li> <li>Проверка: проинтегрируй $\\int u\\,\\varphi'$ по кускам, должен получиться минус твой ответ, применённый к $\\varphi$.</li></ol>",
+      "de": "<ol> <li>Nimm auf jedem Stück die klassische Ableitung.</li> <li>An jeder Sprungstelle addiere (Sprung rechts minus links)·$\\delta_a$.</li> <li>Check: Integrier $\\int u\\,\\varphi'$ stückweise – es muss minus deine Antwort, angewendet auf $\\varphi$, herauskommen.</li></ol>"
+     }
+    },
+    {
+     "type": "falle",
+     "label": {
+      "ru": "Ловушка",
+      "de": "Falle"
+     },
+     "html": {
+      "ru": "Произведение дистрибуций в общем случае не определено ($\\delta^2$ смысла не имеет). Можно умножать на гладкую функцию: $\\langle f T,\\varphi\\rangle=\\langle T,f\\varphi\\rangle$, откуда $x\\,\\delta=0$, $f\\delta=f(0)\\delta$.",
+      "de": "Das Produkt von Distributionen ist im Allgemeinen nicht definiert ($\\delta^2$ ergibt keinen Sinn). Multiplizieren darf man mit einer glatten Funktion: $\\langle f T,\\varphi\\rangle=\\langle T,f\\varphi\\rangle$, daraus $x\\,\\delta=0$, $f\\delta=f(0)\\delta$."
+     }
+    }
+   ]
+  },
+  "fund": {
+   "emoji": "🔨",
+   "ref": "§5.5–5.6",
+   "title": {
+    "ru": "Фундаментальное решение и Фурье для дистрибуций",
+    "de": "Fundamentallösung und Fourier für Distributionen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Реши уравнение один раз для точечного источника (удар молотком в одной точке). Любой источник $f$ — это сумма точечных ударов с весами $f(y)$. Значит, решение для $f$ — сумма откликов, то есть свёртка. Это «универсальный ключ» всей части C.",
+      "de": "Löse die Gleichung einmal für eine Punktquelle (ein Hammerschlag an einem Punkt). Jede Quelle $f$ ist eine Summe von Punktschlägen mit Gewichten $f(y)$. Also ist die Lösung für $f$ die Summe der Antworten – eine Faltung. Das ist der „Generalschlüssel“ für den ganzen Teil C."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$P(\\partial)E=\\delta\\ \\Longrightarrow\\ u=E*f \\text{ решает } P(\\partial)u=f$$ $$\\hat\\delta=(2\\pi)^{-n/2},\\qquad \\hat 1=(2\\pi)^{n/2}\\delta\\qquad(\\text{темперированные дистрибуции } \\mathcal S')$$",
+      "de": "$$P(\\partial)E=\\delta\\ \\Longrightarrow\\ u=E*f \\text{ löst } P(\\partial)u=f$$ $$\\hat\\delta=(2\\pi)^{-n/2},\\qquad \\hat 1=(2\\pi)^{n/2}\\delta\\qquad(\\text{temperierte Distributionen } \\mathcal S')$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$P(\\partial)(E*f)=(P(\\partial)E)*f=\\delta*f=f$. Это одна строка, она же доказательство.</li> <li>Проверь, что вне нуля $P(\\partial)E=0$ классически, а «всё содержимое» сидит в нуле.</li> <li>Через Фурье: $\\widehat{P(\\partial)E}=P(iy)\\hat E=(2\\pi)^{-n/2}$, отсюда $\\hat E=\\frac{(2\\pi)^{-n/2}}{P(iy)}$. Так фундаментальные решения часто и находят.</li> </ul>",
+      "de": "<ul> <li>$P(\\partial)(E*f)=(P(\\partial)E)*f=\\delta*f=f$. Das ist eine Zeile und zugleich der Beweis.</li> <li>Prüfe, dass außerhalb der Null klassisch $P(\\partial)E=0$ gilt und der „ganze Inhalt“ in der Null sitzt.</li> <li>Über Fourier: $\\widehat{P(\\partial)E}=P(iy)\\hat E=(2\\pi)^{-n/2}$, daraus $\\hat E=\\frac{(2\\pi)^{-n/2}}{P(iy)}$. So findet man Fundamentallösungen oft.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "three": {
+   "emoji": "3️⃣",
+   "ref": "§6, 7.1",
+   "title": {
+    "ru": "Три уравнения и их характер",
+    "de": "Drei Gleichungen und ihr Charakter"
+   },
+   "blocks": [
+    {
+     "type": "tabelle",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "<table> <tr><th>Уравнение</th><th>Физика</th><th>Скорость</th><th>Главное свойство</th></tr> <tr><td>$-\\Delta u=f$ (Пуассон), $\\Delta u=0$ (Лаплас)</td><td>стационар: мыльная плёнка, электростатика</td><td>времени нет</td><td>среднее значение, максимум на границе</td></tr> <tr><td>$\\partial_tu=\\Delta u$</td><td>тепло, диффузия</td><td>бесконечная</td><td>сглаживает мгновенно, необратима во времени</td></tr> <tr><td>$\\partial_t^2u=c^2\\Delta u$</td><td>струна, звук, свет</td><td>конечная, $c$</td><td>сохраняет форму и энергию, обратима во времени</td></tr> </table>",
+      "de": "<table> <tr><th>Gleichung</th><th>Physik</th><th>Geschwindigkeit</th><th>Haupteigenschaft</th></tr> <tr><td>$-\\Delta u=f$ (Poisson), $\\Delta u=0$ (Laplace)</td><td>stationär: Seifenhaut, Elektrostatik</td><td>keine Zeit</td><td>Mittelwerteigenschaft, Maximum am Rand</td></tr> <tr><td>$\\partial_tu=\\Delta u$</td><td>Wärme, Diffusion</td><td>unendlich</td><td>glättet sofort, zeitlich irreversibel</td></tr> <tr><td>$\\partial_t^2u=c^2\\Delta u$</td><td>Saite, Schall, Licht</td><td>endlich, $c$</td><td>erhält Form und Energie, zeitlich reversibel</td></tr> </table>"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить постановку",
+      "de": "Check der Problemstellung"
+     },
+     "html": {
+      "ru": "<ul> <li>AWP (задача Коши): для тепла нужно одно условие $u(\\cdot,0)$, для волны два: $u(\\cdot,0)$ и $\\partial_tu(\\cdot,0)$. Число начальных условий = порядок по $t$.</li> <li>RWP: Дирихле задаёт $u$ на границе, Нейман задаёт $\\partial_\\nu u$. У Неймана для Пуассона решение есть только при $\\int_\\Omega f=-\\int_{\\partial\\Omega}g$ и определено с точностью до константы.</li> </ul>",
+      "de": "<ul> <li>AWP (Cauchy-Problem): Für Wärme braucht man eine Bedingung $u(\\cdot,0)$, für die Welle zwei: $u(\\cdot,0)$ und $\\partial_tu(\\cdot,0)$. Anzahl der Anfangsbedingungen = Ordnung in $t$.</li> <li>RWP: Dirichlet gibt $u$ am Rand vor, Neumann gibt $\\partial_\\nu u$ vor. Bei Neumann für Poisson gibt es nur eine Lösung, wenn $\\int_\\Omega f=-\\int_{\\partial\\Omega}g$, und sie ist nur bis auf eine Konstante bestimmt.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "sep": {
+   "emoji": "🎸",
+   "ref": "§6.1–6.4",
+   "title": {
+    "ru": "Разделение переменных",
+    "de": "Separation der Variablen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Ищем решения вида «форма × время»: $u=X(x)T(t)$. Подставляем, делим на $XT$. Слева зависит только от $x$, справа только от $t$ — значит, обе части равны одной константе. Граничные условия разрешают только дискретный набор констант (как струна гитары звучит только на обертонах). Общее решение — сумма всех разрешённых мод, коэффициенты берутся из начальных условий через ряд Фурье.",
+      "de": "Man sucht Lösungen der Form „Form × Zeit“: $u=X(x)T(t)$. Einsetzen, durch $XT$ teilen. Links hängt alles nur von $x$ ab, rechts nur von $t$ – also sind beide Seiten gleich einer Konstanten. Die Randbedingungen erlauben nur eine diskrete Menge an Konstanten (wie eine Gitarrensaite nur in ihren Obertönen klingt). Die allgemeine Lösung ist die Summe aller erlaubten Moden, die Koeffizienten kommen über eine Fourierreihe aus den Anfangsbedingungen."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\text{Струна } [0,L],\\ u(0,t)=u(L,t)=0:\\quad u=\\sum_{k\\ge1}\\sin\\tfrac{k\\pi x}L\\Big(a_k\\cos\\tfrac{k\\pi ct}L+b_k\\sin\\tfrac{k\\pi ct}L\\Big)$$ $$\\text{Тепло на } [0,L]:\\quad u=\\sum_{k\\ge1}c_k\\,e^{-(k\\pi/L)^2t}\\sin\\tfrac{k\\pi x}L,\\qquad c_k=\\tfrac2L\\int_0^Lu_0(x)\\sin\\tfrac{k\\pi x}L\\,dx$$",
+      "de": "$$\\text{Saite } [0,L],\\ u(0,t)=u(L,t)=0:\\quad u=\\sum_{k\\ge1}\\sin\\tfrac{k\\pi x}L\\Big(a_k\\cos\\tfrac{k\\pi ct}L+b_k\\sin\\tfrac{k\\pi ct}L\\Big)$$ $$\\text{Wärme auf } [0,L]:\\quad u=\\sum_{k\\ge1}c_k\\,e^{-(k\\pi/L)^2t}\\sin\\tfrac{k\\pi x}L,\\qquad c_k=\\tfrac2L\\int_0^Lu_0(x)\\sin\\tfrac{k\\pi x}L\\,dx$$"
+     }
+    },
+    {
+     "type": "rezept",
+     "label": {
+      "ru": "Рецепт",
+      "de": "Rezept"
+     },
+     "html": {
+      "ru": "<ol> <li>$u=X(x)T(t)$, подставить, разделить, приравнять к $-\\lambda$.</li> <li>Решить задачу на собственные значения для $X$ с граничными условиями: Дирихле → $\\sin$, Нейман → $\\cos$, периодические → $e^{ikx}$.</li> <li>Решить ОДУ для $T$ при каждом $\\lambda_k$.</li> <li>Сложить моды, коэффициенты найти разложением начальных данных по собственным функциям (ортогональность!).</li></ol>",
+      "de": "<ol> <li>$u=X(x)T(t)$ einsetzen, separieren, gleich $-\\lambda$ setzen.</li> <li>Das Eigenwertproblem für $X$ mit den Randbedingungen lösen: Dirichlet → $\\sin$, Neumann → $\\cos$, periodisch → $e^{ikx}$.</li> <li>Die ODE für $T$ für jedes $\\lambda_k$ lösen.</li> <li>Die Moden aufsummieren, die Koeffizienten durch Entwicklung der Anfangsdaten nach den Eigenfunktionen bestimmen (Orthogonalität!).</li></ol>"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Каждая мода по отдельности должна удовлетворять уравнению и граничным условиям: подставь одну моду.</li> <li>При $t=0$ ряд должен давать $u_0$. Если $u_0$ уже синус, ответ — одна мода, без интегралов.</li> <li>Тепло: при $t\\to\\infty$ всё уходит к 0 (Дирихле) или к среднему значению $u_0$ (Нейман).</li> <li>Круг/шар (§6.3–6.4): в полярных координатах моды $r^k\\cos k\\theta$, $r^k\\sin k\\theta$. Для собственных значений $-\\Delta$ на круге появляются функции Бесселя, на шаре — сферические гармоники.</li> </ul>",
+      "de": "<ul> <li>Jede Mode einzeln muss die Gleichung und die Randbedingungen erfüllen: eine Mode einsetzen.</li> <li>Bei $t=0$ muss die Reihe $u_0$ ergeben. Ist $u_0$ schon ein Sinus, ist die Antwort eine einzige Mode, ohne Integrale.</li> <li>Wärme: Für $t\\to\\infty$ geht alles gegen 0 (Dirichlet) oder gegen den Mittelwert von $u_0$ (Neumann).</li> <li>Kreis/Kugel (§6.3–6.4): In Polarkoordinaten sind die Moden $r^k\\cos k\\theta$, $r^k\\sin k\\theta$. Bei den Eigenwerten von $-\\Delta$ auf dem Kreis tauchen Besselfunktionen auf, auf der Kugel Kugelflächenfunktionen.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "laplace": {
+   "emoji": "🫧",
+   "ref": "§7.1–7.3",
+   "title": {
+    "ru": "Лаплас: фундаментальное решение и функция Грина",
+    "de": "Laplace: Fundamentallösung und Greensche Funktion"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Гармоническая функция ($\\Delta u=0$) в каждой точке равна среднему по любой сфере вокруг неё. Поэтому у неё нет внутренних бугров и ям, и максимум достигается на границе. Фундаментальное решение — потенциал точечного заряда. Функция Грина — тот же потенциал, к которому добавили «зеркальные» заряды, чтобы на границе области потенциал стал нулём.",
+      "de": "Eine harmonische Funktion ($\\Delta u=0$) ist in jedem Punkt gleich ihrem Mittelwert über jede Kugelsphäre um diesen Punkt. Deshalb hat sie innen keine Buckel und keine Mulden, und das Maximum wird am Rand angenommen. Die Fundamentallösung ist das Potential einer Punktladung. Die Greensche Funktion ist dasselbe Potential plus „Spiegelladungen“, damit das Potential am Rand des Gebiets null wird."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$-\\Delta\\Gamma=\\delta:\\quad \\Gamma(x)=\\begin{cases}-\\frac{|x|}2,&n=1\\\\-\\frac1{2\\pi}\\log|x|,&n=2\\\\ \\frac{1}{(n-2)\\omega_n}|x|^{2-n},&n\\ge3\\ (n=3:\\ \\frac1{4\\pi|x|})\\end{cases}$$ $$G(x,y)=\\Gamma(x-y)-h_y(x),\\ \\Delta h_y=0,\\ G=0 \\text{ на } \\partial\\Omega\\ \\Rightarrow\\ u(x)=\\int_\\Omega G f\\,dy-\\int_{\\partial\\Omega}g\\,\\partial_{\\nu_y}G\\,dS_y$$",
+      "de": "$$-\\Delta\\Gamma=\\delta:\\quad \\Gamma(x)=\\begin{cases}-\\frac{|x|}2,&n=1\\\\-\\frac1{2\\pi}\\log|x|,&n=2\\\\ \\frac{1}{(n-2)\\omega_n}|x|^{2-n},&n\\ge3\\ (n=3:\\ \\frac1{4\\pi|x|})\\end{cases}$$ $$G(x,y)=\\Gamma(x-y)-h_y(x),\\ \\Delta h_y=0,\\ G=0 \\text{ auf } \\partial\\Omega\\ \\Rightarrow\\ u(x)=\\int_\\Omega G f\\,dy-\\int_{\\partial\\Omega}g\\,\\partial_{\\nu_y}G\\,dS_y$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Радиальный лапласиан: $\\Delta\\gamma(r)=r^{1-n}(r^{n-1}\\gamma')'$. Подставь $r^{2-n}$ или $\\log r$, получишь 0 при $r\\ne0$.</li> <li>Нормировка: поток $-\\nabla\\Gamma$ через любую сферу вокруг 0 равен 1. Для $n=3$: $\\frac1{4\\pi r^2}\\cdot4\\pi r^2=1$. ✓</li> <li>Принцип максимума: нашёл решение $\\Delta u=0$, у которого внутри значение больше, чем где-либо на границе, — ошибка.</li> <li>Метод отражений (полупространство $x_n>0$): $G=\\Gamma(x-y)-\\Gamma(x-y^*)$, где $y^*$ — зеркальная точка. На плоскости $|x-y|=|x-y^*|$, значит $G=0$. ✓</li> </ul>",
+      "de": "<ul> <li>Radialer Laplace: $\\Delta\\gamma(r)=r^{1-n}(r^{n-1}\\gamma')'$. Setz $r^{2-n}$ oder $\\log r$ ein – für $r\\ne0$ kommt 0 heraus.</li> <li>Normierung: Der Fluss von $-\\nabla\\Gamma$ durch jede Sphäre um 0 ist 1. Für $n=3$: $\\frac1{4\\pi r^2}\\cdot4\\pi r^2=1$. ✓</li> <li>Maximumprinzip: Hast du eine Lösung von $\\Delta u=0$ gefunden, die innen größer ist als irgendwo am Rand – Fehler.</li> <li>Spiegelungsmethode (Halbraum $x_n>0$): $G=\\Gamma(x-y)-\\Gamma(x-y^*)$, wobei $y^*$ der Spiegelpunkt ist. Auf der Ebene gilt $|x-y|=|x-y^*|$, also $G=0$. ✓</li> </ul>"
+     }
+    }
+   ]
+  },
+  "weak": {
+   "emoji": "🪶",
+   "ref": "§7.4–7.5, 9.6",
+   "title": {
+    "ru": "Вариационный метод и слабые решения",
+    "de": "Variationsmethode und schwache Lösungen"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Мыльная плёнка принимает форму с наименьшей энергией. Уравнение $-\\Delta u=f$ — это условие «минимума энергии» $E(u)$. Слабое решение — это $u$, которая удовлетворяет уравнению «в среднем» после умножения на любую пробную функцию и интегрирования по частям. Второй производной для этого не нужно, хватает первой.",
+      "de": "Eine Seifenhaut nimmt die Form mit der kleinsten Energie an. Die Gleichung $-\\Delta u=f$ ist die Bedingung „Energie $E(u)$ minimal“. Eine schwache Lösung ist ein $u$, das die Gleichung „im Mittel“ erfüllt: nach Multiplikation mit jeder Testfunktion und partieller Integration. Dafür braucht man keine zweite Ableitung, die erste reicht."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$E(u)=\\int_\\Omega\\big(\\tfrac12|\\nabla u|^2-fu\\big)dx\\ \\to\\ \\min,\\qquad \\int_\\Omega\\nabla u\\cdot\\nabla\\varphi\\,dx=\\int_\\Omega f\\varphi\\,dx\\ \\ \\forall\\varphi$$",
+      "de": "$$E(u)=\\int_\\Omega\\big(\\tfrac12|\\nabla u|^2-fu\\big)dx\\ \\to\\ \\min,\\qquad \\int_\\Omega\\nabla u\\cdot\\nabla\\varphi\\,dx=\\int_\\Omega f\\varphi\\,dx\\ \\ \\forall\\varphi$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Если $u$ классическая ($C^2$), проинтегрируй по частям обратно: получишь $\\int(-\\Delta u-f)\\varphi=0$ для всех $\\varphi$. По основной лемме вариационного исчисления $-\\Delta u=f$.</li> <li>Для волны (§5, пример из скрипта): $u=\\frac{f(x+ct)+f(x-ct)}2$ с изломом в $f$ классически не дифференцируема, но слабо уравнению удовлетворяет.</li> </ul>",
+      "de": "<ul> <li>Ist $u$ klassisch ($C^2$), integrier partiell zurück: Du bekommst $\\int(-\\Delta u-f)\\varphi=0$ für alle $\\varphi$. Nach dem Fundamentallemma der Variationsrechnung gilt $-\\Delta u=f$.</li> <li>Für die Welle (§5, Beispiel aus dem Skriptum): $u=\\frac{f(x+ct)+f(x-ct)}2$ mit einem Knick in $f$ ist klassisch nicht differenzierbar, erfüllt die Gleichung aber schwach.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "heat": {
+   "emoji": "🔥",
+   "ref": "§8",
+   "title": {
+    "ru": "Уравнение теплопроводности",
+    "de": "Wärmeleitungsgleichung"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Капля горячего в точке за время $t$ расплывается в гауссов колокол ширины $\\sim\\sqrt{2t}$. Любое начальное распределение — сумма таких капель, значит, решение — свёртка начальных данных с колоколом. Уже при сколь угодно малом $t>0$ тепло есть везде (бесконечная скорость), а решение бесконечно гладкое, даже если $u_0$ был со скачками.",
+      "de": "Ein heißer Tropfen in einem Punkt zerfließt in der Zeit $t$ zu einer Gaußglocke der Breite $\\sim\\sqrt{2t}$. Jede Anfangsverteilung ist eine Summe solcher Tropfen, also ist die Lösung die Faltung der Anfangsdaten mit der Glocke. Schon bei beliebig kleinem $t>0$ ist überall Wärme (unendliche Geschwindigkeit), und die Lösung ist unendlich glatt, auch wenn $u_0$ Sprünge hatte."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\Gamma(x,t)=\\frac1{(4\\pi t)^{n/2}}e^{-\\frac{|x|^2}{4t}},\\qquad u(x,t)=\\int_{\\mathbb R^n}\\Gamma(x-y,t)\\,u_0(y)\\,dy$$ $$\\text{Вывод через Фурье: } \\partial_t\\hat u=-|y|^2\\hat u\\ \\Rightarrow\\ \\hat u=e^{-t|y|^2}\\hat u_0 \\Rightarrow \\text{ обратно по таблице гаусса}$$",
+      "de": "$$\\Gamma(x,t)=\\frac1{(4\\pi t)^{n/2}}e^{-\\frac{|x|^2}{4t}},\\qquad u(x,t)=\\int_{\\mathbb R^n}\\Gamma(x-y,t)\\,u_0(y)\\,dy$$ $$\\text{Herleitung mit Fourier: } \\partial_t\\hat u=-|y|^2\\hat u\\ \\Rightarrow\\ \\hat u=e^{-t|y|^2}\\hat u_0 \\Rightarrow \\text{ zurück mit der Gauß-Tabelle}$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$\\int\\Gamma(x,t)\\,dx=1$ при всех $t$: полное тепло сохраняется, $\\int u(x,t)dx=\\int u_0$.</li> <li>Подставь $n=1$: $\\partial_t\\Gamma=\\partial_x^2\\Gamma=\\Gamma\\cdot\\big(\\frac{x^2}{4t^2}-\\frac1{2t}\\big)$. Обе стороны совпадают. ✓</li> <li>$t\\to0^+$: $\\Gamma(\\cdot,t)\\to\\delta$, поэтому $u\\to u_0$.</li> <li>Принцип максимума: $\\min u_0\\le u\\le\\max u_0$. Решение не может стать горячее самой горячей точки.</li> <li>Дисперсия колокола $2t$: если в ответе ширина растёт как $t$, а не $\\sqrt t$, ошибка.</li> <li>Неоднородное уравнение $\\partial_tu-\\Delta u=f$: $u=\\Gamma*u_0+\\int_0^t\\Gamma(\\cdot,t-s)*f(\\cdot,s)\\,ds$ (Дюамель, см. ниже).</li> </ul>",
+      "de": "<ul> <li>$\\int\\Gamma(x,t)\\,dx=1$ für alle $t$: Die gesamte Wärme bleibt erhalten, $\\int u(x,t)dx=\\int u_0$.</li> <li>Setz $n=1$ ein: $\\partial_t\\Gamma=\\partial_x^2\\Gamma=\\Gamma\\cdot\\big(\\frac{x^2}{4t^2}-\\frac1{2t}\\big)$. Beide Seiten stimmen überein. ✓</li> <li>$t\\to0^+$: $\\Gamma(\\cdot,t)\\to\\delta$, deshalb $u\\to u_0$.</li> <li>Maximumprinzip: $\\min u_0\\le u\\le\\max u_0$. Die Lösung kann nicht heißer werden als der heißeste Punkt.</li> <li>Varianz der Glocke $2t$: Wächst die Breite in deiner Antwort wie $t$ statt wie $\\sqrt t$ – Fehler.</li> <li>Inhomogene Gleichung $\\partial_tu-\\Delta u=f$: $u=\\Gamma*u_0+\\int_0^t\\Gamma(\\cdot,t-s)*f(\\cdot,s)\\,ds$ (Duhamel, siehe unten).</li> </ul>"
+     }
+    }
+   ]
+  },
+  "wave": {
+   "emoji": "🌊",
+   "ref": "§9",
+   "title": {
+    "ru": "Волновое уравнение",
+    "de": "Wellengleichung"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "В 1D начальный профиль делится пополам: одна половина бежит вправо, другая влево, обе со скоростью $c$ и без изменения формы. Значение в $(x,t)$ зависит только от начальных данных на отрезке $[x-ct,x+ct]$ (область зависимости): информация не быстрее $c$. В 3D сигнал от вспышки — тонкая сфера: щёлкнул пальцами, и звук прошёл, без хвоста (принцип Гюйгенса). В 2D хвост есть: камень в пруду, рябь продолжается долго.",
+      "de": "In 1D teilt sich das Anfangsprofil in zwei Hälften: Eine läuft nach rechts, die andere nach links, beide mit Geschwindigkeit $c$ und ohne ihre Form zu ändern. Der Wert in $(x,t)$ hängt nur von den Anfangsdaten auf $[x-ct,x+ct]$ ab (Abhängigkeitsgebiet): Information ist nicht schneller als $c$. In 3D ist das Signal eines Blitzes eine dünne Kugelschale: Fingerschnippen – der Ton ist vorbei, ohne Nachhall (Huygens-Prinzip). In 2D gibt es einen Nachhall: Stein im Teich, die Wellen laufen lange nach."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\text{d'Alembert } (n=1):\\quad u(x,t)=\\frac{f(x+ct)+f(x-ct)}2+\\frac1{2c}\\int_{x-ct}^{x+ct}g(s)\\,ds$$ $$\\text{Kirchhoff } (n=3):\\quad u=\\partial_t\\big(t\\,M_{ct}[f]\\big)+t\\,M_{ct}[g],\\quad M_r[h](x)=\\text{среднее } h \\text{ по сфере радиуса } r \\text{ вокруг } x$$ $$\\text{Duhamel:}\\quad \\partial_t^2u-c^2\\Delta u=F,\\ \\text{нулевые данные}\\ \\Rightarrow\\ u(x,t)=\\int_0^t w_s(x,t-s)\\,ds,$$ $$w_s \\text{ — однородное решение с } w_s(\\cdot,0)=0,\\ \\partial_tw_s(\\cdot,0)=F(\\cdot,s)$$",
+      "de": "$$\\text{d'Alembert } (n=1):\\quad u(x,t)=\\frac{f(x+ct)+f(x-ct)}2+\\frac1{2c}\\int_{x-ct}^{x+ct}g(s)\\,ds$$ $$\\text{Kirchhoff } (n=3):\\quad u=\\partial_t\\big(t\\,M_{ct}[f]\\big)+t\\,M_{ct}[g],\\quad M_r[h](x)=\\text{Mittelwert von } h \\text{ auf der Sphäre mit Radius } r \\text{ um } x$$ $$\\text{Duhamel:}\\quad \\partial_t^2u-c^2\\Delta u=F,\\ \\text{Nulldaten}\\ \\Rightarrow\\ u(x,t)=\\int_0^t w_s(x,t-s)\\,ds,$$ $$w_s \\text{ – homogene Lösung mit } w_s(\\cdot,0)=0,\\ \\partial_tw_s(\\cdot,0)=F(\\cdot,s)$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$t=0$ в d'Alembert: $u=f$ ✓, $\\partial_tu=\\frac{c f'-cf'}2+\\frac1{2c}(cg+cg)=g$ ✓.</li> <li>Любая функция вида $F(x-ct)+G(x+ct)$ решает 1D уравнение: проверяется двумя дифференцированиями.</li> <li>Нарисуй характеристики $x\\pm ct=\\text{const}$. Если ответ в точке зависит от данных вне конуса, ошибка.</li> <li>Энергия $E(t)=\\frac12\\int(u_t^2+c^2|\\nabla u|^2)$ сохраняется. Посчитай при $t=0$ и при некотором $t$.</li> <li>Дюамель на пальцах: каждый «удар» силы $F$ в момент $s$ запускает свою свободную волну, все волны складываются. Тот же принцип работает для тепла.</li> </ul>",
+      "de": "<ul> <li>$t=0$ in d'Alembert: $u=f$ ✓, $\\partial_tu=\\frac{c f'-cf'}2+\\frac1{2c}(cg+cg)=g$ ✓.</li> <li>Jede Funktion der Form $F(x-ct)+G(x+ct)$ löst die 1D-Gleichung: zweimal ableiten und prüfen.</li> <li>Zeichne die Charakteristiken $x\\pm ct=\\text{const}$. Hängt die Antwort im Punkt von Daten außerhalb des Kegels ab – Fehler.</li> <li>Die Energie $E(t)=\\frac12\\int(u_t^2+c^2|\\nabla u|^2)$ bleibt erhalten. Berechne sie bei $t=0$ und bei einem anderen $t$.</li> <li>Duhamel anschaulich: Jeder „Schlag“ der Kraft $F$ zur Zeit $s$ startet seine eigene freie Welle, und alle Wellen addieren sich. Dasselbe Prinzip funktioniert für die Wärmeleitung.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "hilbert": {
+   "emoji": "🌌",
+   "ref": "§10.1",
+   "title": {
+    "ru": "Гильбертово пространство",
+    "de": "Hilbertraum"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Это $\\mathbb R^3$ с длинами и углами, только направлений бесконечно много, и в нём «нет дырок»: последовательность, которая сгущается (Коши), куда-то сходится (полнота). Главные примеры: $\\ell^2$ (последовательности с $\\sum|x_k|^2<\\infty$) и $L^2(\\Omega)$ (функции с конечной энергией).",
+      "de": "Das ist $\\mathbb R^3$ mit Längen und Winkeln, nur mit unendlich vielen Richtungen, und es hat „keine Löcher“: Eine Folge, die sich verdichtet (Cauchy), konvergiert irgendwohin (Vollständigkeit). Die wichtigsten Beispiele: $\\ell^2$ (Folgen mit $\\sum|x_k|^2<\\infty$) und $L^2(\\Omega)$ (Funktionen mit endlicher Energie)."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\langle u,v\\rangle_{L^2}=\\int\\overline{u(x)}\\,v(x)\\,dx \\ (\\text{линейно по второму аргументу, как в физике}),\\qquad \\|u\\|=\\sqrt{\\langle u,u\\rangle}$$ $$\\text{Коши–Шварц: } |\\langle u,v\\rangle|\\le\\|u\\|\\,\\|v\\|$$",
+      "de": "$$\\langle u,v\\rangle_{L^2}=\\int\\overline{u(x)}\\,v(x)\\,dx \\ (\\text{linear im zweiten Argument, wie in der Physik}),\\qquad \\|u\\|=\\sqrt{\\langle u,u\\rangle}$$ $$\\text{Cauchy–Schwarz: } |\\langle u,v\\rangle|\\le\\|u\\|\\,\\|v\\|$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить, что перед тобой скалярное произведение",
+      "de": "Check, ob das ein Skalarprodukt ist"
+     },
+     "html": {
+      "ru": "<ul> <li>Три свойства: линейность (по одному аргументу), эрмитовость $\\langle u,v\\rangle=\\overline{\\langle v,u\\rangle}$, $\\langle u,u\\rangle>0$ при $u\\ne0$.</li> <li>Норма из скалярного произведения ⟺ выполняется тождество параллелограмма $\\|u+v\\|^2+\\|u-v\\|^2=2\\|u\\|^2+2\\|v\\|^2$. Для $\\sup$-нормы оно не выполняется, поэтому $C[0,1]$ с $\\sup$ — не гильбертово.</li> </ul>",
+      "de": "<ul> <li>Drei Eigenschaften: Linearität (in einem Argument), Hermitezität $\\langle u,v\\rangle=\\overline{\\langle v,u\\rangle}$, $\\langle u,u\\rangle>0$ für $u\\ne0$.</li> <li>Norm kommt von einem Skalarprodukt ⟺ die Parallelogrammgleichung gilt: $\\|u+v\\|^2+\\|u-v\\|^2=2\\|u\\|^2+2\\|v\\|^2$. Für die $\\sup$-Norm gilt sie nicht, deshalb ist $C[0,1]$ mit $\\sup$ kein Hilbertraum.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "onb": {
+   "emoji": "🔦",
+   "ref": "§10.2–10.3",
+   "title": {
+    "ru": "Ортогональность, проекция, ортонормированный базис",
+    "de": "Orthogonalität, Projektion, Orthonormalbasis"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Ближайшая точка подпространства — это проекция, «тень» вектора, и ошибка перпендикулярна подпространству. ОНБ — набор взаимно перпендикулярных единичных векторов, по которым раскладывается всё. Ряд Фурье — разложение функции по ОНБ $\\{e^{ikx}/\\sqrt{2\\pi}\\}$, а коэффициенты — это проекции.",
+      "de": "Der nächste Punkt eines Unterraums ist die Projektion, der „Schatten“ des Vektors, und der Fehler steht senkrecht auf dem Unterraum. Eine ONB ist eine Menge paarweise senkrechter Einheitsvektoren, nach denen sich alles entwickeln lässt. Eine Fourierreihe ist die Entwicklung einer Funktion nach der ONB $\\{e^{ikx}/\\sqrt{2\\pi}\\}$, und die Koeffizienten sind Projektionen."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$u=\\sum_k\\langle e_k,u\\rangle\\,e_k,\\qquad \\text{Парсеваль: }\\|u\\|^2=\\sum_k|\\langle e_k,u\\rangle|^2,\\qquad \\text{Бессель (неполная система): }\\sum_k|\\langle e_k,u\\rangle|^2\\le\\|u\\|^2$$",
+      "de": "$$u=\\sum_k\\langle e_k,u\\rangle\\,e_k,\\qquad \\text{Parseval: }\\|u\\|^2=\\sum_k|\\langle e_k,u\\rangle|^2,\\qquad \\text{Bessel (unvollständiges System): }\\sum_k|\\langle e_k,u\\rangle|^2\\le\\|u\\|^2$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Нашёл проекцию $Pu$ — проверь, что $u-Pu$ ортогонален каждому базисному вектору подпространства.</li> <li>Парсеваль как контрольная сумма: сумма квадратов коэффициентов должна дать $\\|u\\|^2$. Так же получают $\\sum\\frac1{k^2}=\\frac{\\pi^2}6$.</li> <li>Система полна ⟺ единственный вектор, ортогональный всем $e_k$, — это 0.</li> </ul>",
+      "de": "<ul> <li>Du hast die Projektion $Pu$ gefunden – prüf, dass $u-Pu$ auf jedem Basisvektor des Unterraums senkrecht steht.</li> <li>Parseval als Kontrollsumme: Die Summe der Koeffizientenquadrate muss $\\|u\\|^2$ ergeben. So bekommt man auch $\\sum\\frac1{k^2}=\\frac{\\pi^2}6$.</li> <li>Das System ist vollständig ⟺ der einzige Vektor, der auf allen $e_k$ senkrecht steht, ist 0.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "ops": {
+   "emoji": "🎛️",
+   "ref": "§11.1",
+   "title": {
+    "ru": "Ограниченные операторы и сопряжённый",
+    "de": "Beschränkte Operatoren und der Adjungierte"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Ограниченный оператор не может «растянуть» вектор больше чем в $\\|T\\|$ раз. Сопряжённый $T^*$ — бесконечномерный аналог сопряжённо-транспонированной матрицы. Самосопряжённый ($T=T^*$) — аналог эрмитовой матрицы: у него вещественные собственные значения, поэтому в КМ наблюдаемые самосопряжённые. Унитарный ($U^*U=UU^*=1$) — аналог поворота: сохраняет длины.",
+      "de": "Ein beschränkter Operator kann einen Vektor nicht mehr als um den Faktor $\\|T\\|$ „strecken“. Der Adjungierte $T^*$ ist das unendlichdimensionale Gegenstück zur konjugiert-transponierten Matrix. Selbstadjungiert ($T=T^*$) entspricht einer hermiteschen Matrix: Die Eigenwerte sind reell, deshalb sind Observablen in der QM selbstadjungiert. Unitär ($U^*U=UU^*=1$) entspricht einer Drehung: Längen bleiben erhalten."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\|T\\|=\\sup_{\\|u\\|=1}\\|Tu\\|,\\qquad \\langle Tu,v\\rangle=\\langle u,T^*v\\rangle\\ \\ \\forall u,v$$",
+      "de": "$$\\|T\\|=\\sup_{\\|u\\|=1}\\|Tu\\|,\\qquad \\langle Tu,v\\rangle=\\langle u,T^*v\\rangle\\ \\ \\forall u,v$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Для интегрального оператора $(Tu)(x)=\\int k(x,y)u(y)dy$: $T^*$ имеет ядро $\\overline{k(y,x)}$. Самосопряжённость ⟺ $k(x,y)=\\overline{k(y,x)}$.</li> <li>Сдвиг вправо $S(x_1,x_2,\\dots)=(0,x_1,x_2,\\dots)$: $S^*$ — сдвиг влево. $S^*S=1$, но $SS^*\\neq1$. Такого в конечной размерности не бывает: изометрия, но не унитарность.</li> <li>Оценка нормы умножения на $m(x)$: $\\|M_m\\|=\\sup|m|$.</li> </ul>",
+      "de": "<ul> <li>Für einen Integraloperator $(Tu)(x)=\\int k(x,y)u(y)dy$: $T^*$ hat den Kern $\\overline{k(y,x)}$. Selbstadjungiert ⟺ $k(x,y)=\\overline{k(y,x)}$.</li> <li>Rechtsshift $S(x_1,x_2,\\dots)=(0,x_1,x_2,\\dots)$: $S^*$ ist der Linksshift. $S^*S=1$, aber $SS^*\\neq1$. Das gibt es in endlicher Dimension nicht: Isometrie, aber nicht unitär.</li> <li>Norm des Multiplikationsoperators mit $m(x)$: $\\|M_m\\|=\\sup|m|$.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "spec": {
+   "emoji": "📊",
+   "ref": "§11.2, 12.4",
+   "title": {
+    "ru": "Спектр",
+    "de": "Spektrum"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "В матрицах спектр = собственные значения. В бесконечной размерности $T-\\lambda$ может быть инъективным, но всё равно не иметь ограниченного обратного: «почти собственный вектор» существует, а настоящего нет. Пример: умножение на $x$ в $L^2[0,1]$. Каждое $\\lambda\\in[0,1]$ лежит в спектре (функция, сжатая около $\\lambda$, почти собственная), но ни одной собственной функции нет: «собственная функция» была бы $\\delta_\\lambda$, а её нет в $L^2$. Это непрерывный спектр, как у импульса и координаты в КМ.",
+      "de": "Bei Matrizen ist das Spektrum = die Eigenwerte. In unendlicher Dimension kann $T-\\lambda$ injektiv sein und trotzdem keine beschränkte Inverse haben: Ein „Fast-Eigenvektor“ existiert, ein echter nicht. Beispiel: Multiplikation mit $x$ auf $L^2[0,1]$. Jedes $\\lambda\\in[0,1]$ liegt im Spektrum (eine Funktion, die um $\\lambda$ zusammengedrückt ist, ist fast eigen), aber es gibt keine einzige Eigenfunktion: Die „Eigenfunktion“ wäre $\\delta_\\lambda$, und die liegt nicht in $L^2$. Das ist kontinuierliches Spektrum, wie bei Impuls und Ort in der QM."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$\\sigma(T)=\\{\\lambda\\in\\mathbb C:\\ T-\\lambda \\text{ не имеет ограниченного обратного}\\}\\supseteq\\{\\text{собств. значения}\\}$$ $$\\sigma(T) \\text{ компактен},\\ \\sigma(T)\\subseteq\\{|\\lambda|\\le\\|T\\|\\};\\quad T=T^*\\Rightarrow\\sigma(T)\\subseteq\\mathbb R;\\quad U \\text{ унитарен}\\Rightarrow\\sigma(U)\\subseteq\\{|\\lambda|=1\\}$$",
+      "de": "$$\\sigma(T)=\\{\\lambda\\in\\mathbb C:\\ T-\\lambda \\text{ hat keine beschränkte Inverse}\\}\\supseteq\\{\\text{Eigenwerte}\\}$$ $$\\sigma(T) \\text{ kompakt},\\ \\sigma(T)\\subseteq\\{|\\lambda|\\le\\|T\\|\\};\\quad T=T^*\\Rightarrow\\sigma(T)\\subseteq\\mathbb R;\\quad U \\text{ unitär}\\Rightarrow\\sigma(U)\\subseteq\\{|\\lambda|=1\\}$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Для оператора умножения $M_m$: $\\sigma(M_m)$ = существенное множество значений $m$. Нарисуй график $m$ и посмотри на его область значений.</li> <li>Чтобы показать $\\lambda\\in\\sigma$: построй последовательность $u_k$, $\\|u_k\\|=1$, $\\|(T-\\lambda)u_k\\|\\to0$ (почти собственные векторы).</li> <li>Чтобы показать $\\lambda\\notin\\sigma$: предъяви обратный и оцени его норму.</li> </ul>",
+      "de": "<ul> <li>Für den Multiplikationsoperator $M_m$: $\\sigma(M_m)$ = wesentliches Bild von $m$. Zeichne den Graphen von $m$ und schau auf seinen Wertebereich.</li> <li>Um $\\lambda\\in\\sigma$ zu zeigen: Bau eine Folge $u_k$ mit $\\|u_k\\|=1$, $\\|(T-\\lambda)u_k\\|\\to0$ (Fast-Eigenvektoren).</li> <li>Um $\\lambda\\notin\\sigma$ zu zeigen: Gib die Inverse an und schätz ihre Norm ab.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "spthm": {
+   "emoji": "🪄",
+   "ref": "§11.3–11.7, 12.6",
+   "title": {
+    "ru": "Функциональное исчисление и спектральная теорема",
+    "de": "Funktionalkalkül und Spektralsatz"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Эрмитову матрицу можно повернуть так, что она станет диагональной, и тогда $f(A)$ — просто $f$, применённая к каждому числу на диагонали. Спектральная теорема говорит, что то же самое верно для самосопряжённых операторов, только «диагональная матрица» становится оператором умножения на функцию. Для импульса $P$ «поворот» — это преобразование Фурье: оно превращает $P$ в умножение на $y$.",
+      "de": "Eine hermitesche Matrix kann man so drehen, dass sie diagonal wird, und dann ist $f(A)$ einfach $f$, angewendet auf jede Zahl auf der Diagonale. Der Spektralsatz sagt, dass dasselbe für selbstadjungierte Operatoren gilt, nur wird die „Diagonalmatrix“ zu einem Multiplikationsoperator mit einer Funktion. Für den Impuls $P$ ist die „Drehung“ die Fouriertransformation: Sie macht aus $P$ die Multiplikation mit $y$."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$A=A^*\\ \\Rightarrow\\ A=U^{-1}M_mU\\ (\\text{унитарно эквивалентен умножению}),\\qquad f(A)=U^{-1}M_{f\\circ m}U$$ $$T \\text{ компактен и симметричен}:\\ Tu=\\sum_k\\lambda_k\\langle e_k,u\\rangle e_k,\\ \\lambda_k\\in\\mathbb R,\\ \\lambda_k\\to0$$",
+      "de": "$$A=A^*\\ \\Rightarrow\\ A=U^{-1}M_mU\\ (\\text{unitär äquivalent zu einer Multiplikation}),\\qquad f(A)=U^{-1}M_{f\\circ m}U$$ $$T \\text{ kompakt und symmetrisch}:\\ Tu=\\sum_k\\lambda_k\\langle e_k,u\\rangle e_k,\\ \\lambda_k\\in\\mathbb R,\\ \\lambda_k\\to0$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>$\\sigma(f(A))=f(\\sigma(A))$ (теорема об отображении спектра). Посчитай спектр двумя путями.</li> <li>$\\|f(A)\\|=\\sup_{\\sigma(A)}|f|$ для самосопряжённого $A$.</li> <li>Компактный симметричный: собственные векторы ортогональны, собственные значения накапливаются только в 0. Это то, что стоит за модами струны в части C.</li> </ul>",
+      "de": "<ul> <li>$\\sigma(f(A))=f(\\sigma(A))$ (spektraler Abbildungssatz). Berechne das Spektrum auf zwei Wegen.</li> <li>$\\|f(A)\\|=\\sup_{\\sigma(A)}|f|$ für selbstadjungiertes $A$.</li> <li>Kompakt und symmetrisch: Die Eigenvektoren sind orthogonal, die Eigenwerte häufen sich nur bei 0. Genau das steckt hinter den Saitenmoden aus Teil C.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "qm": {
+   "emoji": "🐈‍⬛",
+   "ref": "§10.5, 11.6, 11.8, 12.7–12.8",
+   "title": {
+    "ru": "Квантовая механика: состояния, неопределённость, плотность",
+    "de": "Quantenmechanik: Zustände, Unschärfe, Dichtematrix"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "Состояние — единичный вектор $\\psi$. Наблюдаемая — самосопряжённый оператор $A$, возможные результаты измерения — его спектр. Среднее значение: $\\langle\\psi,A\\psi\\rangle$. Если два оператора не коммутируют, то их нельзя одновременно сделать «чёткими»: произведение разбросов ограничено снизу. Матрица плотности описывает статистическую смесь состояний. Эволюция во времени — поворот (унитарный оператор), длина вектора сохраняется, вероятности в сумме дают 1.",
+      "de": "Ein Zustand ist ein Einheitsvektor $\\psi$. Eine Observable ist ein selbstadjungierter Operator $A$, die möglichen Messergebnisse sind sein Spektrum. Erwartungswert: $\\langle\\psi,A\\psi\\rangle$. Kommutieren zwei Operatoren nicht, kann man sie nicht gleichzeitig „scharf“ machen: Das Produkt der Streuungen ist nach unten beschränkt. Die Dichtematrix beschreibt ein statistisches Gemisch von Zuständen. Die Zeitentwicklung ist eine Drehung (unitärer Operator): Die Länge des Vektors bleibt erhalten, die Wahrscheinlichkeiten summieren sich zu 1."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$E_\\psi(A)=\\langle\\psi,A\\psi\\rangle,\\quad V_\\psi(A)=\\|(A-E_\\psi(A))\\psi\\|^2,\\quad V_\\psi(A)V_\\psi(B)\\ge\\tfrac14|\\langle\\psi,[A,B]\\psi\\rangle|^2$$ $$[Q,P]=i\\hbar\\ \\Rightarrow\\ \\Delta Q\\,\\Delta P\\ge\\tfrac\\hbar2;\\qquad \\rho\\ge0,\\ \\operatorname{tr}\\rho=1,\\ E_\\rho(A)=\\operatorname{tr}(\\rho A);\\qquad \\psi(t)=e^{-itH/\\hbar}\\psi_0$$",
+      "de": "$$E_\\psi(A)=\\langle\\psi,A\\psi\\rangle,\\quad V_\\psi(A)=\\|(A-E_\\psi(A))\\psi\\|^2,\\quad V_\\psi(A)V_\\psi(B)\\ge\\tfrac14|\\langle\\psi,[A,B]\\psi\\rangle|^2$$ $$[Q,P]=i\\hbar\\ \\Rightarrow\\ \\Delta Q\\,\\Delta P\\ge\\tfrac\\hbar2;\\qquad \\rho\\ge0,\\ \\operatorname{tr}\\rho=1,\\ E_\\rho(A)=\\operatorname{tr}(\\rho A);\\qquad \\psi(t)=e^{-itH/\\hbar}\\psi_0$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить",
+      "de": "Check"
+     },
+     "html": {
+      "ru": "<ul> <li>Гауссов пакет даёт в неопределённости равенство. Проверь на нём свою выкладку.</li> <li>$\\rho$ чистое состояние ⟺ $\\rho^2=\\rho$ ⟺ $\\operatorname{tr}\\rho^2=1$. Смесь: $\\operatorname{tr}\\rho^2<1$.</li> <li>Собственные значения $\\rho$ — вероятности: все в $[0,1]$, сумма 1.</li> <li>Теорема Стоуна: $U(t)=e^{-itA}$ — унитарная группа ⟺ $A$ самосопряжён. Проверка: $\\|U(t)\\psi\\|=\\|\\psi\\|$ при всех $t$.</li> </ul>",
+      "de": "<ul> <li>Ein Gaußsches Wellenpaket liefert in der Unschärferelation Gleichheit. Teste deine Rechnung daran.</li> <li>$\\rho$ reiner Zustand ⟺ $\\rho^2=\\rho$ ⟺ $\\operatorname{tr}\\rho^2=1$. Gemisch: $\\operatorname{tr}\\rho^2<1$.</li> <li>Die Eigenwerte von $\\rho$ sind Wahrscheinlichkeiten: alle in $[0,1]$, Summe 1.</li> <li>Satz von Stone: $U(t)=e^{-itA}$ ist eine unitäre Gruppe ⟺ $A$ ist selbstadjungiert. Check: $\\|U(t)\\psi\\|=\\|\\psi\\|$ für alle $t$.</li> </ul>"
+     }
+    }
+   ]
+  },
+  "unb": {
+   "emoji": "♾️",
+   "ref": "§12.1–12.5",
+   "title": {
+    "ru": "Неограниченные операторы",
+    "de": "Unbeschränkte Operatoren"
+   },
+   "blocks": [
+    {
+     "type": "kern",
+     "label": {
+      "ru": "Суть",
+      "de": ""
+     },
+     "html": {
+      "ru": "$\\frac{d}{dx}\\sin(kx)=k\\cos(kx)$: при той же норме функция растягивается в $k$ раз, а $k$ может быть каким угодно большим. Значит, у производной нет конечной нормы, и она определена не на всём пространстве, а только на «достаточно гладких» функциях — области определения $D(A)$. Тонкость: $A$ может быть симметричным ($\\langle Au,v\\rangle=\\langle u,Av\\rangle$ на $D(A)$), но не самосопряжённым, если $D(A^*)$ больше, чем $D(A)$. Самосопряжённость определяют граничные условия.",
+      "de": "$\\frac{d}{dx}\\sin(kx)=k\\cos(kx)$: Bei gleicher Norm wird die Funktion um den Faktor $k$ gestreckt, und $k$ kann beliebig groß sein. Also hat die Ableitung keine endliche Norm, und sie ist nicht auf dem ganzen Raum definiert, sondern nur auf „genügend glatten“ Funktionen – dem Definitionsbereich $D(A)$. Die Feinheit: $A$ kann symmetrisch sein ($\\langle Au,v\\rangle=\\langle u,Av\\rangle$ auf $D(A)$) und trotzdem nicht selbstadjungiert, wenn $D(A^*)$ größer ist als $D(A)$. Über Selbstadjungiertheit entscheiden die Randbedingungen."
+     }
+    },
+    {
+     "type": "formel",
+     "label": {
+      "ru": "",
+      "de": ""
+     },
+     "html": {
+      "ru": "$$A \\text{ самосопряжён} \\iff A \\text{ симметричен и } D(A^*)=D(A);\\qquad P=-i\\tfrac{d}{dx},\\quad Q=M_x$$",
+      "de": "$$A \\text{ selbstadjungiert} \\iff A \\text{ symmetrisch und } D(A^*)=D(A);\\qquad P=-i\\tfrac{d}{dx},\\quad Q=M_x$$"
+     }
+    },
+    {
+     "type": "check",
+     "label": {
+      "ru": "Как проверить симметричность",
+      "de": "Check der Symmetrie"
+     },
+     "html": {
+      "ru": "<ul> <li>Посчитай $\\langle Pu,v\\rangle-\\langle u,Pv\\rangle$ интегрированием по частям. На отрезке $[0,1]$ остаётся граничный член $i\\,[\\bar u v]_0^1$. Он исчезает только при подходящих граничных условиях (например, $u(1)=e^{i\\theta}u(0)$ для всех функций из $D$).</li> <li>На всём $\\mathbb R$ граничных членов нет, и $P$ самосопряжён на $H^1(\\mathbb R)$. Фурье превращает его в умножение на $y$.</li> <li>Почему именно неограниченные: $[Q,P]=i$ невозможно реализовать ограниченными операторами (в конечной размерности это видно по следу: $\\operatorname{tr}[Q,P]=0$, а $\\operatorname{tr}(i\\cdot1)=i\\,n$; для ограниченных операторов это теорема Винтнера–Виландта).</li> </ul>",
+      "de": "<ul> <li>Berechne $\\langle Pu,v\\rangle-\\langle u,Pv\\rangle$ mit partieller Integration. Auf $[0,1]$ bleibt der Randterm $i\\,[\\bar u v]_0^1$. Er verschwindet nur bei passenden Randbedingungen (z. B. $u(1)=e^{i\\theta}u(0)$ für alle Funktionen aus $D$).</li> <li>Auf ganz $\\mathbb R$ gibt es keine Randterme, und $P$ ist auf $H^1(\\mathbb R)$ selbstadjungiert. Fourier macht daraus die Multiplikation mit $y$.</li> <li>Warum gerade unbeschränkt: $[Q,P]=i$ lässt sich mit beschränkten Operatoren nicht realisieren (in endlicher Dimension sieht man das an der Spur: $\\operatorname{tr}[Q,P]=0$, aber $\\operatorname{tr}(i\\cdot1)=i\\,n$; für beschränkte Operatoren ist das der Satz von Wintner–Wielandt).</li> </ul>"
+     }
+    }
+   ]
+  }
+ }
+};
