@@ -2,11 +2,11 @@
 // Online: always the fresh version from the network (and the cache gets updated).
 // Offline: the cached copy. Icons and fonts come straight from the cache.
 // Videos are left to the network: phones fetch them in byte ranges, which a simple cache can't answer.
-const CACHE = 'physik-heute-v1';
+const CACHE = 'physik-heute-v2';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './manifest-l.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png', './schach.png',
-  './ana3-data.js', './katex/katex.min.css', './katex/katex.min.js', './katex/auto-render.min.js',
+  './ana3-data.js', './e2-data.js', './katex/katex.min.css', './katex/katex.min.js', './katex/auto-render.min.js',
 ];
 
 self.addEventListener('install', e => {

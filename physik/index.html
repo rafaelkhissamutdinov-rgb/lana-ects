@@ -115,6 +115,27 @@
   .soon { text-align: center; opacity: .7; font-style: italic; }
   .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
   .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
+  /* Experimentalphysik II: topics + flashcards */
+  .e2-big { display: block; width: 100%; margin: 16px 0 4px; background: var(--want); font-size: 1.1rem; padding: 14px 18px; }
+  .tile .cnt { font-size: .78rem; font-weight: 700; opacity: .65; }
+  .e2-list details { background: #fff; border-radius: 14px; margin-top: 10px; border: 2px solid rgba(138, 92, 246, .18); overflow: hidden; }
+  .e2-list summary { cursor: pointer; padding: 12px 14px; font-weight: 700; line-height: 1.4; }
+  .e2-list details[open] summary { border-bottom: 1px solid rgba(0, 0, 0, .06); }
+  .e2-list .inner { padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .fc { text-align: left; }
+  .fc-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .fc-chip { font-size: .85rem; font-weight: 700; background: #f1ebff; border-radius: 999px; padding: 4px 12px; }
+  .fc-count { font-size: .85rem; font-weight: 600; opacity: .7; }
+  .fc-q { font-size: clamp(1.15rem, 4.6vw, 1.35rem); font-weight: 700; line-height: 1.45; margin: 18px 0 6px; }
+  .fc-back { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .fc-btns { display: flex; gap: 10px; margin-top: 16px; }
+  .fc-btns button { flex: 1; font-size: 1.05rem; padding: 13px 10px; }
+  .fc-show { background: var(--want); }
+  .fc-again { background: #ef8a17; }
+  .fc-got { background: #2fb67c; }
+  .fc-done { text-align: center; }
+  .fc-done .big { font-size: 3.4rem; line-height: 1; }
+
   /* TP2: electric chaos scene */
   #scene-tp2 { background: radial-gradient(circle at 50% 30%, #3d2b7a 0%, #1d1442 55%, #090616 100%); }
   #scene-tp2::after { /* lightning flashes */
@@ -388,6 +409,21 @@
   <button class="back" type="button">zurück</button>
 </section>
 
+<section id="e2" class="screen">
+  <div class="card ana" id="e2-list"><p class="loading">Lädt … ⏳</p></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="e2t" class="screen">
+  <div class="card ana" id="e2-topic"></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="e2k" class="screen">
+  <div class="card ana fc" id="e2-cards"></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
 <section id="tp2" class="screen">
   <div class="card tp2">
     <div class="sad">😔</div>
@@ -596,6 +632,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
 <script>
   // ---------- subjects: content for each option goes into `html` ----------
   const FAECHER = {
+    e2:     { icon: '⚡', title: 'Experimentalphysik II',  screen: 'e2' },
     tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', screen: 'tp2' },
     ana3:   { icon: '∫',  title: 'Analysis 3',            screen: 'ana3' },
     labor:  { icon: '🧪', title: 'Laborpraktikum',        screen: 'labor' },
@@ -957,6 +994,138 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
     });
   }
 
+  // ---------- Experimentalphysik II: theory + flashcards (data loaded on demand) ----------
+  const E2UI = {
+    de: { title: 'Experimentalphysik II', sub: 'Optik, Elektromagnetismus, Relativität – Theorie einfach erklärt und Karteikarten für die Altfragen.',
+          all: '🃏 Alle Karten lernen', known: 'Karten gewusst', learn: '🃏 Diese Karten lernen', show: 'Antwort zeigen',
+          again: '🔁 Nochmal', got: '✅ Gewusst', answer: '📐 Antwort', einfach: '👶 Einfach erklärt', bild: '💡 Bild dazu',
+          left: 'noch', doneT: 'Runde geschafft!', doneS: 'Alle Karten dieser Runde sitzen.', restart: '🔁 Neue Runde',
+          cards: 'Karten', overview: '📚 Alle Karten zum Nachlesen' },
+    ru: { title: 'Экспериментальная физика II', sub: 'Оптика, электромагнетизм, теория относительности — простая теория и карточки для Altfragen.',
+          all: '🃏 Учить все карточки', known: 'карточек выучено', learn: '🃏 Учить эти карточки', show: 'Показать ответ',
+          again: '🔁 Ещё раз', got: '✅ Знаю', answer: '📐 Ответ', einfach: '👶 Просто', bild: '💡 Образ',
+          left: 'осталось', doneT: 'Раунд пройден!', doneS: 'Все карточки этого раунда выучены.', restart: '🔁 Новый раунд',
+          cards: 'карточек', overview: '📚 Все карточки для чтения' },
+  };
+  const e2t = k => E2UI[anaLang][k];
+  let e2Ready = null;
+  let e2Box = store.get('e2-box', {});
+  function loadE2() {
+    if (!e2Ready) {
+      e2Ready = loadAna3KaTeX().then(() => loadScript('e2-data.js'));
+      e2Ready.catch(() => { e2Ready = null; });
+    }
+    return e2Ready;
+  }
+  function loadAna3KaTeX() {
+    if (window.renderMathInElement) return Promise.resolve();
+    if (!document.querySelector('link[href="katex/katex.min.css"]')) {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet'; css.href = 'katex/katex.min.css';
+      document.head.appendChild(css);
+    }
+    return loadScript('katex/katex.min.js').then(() => loadScript('katex/auto-render.min.js'));
+  }
+  const isKnown = id => (e2Box[id] || 0) > 0;
+  function cardBack(c) {
+    return `<div class="step s-formel"><div class="step-title">${e2t('answer')}</div>${c.a[anaLang]}</div>` +
+      `<div class="step s-einfach"><div class="step-title">${e2t('einfach')}</div>${c.e[anaLang]}</div>` +
+      `<div class="step s-beispiel"><div class="step-title">${e2t('bild')}</div>${c.b[anaLang]}</div>`;
+  }
+
+  function renderE2List() {
+    const root = document.getElementById('e2-list');
+    root.lang = anaLang;
+    const ids = Object.keys(E2.cards), n = ids.filter(isKnown).length;
+    root.innerHTML = `
+      <div class="ana-top"><h2>⚡ ${e2t('title')}</h2>${langSwitch()}</div>
+      <p class="hero">${e2t('sub')}</p>
+      <div class="progress"><div style="width:${(100 * n / ids.length).toFixed(1)}%"></div></div>
+      <span class="progress-label">${n} / ${ids.length} ${e2t('known')}</span>
+      <button type="button" class="e2-big" data-learn="all">${e2t('all')}</button>
+      <div class="part-card"><div class="tiles">${E2.topics.map(tp => {
+        const k = tp.cards.filter(isKnown).length;
+        return `<button type="button" class="tile${k === tp.cards.length ? ' done' : ''}" data-e2topic="${tp.id}">` +
+          `<span class="em">${tp.emoji}</span><span>${tp.title[anaLang]}</span><span class="cnt">${k}/${tp.cards.length}</span></button>`;
+      }).join('')}</div></div>`;
+    wireLang(root, renderE2List);
+    root.querySelectorAll('[data-e2topic]').forEach(b => b.addEventListener('click', () => go({ id: 'e2t', topic: b.dataset.e2topic })));
+    root.querySelector('[data-learn]').addEventListener('click', () => go({ id: 'e2k', topic: 'all' }));
+  }
+
+  function renderE2Topic(tid) {
+    const root = document.getElementById('e2-topic');
+    root.lang = anaLang;
+    const tp = E2.topics.find(t => t.id === tid);
+    root.innerHTML = `
+      <div class="ana-top"><span></span>${langSwitch()}</div>
+      <div class="thema-head"><span class="em">${tp.emoji}</span><h2>${tp.title[anaLang]}</h2><span class="ref">${tp.cards.length} ${e2t('cards')}</span></div>
+      <div class="steps"><div class="step s-einfach">${tp.intro[anaLang]}</div></div>
+      <button type="button" class="e2-big" data-learn="${tid}">${e2t('learn')}</button>
+      <h3>${e2t('overview')}</h3>
+      <div class="e2-list">${tp.cards.map(cid => {
+        const c = E2.cards[cid];
+        return `<details><summary>${isKnown(cid) ? '✅ ' : ''}${c.q[anaLang]}</summary><div class="inner">${cardBack(c)}</div></details>`;
+      }).join('')}</div>`;
+    wireLang(root, () => renderE2Topic(tid));
+    root.querySelector('[data-learn]').addEventListener('click', () => go({ id: 'e2k', topic: tid }));
+    tex(root);
+  }
+
+  function startE2Session(topic) {
+    const pool = topic === 'all' ? Object.keys(E2.cards) : E2.topics.find(t => t.id === topic).cards.slice();
+    // least-known first, random order inside each box
+    pool.sort((a, b) => (e2Box[a] || 0) - (e2Box[b] || 0) || Math.random() - .5);
+    const queue = pool.slice(0, topic === 'all' ? 20 : pool.length);
+    renderE2Card(topic, queue, queue.length);
+  }
+
+  function renderE2Card(topic, queue, total) {
+    const root = document.getElementById('e2-cards');
+    root.lang = anaLang;
+    if (!queue.length) {
+      root.innerHTML = `<div class="fc-done"><div class="big">🎉</div><h2>${e2t('doneT')}</h2><p>${e2t('doneS')}</p>
+        <button type="button" class="e2-big" id="fc-restart">${e2t('restart')}</button></div>`;
+      root.querySelector('#fc-restart').addEventListener('click', () => startE2Session(topic));
+      return;
+    }
+    const cid = queue[0], c = E2.cards[cid], tp = E2.topics.find(t => t.id === c.topic);
+    root.innerHTML = `
+      <div class="fc-top"><span class="fc-chip">${tp.emoji} ${tp.title[anaLang]}</span>${langSwitch()}</div>
+      <div class="progress"><div style="width:${(100 * (total - queue.length) / total).toFixed(1)}%"></div></div>
+      <span class="fc-count">${e2t('left')} ${queue.length} / ${total}</span>
+      <div class="fc-q">${c.q[anaLang]}</div>
+      <div class="fc-back" id="fc-back" hidden>${cardBack(c)}</div>
+      <div class="fc-btns" id="fc-btns"><button type="button" class="fc-show">${e2t('show')}</button></div>`;
+    wireLang(root, () => renderE2Card(topic, queue, total));
+    tex(root);
+    root.querySelector('.fc-show').addEventListener('click', () => {
+      root.querySelector('#fc-back').hidden = false;
+      const btns = root.querySelector('#fc-btns');
+      btns.innerHTML = `<button type="button" class="fc-again">${e2t('again')}</button><button type="button" class="fc-got">${e2t('got')}</button>`;
+      btns.querySelector('.fc-again').addEventListener('click', () => {
+        e2Box[cid] = 0; store.set('e2-box', e2Box);
+        queue.push(queue.shift());   // comes back later in this round
+        renderE2Card(topic, queue, total);
+      });
+      btns.querySelector('.fc-got').addEventListener('click', () => {
+        e2Box[cid] = Math.min((e2Box[cid] || 0) + 1, 5); store.set('e2-box', e2Box);
+        queue.shift();
+        renderE2Card(topic, queue, total);
+      });
+    });
+  }
+
+  function showE2(state) {
+    loadE2().then(() => {
+      if (state.id === 'e2') renderE2List();
+      else if (state.id === 'e2t') renderE2Topic(state.topic);
+      else startE2Session(state.topic);
+    }).catch(() => {
+      document.getElementById({ e2: 'e2-list', e2t: 'e2-topic', e2k: 'e2-cards' }[state.id]).innerHTML = `<p class="loading">${t('error')}</p>`;
+    });
+  }
+
   // ---------- thumbs flying out of the video edges while it plays ----------
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let thumbTimer = null;
@@ -1138,6 +1307,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
       document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald ✨</p>';
     }
     if (id === 'ana3' || id === 'thema') showAna(state);
+    if (id === 'e2' || id === 'e2t' || id === 'e2k') showE2(state);
     document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
     for (const [key, v] of Object.entries(videos)) if (key !== id) v.pause();
     document.querySelectorAll('.scene').forEach(sc => sc.classList.toggle('on', sc.id === scenes[id]));
