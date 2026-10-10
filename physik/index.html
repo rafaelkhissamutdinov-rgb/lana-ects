@@ -102,6 +102,45 @@
   .soon { text-align: center; opacity: .7; font-style: italic; }
   .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
   .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
+  /* Laborpraktikum: prompt builder */
+  .labor { text-align: left; }
+  .labor .hilfe-icon, .labor h2, .labor > .sub { text-align: center; }
+  .labor h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; margin: 26px 0 12px; }
+  .num {
+    flex: none; display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%; background: var(--want); color: #fff; font-size: .95rem;
+  }
+  fieldset.seg { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
+  fieldset.seg legend { font-weight: 600; margin-bottom: 6px; padding: 0; }
+  .seg label {
+    display: inline-flex; align-items: center; gap: 6px; margin: 0 6px 6px 0; padding: 8px 14px;
+    border-radius: 999px; background: #fff; border: 2px solid rgba(138, 92, 246, .3); cursor: pointer; font-size: .95rem;
+  }
+  .seg label:has(input:checked) { border-color: var(--want); background: #f1ebff; }
+  .seg input, .check input { accent-color: var(--want); margin: 0; }
+  .field { display: block; font-weight: 600; margin: 0 0 14px; }
+  .field input, .field textarea {
+    display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 10px 12px;
+    border-radius: 12px; border: 2px solid rgba(138, 92, 246, .3); background: #fff; color: var(--text);
+  }
+  .field textarea { resize: vertical; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--want); }
+  .check { display: flex; gap: 8px; align-items: flex-start; font-size: .95rem; cursor: pointer; }
+  .check input { margin-top: 4px; }
+  .primary { background: var(--want); width: 100%; font-size: 1.15rem; padding: 14px 20px; }
+  .status { min-height: 1.3em; margin: 8px 0 0; text-align: center; font-weight: 600; color: #1f8a5b; }
+  .labor details { margin-top: 6px; }
+  .labor summary { cursor: pointer; font-weight: 600; }
+  #prompt-preview {
+    white-space: pre-wrap; word-break: break-word; font-size: .78rem; line-height: 1.45; max-height: 320px; overflow: auto;
+    background: #fff; padding: 12px; border-radius: 12px; border: 1px solid rgba(0, 0, 0, .08); margin: 8px 0 0;
+  }
+  .labor ol, .labor ul { padding-left: 1.3em; line-height: 1.5; margin: 0; }
+  .labor li { margin-bottom: 6px; }
+  .labor a { color: var(--want); font-weight: 700; }
+  .ph { color: #ea7a00; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
+  .tip { background: #fff4d6; border-radius: 12px; padding: 10px 12px; margin: 12px 0 0; line-height: 1.45; }
+  .note { font-size: .88rem; opacity: .8; margin: 14px 0 0; line-height: 1.45; }
   .wahl { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; align-items: center; }
   .wahl button { width: 100%; max-width: 320px; font-size: 1.1rem; padding: 13px 20px; }
   .wahl .go-schach { background: linear-gradient(90deg, #ffb703, #fb8500); }
@@ -224,6 +263,147 @@
   <button class="back" type="button">zurück</button>
 </section>
 
+<section id="labor" class="screen">
+  <div class="card labor">
+    <div class="hilfe-icon">🧪</div>
+    <h2>Laborpraktikum</h2>
+    <p class="sub">Protokoll-Gerüst in 30 Minuten statt 4 Stunden: Claude baut die Folien, du trägst nur noch deine Daten ein.</p>
+
+    <h3><span class="num">1</span> Angaben</h3>
+    <form id="labor-form" autocomplete="on">
+      <fieldset class="seg"><legend>Wann?</legend>
+        <label><input type="radio" name="modus" value="VORBEREITUNG" checked> Vor dem Termin</label>
+        <label><input type="radio" name="modus" value="AUSWERTUNG"> Nach dem Termin</label>
+      </fieldset>
+      <label class="field">Namen
+        <input name="namen" placeholder="Vorname Nachname, Vorname Nachname">
+      </label>
+      <label class="field">Datum des Versuchs
+        <input type="date" name="datum">
+      </label>
+      <fieldset class="seg"><legend>Fehlerrechnung</legend>
+        <label><input type="radio" name="berechnung" value="SELBST" checked> Mach ich selbst</label>
+        <label><input type="radio" name="berechnung" value="CLAUDE"> Claude rechnet</label>
+      </fieldset>
+      <fieldset class="seg"><legend>Claude antwortet mir</legend>
+        <label><input type="radio" name="sprache" value="auf Deutsch" checked> Deutsch</label>
+        <label><input type="radio" name="sprache" value="auf Russisch"> Русский</label>
+        <label><input type="radio" name="sprache" value="auf Englisch"> English</label>
+      </fieldset>
+      <label class="field" id="daten-field">Messdaten
+        <textarea name="daten" rows="5" placeholder="Tabelle hier einfügen – oder Fotos/Screenshots später direkt im Chat anhängen"></textarea>
+      </label>
+      <label class="check"><input type="checkbox" name="ki"> Vermerk „KI-gestützt erstellt“ auf die Titelfolie</label>
+    </form>
+
+    <h3><span class="num">2</span> Prompt kopieren</h3>
+    <button type="button" id="copy-prompt" class="primary">📋 Prompt kopieren</button>
+    <p id="copy-status" class="status" role="status"></p>
+    <details><summary>Prompt ansehen</summary><pre id="prompt-preview"></pre></details>
+
+    <h3><span class="num">3</span> In Claude</h3>
+    <ol>
+      <li><a href="https://claude.ai/new" target="_blank" rel="noopener">claude.ai</a> öffnen. Ein kostenloser Account reicht zum Ausprobieren; bei langen Anleitungen kann das Gratis-Limit knapp werden.</li>
+      <li>Einmalig in den Einstellungen unter <b>Funktionen</b> die <b>Code-Ausführung / Dateierstellung</b> einschalten – sonst kann Claude keine .pptx liefern.</li>
+      <li>Neuen Chat starten und anhängen: die <b>Anleitung als PDF</b> (Pflicht), die Beispielauswertung, falls vorhanden, und nach dem Termin Fotos oder Tabellen der Messdaten.</li>
+      <li>Prompt einfügen und abschicken.</li>
+      <li>Die .pptx herunterladen, in PowerPoint, Keynote oder Google Präsentationen öffnen und nur noch die orangen <span class="ph">[__]</span> ausfüllen.</li>
+    </ol>
+    <p class="tip">💡 Vor dem Termin vorbereiten lassen – Claude sagt dir dann genau, was du im Labor notieren musst. Danach im <b>selben Chat</b> einfach die Messdaten schicken, und das Protokoll wird ausgefüllt.</p>
+
+    <h3><span class="num">4</span> Das bleibt bei dir</h3>
+    <ul>
+      <li>Messen – und dabei <b>jede Geräteauflösung</b>, Gerätekonstanten und die Temperatur notieren. Was im Labor fehlt, lässt sich später nicht rekonstruieren.</li>
+      <li>Die Diskussion in eigenen Worten.</li>
+      <li>Die Fehlerrechnung, wenn du „Mach ich selbst“ gewählt hast.</li>
+      <li>Alle Annahmen prüfen, die Claude als „prüfen“ markiert.</li>
+      <li>Quellen für Literaturwerte selbst angeben.</li>
+      <li>Zahlen und Einheiten gegenchecken – Claude kann sich irren.</li>
+    </ul>
+    <p class="note">Prüf die Regeln eures Praktikums zur KI-Nutzung. Wenn ein Vermerk verlangt wird, setz oben das Häkchen.</p>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<script type="text/plain" id="prompt-tpl">
+# Laborprotokoll (Physik-Praktikum, Uni Wien)
+
+Du hilfst mir, das Protokoll einer Laborübung (Physik-Praktikum, Universität Wien) zu erstellen.
+Das Protokoll wird auf **Deutsch** als Foliensatz abgegeben, wie in der Beispielauswertung des Kurses.
+Mit mir sprichst du {{SPRACHE}}: kurz, direkt, ohne Füllwörter.
+
+## Eingaben
+- **Anleitung** dieser Laborübung (PDF) – Pflicht. Lies sie vollständig, inklusive aller „Warum?“-Fragen, Gerätetabellen und des Abschnitts mit dem Auswertungsbeispiel.
+- **Beispielauswertung** (falls angehängt) – Vorlage für Struktur und Detailgrad.
+- Modus: {{MODUS}} · Autor:innen: {{NAMEN}} · Datum: {{DATUM}} · Fehlerrechnung: {{BERECHNUNG}}
+- Messdaten: {{DATEN}}
+
+Wenn keine Anleitung angehängt ist, halte an und bitte darum. Sonst frag nichts weiter: Fehlendes markierst du als Platzhalter und machst weiter.
+
+## Arbeitsteilung
+| Du machst | Ich mache |
+|---|---|
+| Struktur, Titelfolie, Fußzeilen | Messungen im Labor |
+| Grundlagen, Aufbau, Durchführung (laut Anleitung) | Diskussion: Interpretation in eigenen Worten |
+| Geräte- und Messwerttabellen | Fehlerrechnung, wenn Fehlerrechnung = SELBST |
+| Diagramme und Fits | Prüfen der Annahmen, die du markierst |
+| Fehlerformeln (mit partiellen Ableitungen) | |
+| Antworten auf die „Warum?“-Fragen in den Sprechernotizen | |
+
+Bei Fehlerrechnung = SELBST: Schreib Formeln und Ableitungen aus und lass die Endwerte der Unsicherheiten als Platzhalter. Biete danach an, meine Rechnung mit deiner abzugleichen.
+
+## Ausgabe
+
+### 1. Protokoll (Folien, Deutsch)
+Wenn ein Folien-Artefakt verfügbar ist, nutze es. Sonst erstelle eine bearbeitbare .pptx (python-pptx).
+
+Struktur **für jeden Versuch** aus der Anleitung:
+1. **Grundlagen & Durchführung**: zentrale Formel groß, kurze Theorie, Aufbau und Durchführung in Stichpunkten.
+2. **Unsicherheiten**: Tabelle „Messgröße | Messgerät (Auflösung) | Unsicherheit | Begründung“ und Gauß'sche Fehlerfortpflanzung mit partiellen Ableitungen. Unter der Formel die Ableitungen selbst ausschreiben.
+3. **Messwerte & Ergebnis**: Rohdatentabelle, Mittelwerte, s/√n, Endergebnis hervorgehoben als „Größe = (Wert ± u) Einheit“.
+4. **Diskussion**: Vergleich mit dem Literaturwert (Abweichung in % und in Vielfachen von u), Zeile „Mögliche Ursachen: [__]“.
+5. Diagramm, falls die Anleitung eines verlangt: Fehlerbalken, Achsenbeschriftungen mit Einheiten, Literaturkurve gestrichelt, falls vorhanden.
+
+Dazu eine **Titelfolie** (Uni Wien · Physikpraktikum · PW-Nummer, Titel, {{NAMEN}}, {{DATUM}}) und **Quellen** (Anleitung und Quellen der Literaturwerte).
+Fußzeile auf jeder Folie: Datum · Nummer · „Nachnamen mit Initialen“.
+
+**Stil.** Heller Hintergrund, dunkler Text, ein blauer Akzent. Kein überflüssiges Design: streng akademisch wie in der Beispielauswertung.
+
+**Platzhalter.** Alles, was ich ausfülle oder was aus den Daten kommt, als `[__]` in **Orange**. Sobald ein Wert eingetragen ist, Klammern und Orange entfernen.
+
+### 2. Sprechernotizen
+Zu jeder Folie:
+- Antworten auf alle „Warum?“-Fragen der Anleitung, die zu dieser Folie gehören;
+- Literaturwerte mit dem Vermerk „Richtwert, Quelle selbst angeben“;
+- Annahmen, die du getroffen hast.
+
+### 3. Checkliste für mich (im Chat, {{SPRACHE}})
+**Im Modus VORBEREITUNG:**
+- **„Im Labor notieren“**: vollständige Liste der Messgrößen mit Anzahl der Wiederholungen, **Auflösung/Skalenteilung jedes Geräts**, Gerätekonstanten, Temperatur. Nichts darf fehlen: Eine fehlende Geräteauflösung lässt sich später nicht rekonstruieren.
+- **„Vor dem Termin lesen“**: 3–5 Theoriepunkte, ohne die man den Versuch nicht versteht.
+- **„Mögliche Kolloquiumsfragen“**: 5–8 Fragen mit kurzen Antworten.
+
+**Im Modus AUSWERTUNG:**
+- was ausgefüllt ist und was noch fehlt (pro Folie);
+- **alle Annahmen**, markiert mit „prüfen“ (z. B. „Skalenteilung der Waage = 1 mN angenommen“);
+- Auffälligkeiten in den Daten (Ausreißer > 2σ, Abweichung vom Literaturwert außerhalb von u) und 2–3 mögliche physikalische Ursachen als Hinweis für die Diskussion, nicht als fertiger Text;
+- falls du gerechnet hast: ein eigener Block „Erklärung der Rechnung“ Schritt für Schritt (Formel → Einsetzen → Ergebnis), damit ich sie mündlich verteidigen kann.
+
+## Qualitätsregeln (verbindlich)
+1. **Einheiten.** Vor jedem Ergebnis eine Dimensionsprüfung. Typische Fallen: Pa·s ↔ mPa·s, g/cm³ ↔ kg/m³, mm ↔ m, mN ↔ N. Wenn ich einen Wert mit falscher Größenordnung schicke, korrigiere ihn und sag es ausdrücklich.
+2. **Abgleich mit Rohdaten.** Wenn eine Zahl in meinen Daten von der auf der Folie abweicht, weise darauf hin.
+3. **Einheitliche Fehlermethode** im ganzen Protokoll: Typ A (s/√n) und Typ B quadratisch kombiniert. Wenn die Anleitung eine andere Methode erlaubt, wähle eine und wende sie überall an.
+4. **Zahlen aus dem Auswertungsbeispiel der Anleitung** nicht ins Protokoll übernehmen. Nur zur Kontrolle deiner Formeln verwenden.
+5. **Dezimalkomma** nur im sichtbaren Folientext. Punkte in Code, Koordinaten, CSS und Attributen nie ersetzen.
+6. **Literaturwerte** nicht erfinden. Wenn du unsicher bist: `[__]` und ein Punkt in der Checkliste.
+7. **Fit**: gewichtete kleinste Quadrate mit dy (wie SciDAVis/Jupyter). Parameter ± u und χ²/dof angeben. Bei χ²/dof ≫ 1 oder ≪ 1 in der Checkliste vermerken.
+8. Vor der Abgabe alle Fragen und Aufgaben der Anleitung („Bestimmen Sie…“, „Vergleichen Sie…“, „Wie könnten Sie…“) durchgehen und sicherstellen, dass jede im Protokoll Platz hat.
+9. {{KI_REGEL}}
+
+## Antwort im Chat
+Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbeitsablauf nicht nacherzählen.
+</script>
+
 <section id="hilfe" class="screen">
   <div class="card">
     <div class="hilfe-icon" id="hilfe-icon"></div>
@@ -238,7 +418,7 @@
   const FAECHER = {
     tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', html: '' },
     ana3:   { icon: '∫',  title: 'Analysis 3',            html: '' },
-    labor:  { icon: '🧪', title: 'Laborpraktikum',        html: '' },
+    labor:  { icon: '🧪', title: 'Laborpraktikum',        screen: 'labor' },
     schach: { icon: '♟️', title: 'Schach',
               html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' +
                     '<div class="wahl"><button type="button" class="go-schach" data-go="katze">Ich gehe zum Schach ♟️</button>' +
@@ -317,9 +497,68 @@
     b.type = 'button';
     b.className = 'fach';
     b.innerHTML = `<span class="icon">${f.icon}</span><span>${f.title}</span>`;
-    b.addEventListener('click', () => go({ id: 'hilfe', fach: key }));
+    b.addEventListener('click', () => go(f.screen ? { id: f.screen } : { id: 'hilfe', fach: key }));
     grid.appendChild(b);
   }
+
+  // ---------- Laborpraktikum: build the protocol prompt ----------
+  const laborForm = document.getElementById('labor-form');
+  const promptTpl = document.getElementById('prompt-tpl').textContent.trim();
+  const preview = document.getElementById('prompt-preview');
+  const copyStatus = document.getElementById('copy-status');
+
+  function fill(tpl, vars) {
+    for (const [k, v] of Object.entries(vars)) tpl = tpl.split('{{' + k + '}}').join(v);
+    return tpl;
+  }
+  function buildPrompt() {
+    const fd = new FormData(laborForm);
+    const modus = fd.get('modus');
+    const datum = fd.get('datum') ? fd.get('datum').split('-').reverse().join('.') : '[__]';
+    const rohdaten = (fd.get('daten') || '').trim();
+    let daten;
+    if (modus === 'VORBEREITUNG') daten = '— (Vorbereitung, noch keine Daten)';
+    else if (rohdaten) daten = '\n```\n' + rohdaten + '\n```';
+    else daten = 'siehe Anhänge im Chat';
+    return fill(promptTpl, {
+      MODUS: modus,
+      NAMEN: (fd.get('namen') || '').trim() || '[__]',
+      DATUM: datum,
+      BERECHNUNG: fd.get('berechnung'),
+      SPRACHE: fd.get('sprache'),
+      DATEN: daten,
+      KI_REGEL: fd.get('ki')
+        ? 'Setz auf die Titelfolie den Vermerk „KI-gestützt erstellt“.'
+        : 'Keine Erwähnung von KI auf den Folien, außer ich bitte um den Vermerk „KI-gestützt erstellt“.',
+    });
+  }
+  function updateLabor() {
+    const auswertung = new FormData(laborForm).get('modus') === 'AUSWERTUNG';
+    document.getElementById('daten-field').style.display = auswertung ? '' : 'none';
+    preview.textContent = buildPrompt();
+    copyStatus.textContent = '';
+    try { localStorage.setItem('labor-namen', laborForm.namen.value); } catch (e) {}
+  }
+  try { laborForm.namen.value = localStorage.getItem('labor-namen') || ''; } catch (e) {}
+  laborForm.addEventListener('input', updateLabor);
+  laborForm.addEventListener('change', updateLabor);
+  updateLabor();
+
+  document.getElementById('copy-prompt').addEventListener('click', async () => {
+    const text = buildPrompt();
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { ok = document.execCommand('copy'); } catch (e2) {}
+      ta.remove();
+    }
+    copyStatus.textContent = ok ? '✅ Kopiert! Jetzt in Claude einfügen.' : 'Kopieren hat nicht geklappt – öffne „Prompt ansehen“ und kopier den Text von Hand.';
+  });
 
   // ---------- thumbs flying out of the video edges while it plays ----------
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
