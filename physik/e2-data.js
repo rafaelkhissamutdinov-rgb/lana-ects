@@ -767,8 +767,8 @@ window.E2 = {
     "ru": "⚠️ Частица влетает в магнитное поле. От чего зависит отклонение? Что будет при заряде $2q$ и массе $2m$?"
    },
    "a": {
-    "de": "Ablenkung $\\propto\\frac qm$: leichtere Teilchen werden stärker abgelenkt. $2q$ und $2m$ → gleiches $\\frac qm$ → genau gleiche Ablenkung.",
-    "ru": "Отклонение $\\propto\\frac qm$: лёгкие частицы отклоняются сильнее. $2q$ и $2m$ → то же $\\frac qm$ → точно такое же отклонение."
+    "de": "Bei gleicher Geschwindigkeit gilt: Ablenkung $\\propto\\frac qm$, leichtere Teilchen werden stärker abgelenkt. $2q$ und $2m$ → gleiches $\\frac qm$ → genau gleiche Ablenkung.",
+    "ru": "При одинаковой скорости отклонение $\\propto\\frac qm$: лёгкие частицы отклоняются сильнее. $2q$ и $2m$ → то же $\\frac qm$ → точно такое же отклонение."
    },
    "e": {
     "de": "Kraft $\\propto q$, Trägheit $\\propto m$. Beschleunigung $a=\\frac Fm$ hängt also nur vom Verhältnis ab. Darauf beruht das Massenspektrometer: $m=\\frac{qBr}{v}$.",

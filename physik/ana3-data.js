@@ -190,8 +190,8 @@ window.ANA3 = {
       "ru": ""
      },
      "html": {
-      "de": "Stell dir vor, du druckst ein Foto auf ein Gummituch und dehnst es. Bei einer <b>holomorphen</b> Funktion darf jedes kleine Stück nur <b>gedreht und gleichmäßig vergrößert</b> werden, wie beim Zoomen am Handy. Verzerren (ein Quadrat wird zur schiefen Raute) ist verboten. Die zwei Cauchy-Riemann-Gleichungen sind genau diese Regel „nur drehen und zoomen“, als Formel geschrieben.",
-      "ru": "Представь: печатаешь фото на резиновой плёнке и растягиваешь её. У <b>голоморфной</b> функции каждый маленький кусочек можно только <b>повернуть и равномерно увеличить</b>, как при зуме на телефоне. Перекашивать (квадрат превращается в косой ромб) нельзя. Два уравнения Коши–Римана — это ровно правило «только поворот и зум», записанное формулой."
+      "de": "Stell dir vor, du druckst ein Foto auf ein Gummituch und dehnst es. Bei einer <b>holomorphen</b> Funktion darf jedes kleine Stück (dort, wo $f'\\neq0$) nur <b>gedreht und gleichmäßig vergrößert</b> werden, wie beim Zoomen am Handy. Verzerren (ein Quadrat wird zur schiefen Raute) ist verboten. Die zwei Cauchy-Riemann-Gleichungen sind genau diese Regel „nur drehen und zoomen“, als Formel geschrieben.",
+      "ru": "Представь: печатаешь фото на резиновой плёнке и растягиваешь её. У <b>голоморфной</b> функции каждый маленький кусочек (там, где $f'\\neq0$) можно только <b>повернуть и равномерно увеличить</b>, как при зуме на телефоне. Перекашивать (квадрат превращается в косой ромб) нельзя. Два уравнения Коши–Римана — это ровно правило «только поворот и зум», записанное формулой."
      }
     },
     {
@@ -212,8 +212,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "Вещественная производная говорит «растяни в $f'$ раз». Комплексная производная — это комплексное число, а умножение на комплексное число означает <b>поворот + растяжение</b>. Значит, голоморфная функция вблизи каждой точки выглядит как поворот с растяжением: маленькие квадратики переходят в маленькие квадратики, а не в параллелограммы. Это сильное ограничение, поэтому голоморфных функций «мало» и они очень хорошо себя ведут.",
-      "de": "Die reelle Ableitung sagt „streck um den Faktor $f'$“. Die komplexe Ableitung ist eine komplexe Zahl, und Multiplizieren mit einer komplexen Zahl heißt <b>Drehen + Strecken</b>. Eine holomorphe Funktion sieht also in der Nähe jedes Punkts wie eine Drehstreckung aus: Kleine Quadrate werden auf kleine Quadrate abgebildet, nicht auf Parallelogramme. Das ist eine starke Einschränkung – deshalb gibt es „wenige“ holomorphe Funktionen, und sie verhalten sich sehr brav."
+      "ru": "Вещественная производная говорит «растяни в $f'$ раз». Комплексная производная — это комплексное число, а умножение на комплексное число означает <b>поворот + растяжение</b>. Значит, голоморфная функция вблизи каждой точки, где $f'\\neq0$, выглядит как поворот с растяжением: маленькие квадратики переходят в маленькие квадратики, а не в параллелограммы. Это сильное ограничение, поэтому голоморфных функций «мало» и они очень хорошо себя ведут.",
+      "de": "Die reelle Ableitung sagt „streck um den Faktor $f'$“. Die komplexe Ableitung ist eine komplexe Zahl, und Multiplizieren mit einer komplexen Zahl heißt <b>Drehen + Strecken</b>. Eine holomorphe Funktion sieht also in der Nähe jedes Punkts mit $f'\\neq0$ wie eine Drehstreckung aus: Kleine Quadrate werden auf kleine Quadrate abgebildet, nicht auf Parallelogramme. Das ist eine starke Einschränkung – deshalb gibt es „wenige“ holomorphe Funktionen, und sie verhalten sich sehr brav."
      }
     },
     {
@@ -386,8 +386,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "Если внутри замкнутой петли у функции нет ни одной «дырки» (особенности), то интеграл по петле равен нулю. Как работа силы без источников по замкнутому пути. Петлю можно сколько угодно деформировать, не задевая особенностей, и интеграл не изменится.",
-      "de": "Hat die Funktion innerhalb einer geschlossenen Schleife kein einziges „Loch“ (keine Singularität), dann ist das Integral über die Schleife null. Wie die Arbeit einer quellenfreien Kraft entlang eines geschlossenen Wegs. Die Schleife darf man beliebig verformen, solange man keine Singularität berührt – das Integral ändert sich nicht."
+      "ru": "Если внутри замкнутой петли у функции нет ни одной «дырки» (особенности), то интеграл по петле равен нулю. Как работа консервативной (безвихревой) силы по замкнутому пути. Петлю можно сколько угодно деформировать, не задевая особенностей, и интеграл не изменится.",
+      "de": "Hat die Funktion innerhalb einer geschlossenen Schleife kein einziges „Loch“ (keine Singularität), dann ist das Integral über die Schleife null. Wie die Arbeit einer konservativen (wirbelfreien) Kraft entlang eines geschlossenen Wegs. Die Schleife darf man beliebig verformen, solange man keine Singularität berührt – das Integral ändert sich nicht."
      }
     },
     {
@@ -549,8 +549,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "Голоморфная функция везде раскладывается в степенной ряд, и ряд сходится в самом большом круге, который помещается до ближайшей особенности. Именно поэтому ряд для $\\frac1{1+x^2}$ на вещественной оси сходится только при $|x|<1$, хотя сама функция на $\\mathbb R$ гладкая: в комплексной плоскости в точках $\\pm i$ сидят полюсы на расстоянии 1.",
-      "de": "Eine holomorphe Funktion lässt sich überall in eine Potenzreihe entwickeln, und die Reihe konvergiert im größten Kreis, der bis zur nächsten Singularität passt. Genau deshalb konvergiert die Reihe für $\\frac1{1+x^2}$ auf der reellen Achse nur für $|x|<1$, obwohl die Funktion auf $\\mathbb R$ glatt ist: In der komplexen Ebene sitzen bei $\\pm i$ Pole im Abstand 1."
+      "ru": "Голоморфная функция везде раскладывается в степенной ряд, и ряд сходится в самом большом круге, который помещается до ближайшей неустранимой особенности. Именно поэтому ряд для $\\frac1{1+x^2}$ на вещественной оси сходится только при $|x|<1$, хотя сама функция на $\\mathbb R$ гладкая: в комплексной плоскости в точках $\\pm i$ сидят полюсы на расстоянии 1.",
+      "de": "Eine holomorphe Funktion lässt sich überall in eine Potenzreihe entwickeln, und die Reihe konvergiert im größten Kreis, der bis zur nächsten nicht hebbaren Singularität passt. Genau deshalb konvergiert die Reihe für $\\frac1{1+x^2}$ auf der reellen Achse nur für $|x|<1$, obwohl die Funktion auf $\\mathbb R$ glatt ist: In der komplexen Ebene sitzen bei $\\pm i$ Pole im Abstand 1."
      }
     },
     {
@@ -560,8 +560,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{или}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{ближайшая особенность})$$",
-      "de": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{oder}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{nächste Singularität})$$"
+      "ru": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{или}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{ближайшая неустранимая особенность})$$",
+      "de": "$$R=\\lim_{n\\to\\infty}\\frac{|a_n|}{|a_{n+1}|}\\quad\\text{oder}\\quad R=\\frac1{\\limsup|a_n|^{1/n}}\\qquad R=\\operatorname{dist}(z_0,\\ \\text{nächste nicht hebbare Singularität})$$"
      }
     },
     {
@@ -1364,8 +1364,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "Перекидываем производную на гладкую пробную функцию через интегрирование по частям. Граничных членов нет, потому что $\\varphi$ обращается в нуль далеко. Так любая функция становится бесконечно дифференцируемой. Скачок на высоту $h$ в точке $a$ даёт в производной слагаемое $h\\,\\delta_a$.",
-      "de": "Man schiebt die Ableitung per partieller Integration auf die glatte Testfunktion. Randterme gibt es keine, weil $\\varphi$ weit draußen verschwindet. So wird jede Funktion unendlich oft differenzierbar. Ein Sprung der Höhe $h$ im Punkt $a$ liefert in der Ableitung den Summanden $h\\,\\delta_a$."
+      "ru": "Перекидываем производную на гладкую пробную функцию через интегрирование по частям. Граничных членов нет, потому что $\\varphi$ обращается в нуль далеко. Так любая локально интегрируемая функция становится бесконечно дифференцируемой (как дистрибуция). Скачок на высоту $h$ в точке $a$ даёт в производной слагаемое $h\\,\\delta_a$.",
+      "de": "Man schiebt die Ableitung per partieller Integration auf die glatte Testfunktion. Randterme gibt es keine, weil $\\varphi$ weit draußen verschwindet. So wird jede lokal integrierbare Funktion unendlich oft differenzierbar (als Distribution). Ein Sprung der Höhe $h$ im Punkt $a$ liefert in der Ableitung den Summanden $h\\,\\delta_a$."
      }
     },
     {
@@ -1679,8 +1679,8 @@ window.ANA3 = {
       "de": ""
      },
      "html": {
-      "ru": "Гармоническая функция ($\\Delta u=0$) в каждой точке равна среднему по любой сфере вокруг неё. Поэтому у неё нет внутренних бугров и ям, и максимум достигается на границе. Фундаментальное решение — потенциал точечного заряда. Функция Грина — тот же потенциал, к которому добавили «зеркальные» заряды, чтобы на границе области потенциал стал нулём.",
-      "de": "Eine harmonische Funktion ($\\Delta u=0$) ist in jedem Punkt gleich ihrem Mittelwert über jede Kugelsphäre um diesen Punkt. Deshalb hat sie innen keine Buckel und keine Mulden, und das Maximum wird am Rand angenommen. Die Fundamentallösung ist das Potential einer Punktladung. Die Greensche Funktion ist dasselbe Potential plus „Spiegelladungen“, damit das Potential am Rand des Gebiets null wird."
+      "ru": "Гармоническая функция ($\\Delta u=0$) в каждой точке равна среднему по любой сфере вокруг неё, целиком лежащей в области. Поэтому у неё нет внутренних бугров и ям, и максимум достигается на границе. Фундаментальное решение — потенциал точечного заряда. Функция Грина — тот же потенциал, к которому добавили «зеркальные» заряды, чтобы на границе области потенциал стал нулём.",
+      "de": "Eine harmonische Funktion ($\\Delta u=0$) ist in jedem Punkt gleich ihrem Mittelwert über jede Kugelsphäre um diesen Punkt, die ganz im Gebiet liegt. Deshalb hat sie innen keine Buckel und keine Mulden, und das Maximum wird am Rand angenommen. Die Fundamentallösung ist das Potential einer Punktladung. Die Greensche Funktion ist dasselbe Potential plus „Spiegelladungen“, damit das Potential am Rand des Gebiets null wird."
      }
     },
     {
