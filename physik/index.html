@@ -4,6 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Physik heute?</title>
+<meta name="theme-color" content="#ff8fc4">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Physik heute">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<script>
+  // the ?L link installs an app that opens with the name already set
+  document.write('<link rel="manifest" href="' +
+    (new URLSearchParams(location.search).has('L') ? 'manifest-l.webmanifest' : 'manifest.webmanifest') + '">');
+</script>
 <style>
   :root {
     --text: #5a1a3d;
@@ -310,6 +322,10 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
   }
 
+  .install-btn { margin-top: 16px; background: rgba(255, 255, 255, .85); color: var(--text); font-size: .95rem; font-weight: 600; padding: 9px 18px; box-shadow: 0 4px 12px rgba(0, 0, 0, .12); }
+  .install-help { margin: 10px auto 0; max-width: 420px; background: rgba(255, 255, 255, .92); border-radius: 16px; padding: 12px 16px; text-align: left; font-size: .92rem; line-height: 1.5; box-shadow: 0 4px 12px rgba(0, 0, 0, .12); }
+  .install-help ol { margin: 6px 0 0; padding-left: 1.2em; }
+
   /* flying thumbs */
   .thumb {
     position: fixed;
@@ -338,15 +354,17 @@
       <button id="btn-will" type="button">Nein, aber ich will</button>
     </div>
   </div>
+  <button type="button" id="install-btn" class="install-btn" hidden>📲 Als App auf den Startbildschirm</button>
+  <div id="install-help" class="install-help" hidden></div>
 </section>
 
 <section id="ja" class="screen">
-  <video id="video-ja" src="ja.mp4" playsinline loop controls preload="auto"></video>
+  <video id="video-ja" src="ja.mp4" playsinline loop controls preload="none"></video>
   <button class="back" type="button">zurück</button>
 </section>
 
 <section id="nein" class="screen">
-  <video id="video-nein" src="nein.mp4" playsinline loop controls preload="auto"></video>
+  <video id="video-nein" src="nein.mp4" playsinline loop controls preload="none"></video>
   <button class="back" type="button">zurück</button>
 </section>
 
@@ -361,12 +379,12 @@
 
 <section id="katze" class="screen">
   <canvas id="canvas-katze" width="252" height="512" aria-label="Glückliche Katze"></canvas>
-  <video id="video-katze" src="katze.mp4" playsinline loop preload="auto"></video>
+  <video id="video-katze" src="katze.mp4" playsinline loop preload="none"></video>
   <button class="back" type="button">zurück</button>
 </section>
 
 <section id="opa" class="screen">
-  <video id="video-opa" src="opa.mp4" playsinline loop controls preload="auto"></video>
+  <video id="video-opa" src="opa.mp4" playsinline loop controls preload="none"></video>
   <button class="back" type="button">zurück</button>
 </section>
 
@@ -1150,6 +1168,28 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
     if (b) answer(b.dataset.go);
   });
   document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
+
+  // ---------- app install (PWA) ----------
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const installBtn = document.getElementById('install-btn');
+  const installHelp = document.getElementById('install-help');
+  let installPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; });
+  if (!standalone) installBtn.hidden = false;
+  installBtn.addEventListener('click', async () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      await installPrompt.userChoice.catch(() => {});
+      installPrompt = null;
+      return;
+    }
+    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    installHelp.innerHTML = ios
+      ? '<b>Auf dem iPhone (Safari):</b><ol><li>Unten auf <b>Teilen</b> tippen (Quadrat mit Pfeil nach oben).</li><li><b>„Zum Home-Bildschirm“</b> wählen.</li><li>Oben rechts <b>Hinzufügen</b>.</li></ol>'
+      : '<b>Auf Android (Chrome):</b><ol><li>Oben rechts auf <b>⋮</b> tippen.</li><li><b>„App installieren“</b> oder <b>„Zum Startbildschirm hinzufügen“</b> wählen.</li></ol>';
+    installHelp.hidden = !installHelp.hidden;
+  });
 
   window.addEventListener('popstate', e => show(e.state || { id: 'frage' }));
   history.replaceState({ id: 'frage' }, '', location.pathname + location.search);
