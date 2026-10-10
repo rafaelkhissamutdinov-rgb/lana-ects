@@ -100,6 +100,8 @@
   .hilfe-icon { font-size: 3rem; line-height: 1; margin-bottom: 8px; }
   .hilfe-body { text-align: left; line-height: 1.5; margin-top: 16px; }
   .soon { text-align: center; opacity: .7; font-style: italic; }
+  .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
+  .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
 
   video { display: block; width: 100%; max-height: 75vh; border-radius: 16px; background: #000; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
 
@@ -174,7 +176,8 @@
     tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', html: '' },
     ana3:   { icon: '∫',  title: 'Analysis 3',            html: '' },
     labor:  { icon: '🧪', title: 'Laborpraktikum',        html: '' },
-    schach: { icon: '♟️', title: 'Schach',                html: '' },
+    schach: { icon: '♟️', title: 'Schach',
+              html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' },
   };
 
   // ---------- background theme per weekday ----------
