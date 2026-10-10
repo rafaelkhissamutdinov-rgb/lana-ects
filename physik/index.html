@@ -231,6 +231,8 @@
   .warnung p { margin: 0 0 8px; }
   .warnung .warn-titel { font-weight: 800; font-size: 1.1rem; }
   .warnung ul { color: #b3121d; }
+  .warnung .min { display: inline-block; font-size: .8rem; font-weight: 700; background: #ffd9dc; border-radius: 999px; padding: 1px 8px; margin-left: 2px; white-space: nowrap; }
+  .zeit .kontrolle td { background: #fff1f1; }
   .note { font-size: .88rem; opacity: .8; margin: 14px 0 0; line-height: 1.45; }
   .wahl { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; align-items: center; }
   .wahl button { width: 100%; max-width: 320px; font-size: 1.1rem; padding: 13px 20px; }
@@ -379,7 +381,7 @@
   <div class="card labor">
     <div class="hilfe-icon">🧪</div>
     <h2>Laborpraktikum</h2>
-    <p class="sub">Claude baut das Protokoll-Gerüst in 5–10 Minuten, du trägst nur noch deine Daten ein. Insgesamt ca. 1,5 statt 3,5–5 Stunden pro PW.</p>
+    <p class="sub">Claude baut das Protokoll-Gerüst in 5–10 Minuten, du trägst nur noch deine Daten ein. Insgesamt ca. 2–3,5 statt 3,5–6 Stunden pro PW – inklusive gründlicher Endkontrolle.</p>
     <button type="button" id="zeit-btn" class="zeit-btn" aria-expanded="false" aria-controls="zeit">⏱️ Lohnt sich das? Zeitvergleich</button>
     <div id="zeit" class="zeit" hidden>
       <table>
@@ -391,9 +393,10 @@
         <tr><td>Daten nach dem Termin eintragen</td><td>30–60 min</td><td>5–10 min</td></tr>
         <tr><td>Fehlerrechnung (selbst gerechnet)</td><td>30–45 min</td><td>30–45 min</td></tr>
         <tr><td>Diskussion</td><td>20–30 min</td><td>15–20 min <span class="hint">(Vorlagen)</span></td></tr>
-        <tr class="sum"><td>Gesamt</td><td>≈ 3,5–5 h</td><td>≈ 1,5 h</td></tr>
+        <tr class="kontrolle"><td>Endkontrolle <span class="hint">(Liste unten in Rot)</span></td><td>15–30 min <span class="hint">(eigenen Text Korrektur lesen)</span></td><td>50–90 min <span class="hint">(fremden Text gründlich prüfen)</span></td></tr>
+        <tr class="sum"><td>Gesamt</td><td>≈ 3,5–6 h</td><td>≈ 2–3,5 h</td></tr>
       </table>
-      <p class="hint">Grobe Schätzung der aktiven Zeit pro PW. Die Endkontrolle (unten in Rot) kommt noch dazu.</p>
+      <p class="hint">Grobe Schätzung der aktiven Zeit pro PW mit 1–3 Versuchen. Die Endkontrolle mit Claude dauert länger als bei einem selbst geschriebenen Protokoll – trotzdem sparst du unterm Strich etwa 1,5–2,5 Stunden.</p>
     </div>
 
     <h3><span class="num">1</span> Angaben</h3>
@@ -450,17 +453,17 @@
     <div class="warnung" role="note">
       <p class="warn-titel">⚠️ Wichtig: Die Endkontrolle machst du komplett selbst</p>
       <p>Claude macht Fehler. In der Praxis haben wir das Protokoll am Termin noch mit dem Partner korrigiert – erst damit gab es die volle Punktzahl. Ohne diese Korrekturen wäre es nicht gegangen, und dafür braucht man eigenes Wissen, wie euer Praktikum Protokolle haben will.</p>
-      <p><b>Selbst prüfen und korrigieren:</b></p>
+      <p><b>Selbst prüfen und korrigieren – plan dafür ca. 50–90 Minuten pro PW ein:</b></p>
       <ul>
-        <li>Jede Zahl gegen deine Rohdaten: Abschreibfehler, Rundung, signifikante Stellen.</li>
-        <li>Einheiten und Größenordnungen (mm ↔ m, mN ↔ N, g/cm³ ↔ kg/m³).</li>
-        <li>Geräteauflösungen und Unsicherheiten: Passen sie zu den Geräten, die ihr wirklich benutzt habt?</li>
-        <li>Formeln und partielle Ableitungen der Fehlerfortpflanzung.</li>
-        <li>Fit und Diagramm: Achsen, Einheiten, Fehlerbalken – passt die Kurve zu den Daten?</li>
-        <li>Literaturwerte: echte Quelle suchen und angeben.</li>
-        <li>Aufbau und Durchführung so, wie ihr es wirklich gemacht habt – nicht wie in der Anleitung.</li>
-        <li>Diskussion in eigenen Worten, mit euren Beobachtungen.</li>
-        <li>Form: was euer Betreuer verlangt (Folien, Beschriftung, Abgabeformat).</li>
+        <li>Jede Zahl gegen deine Rohdaten: Abschreibfehler, Rundung, signifikante Stellen. <span class="min">10–15 min</span></li>
+        <li>Einheiten und Größenordnungen (mm ↔ m, mN ↔ N, g/cm³ ↔ kg/m³). <span class="min">5–10 min</span></li>
+        <li>Geräteauflösungen und Unsicherheiten: Passen sie zu den Geräten, die ihr wirklich benutzt habt? <span class="min">5–10 min</span></li>
+        <li>Formeln und partielle Ableitungen der Fehlerfortpflanzung. Hat Claude gerechnet, jeden Schritt selbst nachvollziehen. <span class="min">10–20 min</span></li>
+        <li>Fit und Diagramm: Achsen, Einheiten, Fehlerbalken – passt die Kurve zu den Daten? <span class="min">5–10 min</span></li>
+        <li>Literaturwerte: echte Quelle suchen und angeben. <span class="min">5–10 min</span></li>
+        <li>Aufbau und Durchführung so, wie ihr es wirklich gemacht habt – nicht wie in der Anleitung. <span class="min">5–10 min</span></li>
+        <li>Form: was euer Betreuer verlangt (Folien, Beschriftung, Abgabeformat). <span class="min">5 min</span></li>
+        <li>Diskussion in eigenen Worten, mit euren Beobachtungen. <span class="min">steht schon in der Zeittabelle</span></li>
       </ul>
     </div>
   </div>
