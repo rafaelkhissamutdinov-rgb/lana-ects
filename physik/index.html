@@ -743,11 +743,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
   const SHORT_NAMES = { L: 'Lana' };
   const short = Object.keys(SHORT_NAMES).find(k => params.has(k));
   const NAME = short ? SHORT_NAMES[short] : (params.get('name') || '').trim().slice(0, 30);
-  if (NAME) {
-    document.getElementById('frage-name').textContent = NAME + ', ';
-    const h1 = document.getElementById('frage-text');
-    h1.childNodes[1].textContent = h1.childNodes[1].textContent.replace('Hast du', 'hast du');
-  }
+  // the name appears once, in the greeting; the question stays as it is
   function greetingFor(h) {
     const who = NAME ? ', ' + NAME : '';
     if (h >= 5 && h < 11) return 'Guten Morgen' + who + '! ☀️';
