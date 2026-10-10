@@ -102,6 +102,59 @@
   .soon { text-align: center; opacity: .7; font-style: italic; }
   .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
   .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
+  .wahl { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; align-items: center; }
+  .wahl button { width: 100%; max-width: 320px; font-size: 1.1rem; padding: 13px 20px; }
+  .wahl .go-schach { background: linear-gradient(90deg, #ffb703, #fb8500); }
+  .wahl .go-tutorium { background: linear-gradient(90deg, #5b6170, #2f333d); }
+
+  /* full-screen scenes behind the chess / tutorium videos */
+  .scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; display: none; }
+  .scene.on { display: block; }
+  #scene-happy { background: radial-gradient(circle at 50% 20%, #fff7b0 0%, #ffd84d 30%, #7fd3ff 75%, #52b6f5 100%); }
+  #scene-happy .sun {
+    position: absolute; top: -90px; left: 50%; width: 260px; height: 260px; margin-left: -130px;
+    border-radius: 50%; background: radial-gradient(circle, #fff6a8 0%, #ffd23f 55%, rgba(255, 210, 63, 0) 72%);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  #scene-happy .rainbow {
+    position: absolute; bottom: -220px; left: 50%; width: 640px; height: 640px; margin-left: -320px; border-radius: 50%;
+    background: radial-gradient(circle, transparent 52%, #8b5cf6 52%, #8b5cf6 56%, #3b82f6 56%, #3b82f6 60%, #22c55e 60%, #22c55e 64%,
+                #facc15 64%, #facc15 68%, #fb923c 68%, #fb923c 72%, #ef4444 72%, #ef4444 76%, transparent 76%);
+    opacity: .55;
+  }
+  @keyframes pulse { 50% { transform: scale(1.12); } }
+  #scene-gloom { background: radial-gradient(ellipse at 50% 40%, #3a3f4a 0%, #1c1f26 55%, #07080b 100%); }
+  #scene-gloom::after { /* heavy vignette that slowly breathes */
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 45%, transparent 35%, rgba(0, 0, 0, .85) 100%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe { 50% { opacity: .55; } }
+  .drop {
+    position: absolute; top: -60px; width: 1px; height: 60px;
+    background: linear-gradient(transparent, rgba(180, 195, 220, .5));
+    animation: fall linear infinite;
+  }
+  @keyframes fall { to { transform: translateY(115vh); } }
+  .gloom-deco {
+    position: absolute; opacity: .28; filter: grayscale(1);
+    animation: drift ease-in-out infinite alternate;
+  }
+  @keyframes drift { from { transform: translate(0, 0); } to { transform: translate(14px, 26px); } }
+
+  #katze canvas {
+    display: block; margin: 0 auto; height: min(62vh, 520px); max-width: 100%;
+    animation: hop 1.1s ease-in-out infinite;
+    cursor: pointer;
+  }
+  @keyframes hop { 50% { transform: translateY(-14px) rotate(-2deg); } }
+  /* the cat video only feeds the canvas; it stays in the DOM so phones keep decoding it */
+  #video-katze { position: fixed; left: 0; top: 0; width: 2px; height: 2px; opacity: .01; pointer-events: none; }
+  #video-katze.fallback { position: static; width: 100%; height: auto; opacity: 1; pointer-events: auto; }
+  .caption { margin: 14px 0 0; font-size: clamp(1.2rem, 5vw, 1.6rem); font-weight: 800; }
+  #katze .caption { color: #7a3b00; text-shadow: 0 2px 0 rgba(255, 255, 255, .6); }
+  #opa .caption { color: #9aa3b2; font-weight: 500; font-style: italic; letter-spacing: .04em; }
+  #opa video { filter: saturate(.55) contrast(1.05); }
 
   video { display: block; width: 100%; max-height: 75vh; border-radius: 16px; background: #000; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
 
@@ -128,6 +181,8 @@
 <body>
 
 <div id="bg" aria-hidden="true"></div>
+<div id="scene-happy" class="scene" aria-hidden="true"><div class="rainbow"></div><div class="sun"></div></div>
+<div id="scene-gloom" class="scene" aria-hidden="true"></div>
 
 <section id="frage" class="screen active">
   <div class="card">
@@ -161,6 +216,19 @@
   <button class="back" type="button">zurück</button>
 </section>
 
+<section id="katze" class="screen">
+  <canvas id="canvas-katze" width="252" height="512" aria-label="Glückliche Katze"></canvas>
+  <video id="video-katze" src="katze.mp4" playsinline loop preload="auto"></video>
+  <p class="caption">Schach! Happy, happy, happy! 🎉</p>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="opa" class="screen">
+  <video id="video-opa" src="opa.mp4" playsinline loop controls preload="auto"></video>
+  <p class="caption">… und Schach spielt er jetzt allein.</p>
+  <button class="back" type="button">zurück</button>
+</section>
+
 <section id="hilfe" class="screen">
   <div class="card">
     <div class="hilfe-icon" id="hilfe-icon"></div>
@@ -177,7 +245,9 @@
     ana3:   { icon: '∫',  title: 'Analysis 3',            html: '' },
     labor:  { icon: '🧪', title: 'Laborpraktikum',        html: '' },
     schach: { icon: '♟️', title: 'Schach',
-              html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' },
+              html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' +
+                    '<div class="wahl"><button type="button" class="go-schach" data-go="katze">Ich gehe zum Schach ♟️</button>' +
+                    '<button type="button" class="go-tutorium" data-go="opa">Ich gehe zum Tutorium 📚</button></div>' },
   };
 
   // ---------- background theme per weekday ----------
@@ -260,7 +330,8 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let thumbTimer = null;
 
-  function spawnThumb(video, emoji) {
+  function spawnThumb(video, emojis) {
+    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
     const r = video.getBoundingClientRect();
     if (!r.width) return;
     // random point on the video's border
@@ -295,11 +366,11 @@
       .onfinish = () => t.remove();
   }
 
-  function startThumbs(video, emoji) {
+  function startThumbs(video, emojis, from = video) {
     stopThumbs();
     if (reduceMotion) return;
     thumbTimer = setInterval(() => {
-      if (!video.paused) for (let i = 0; i < 3; i++) spawnThumb(video, emoji);
+      if (!video.paused) for (let i = 0; i < 3; i++) spawnThumb(from, emojis);
     }, 220);
   }
   function stopThumbs() {
@@ -308,8 +379,98 @@
   }
 
   // ---------- navigation ----------
-  const videos = { ja: document.getElementById('video-ja'), nein: document.getElementById('video-nein') };
-  const thumbs = { ja: '👍', nein: '👎' };
+  const videos = {
+    ja: document.getElementById('video-ja'),
+    nein: document.getElementById('video-nein'),
+    katze: document.getElementById('video-katze'),
+    opa: document.getElementById('video-opa'),
+  };
+  const thumbs = { ja: ['👍'], nein: ['👎'], katze: ['😄', '😁', '🥳', '🌈', '☀️', '✨', '🌻', '🎉', '💛', '🦋'] };
+  const scenes = { katze: 'scene-happy', opa: 'scene-gloom' };
+
+  // ---------- happy cat: remove the green screen on a canvas ----------
+  const katzeVideo = videos.katze;
+  const canvas = document.getElementById('canvas-katze');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  let katzeFrames = 0, katzeLoop = false;
+  function kickKatze() {
+    if (!katzeLoop) { katzeLoop = true; requestAnimationFrame(drawKatze); }
+  }
+  function drawKatze() {
+    if (katzeVideo.paused || katzeVideo.ended || !document.getElementById('katze').classList.contains('active')) {
+      katzeLoop = false;
+      return;
+    }
+    try {
+      // crop the empty green margins so the cat appears bigger
+      const vw = katzeVideo.videoWidth, vh = katzeVideo.videoHeight;
+      ctx.drawImage(katzeVideo, vw * .15, vh * .1, vw * .7, vh * .8, 0, 0, canvas.width, canvas.height);
+      const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i + 1], b = d[i + 2];
+        const m = r > b ? r : b;
+        const green = g - m;
+        if (green > 90) d[i + 3] = 0;
+        else if (green > 25) {
+          d[i + 3] = 255 * (1 - (green - 25) / 65);
+          d[i + 1] = m; // remove green spill on the fur edges
+        } else if (green > 0) d[i + 1] = m;
+      }
+      ctx.putImageData(img, 0, 0);
+      katzeFrames++;
+    } catch (e) {
+      useKatzeFallback();
+      katzeLoop = false;
+      return;
+    }
+    requestAnimationFrame(drawKatze);
+  }
+  function useKatzeFallback() {
+    canvas.style.display = 'none';
+    katzeVideo.classList.add('fallback');
+  }
+  katzeVideo.addEventListener('play', kickKatze);
+  // if the phone refuses to hand frames to the canvas, just show the video itself
+  katzeVideo.addEventListener('timeupdate', () => {
+    if (katzeVideo.currentTime > 1 && katzeFrames === 0) useKatzeFallback();
+  });
+  canvas.addEventListener('click', () => katzeVideo.paused ? katzeVideo.play() : katzeVideo.pause());
+
+  // ---------- gloomy scene: rain + faded anxious emoji ----------
+  const gloom = document.getElementById('scene-gloom');
+  for (let i = 0; i < 70; i++) {
+    const r = document.createElement('div');
+    r.className = 'drop';
+    r.style.left = (Math.random() * 100) + '%';
+    r.style.animationDuration = (0.7 + Math.random() * 0.8) + 's';
+    r.style.animationDelay = (-Math.random() * 2) + 's';
+    gloom.appendChild(r);
+  }
+  ['😰', '😟', '😔', '😶‍🌫️', '🥀', '🖤', '🌧️', '⛈️', '🕳️', '😞', '🌫️', '😓'].forEach(e => {
+    const d = document.createElement('span');
+    d.className = 'gloom-deco';
+    d.textContent = e;
+    d.style.left = (Math.random() * 90) + '%';
+    d.style.top = (Math.random() * 90) + '%';
+    d.style.fontSize = (26 + Math.random() * 30) + 'px';
+    d.style.animationDuration = (5 + Math.random() * 5) + 's';
+    gloom.appendChild(d);
+  });
+
+  // ---------- happy scene: floating happy emoji ----------
+  const happy = document.getElementById('scene-happy');
+  ['😄', '😁', '🥳', '🌈', '🌻', '🌼', '🎈', '✨', '😊', '🦋', '🎉', '🌞', '🍀', '😆'].forEach(e => {
+    const d = document.createElement('span');
+    d.className = 'deco';
+    d.textContent = e;
+    d.style.left = (Math.random() * 90) + '%';
+    d.style.top = (10 + Math.random() * 80) + '%';
+    d.style.fontSize = (26 + Math.random() * 26) + 'px';
+    d.style.setProperty('--dur', (1.2 + Math.random() * 1.5) + 's');
+    d.style.setProperty('--delay', (-Math.random() * 2) + 's');
+    happy.appendChild(d);
+  });
 
   function show(state) {
     const id = state.id;
@@ -321,7 +482,10 @@
     }
     document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
     for (const [key, v] of Object.entries(videos)) if (key !== id) v.pause();
-    if (videos[id]) startThumbs(videos[id], thumbs[id]); else stopThumbs();
+    document.querySelectorAll('.scene').forEach(sc => sc.classList.toggle('on', sc.id === scenes[id]));
+    if (thumbs[id]) startThumbs(videos[id], thumbs[id], id === 'katze' && !katzeVideo.classList.contains('fallback') ? canvas : videos[id]);
+    else stopThumbs();
+    if (id === 'katze' && !katzeVideo.paused) kickKatze();
     scrollTo(0, 0);
   }
 
@@ -341,6 +505,10 @@
   document.getElementById('btn-ja').addEventListener('click', () => answer('ja'));
   document.getElementById('btn-nein').addEventListener('click', () => answer('nein'));
   document.getElementById('btn-will').addEventListener('click', () => go({ id: 'faecher' }));
+  document.getElementById('hilfe-body').addEventListener('click', e => {
+    const b = e.target.closest('[data-go]');
+    if (b) answer(b.dataset.go);
+  });
   document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
 
   window.addEventListener('popstate', e => show(e.state || { id: 'frage' }));
