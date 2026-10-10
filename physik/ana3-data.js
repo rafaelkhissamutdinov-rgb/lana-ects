@@ -912,6 +912,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Integral</b> = Fläche unter dem Graphen (unterhalb der x-Achse zählt negativ).</li><li><b>Folge von Funktionen</b> $f_1,f_2,f_3,\\dots$: eine Reihe von Bildern, die sich Schritt für Schritt verändern, wie Einzelbilder eines Films.</li><li><b>Nullmenge</b>: eine Menge ohne „Breite“, z. B. ein einzelner Punkt. Sie trägt zur Fläche nichts bei.</li><li><b>f.ü.</b> = fast überall = überall außer auf einer Nullmenge.</li></ul>",
+      "ru": "<ul><li><b>Интеграл</b> — площадь под графиком (ниже оси x считается со знаком минус).</li><li><b>Последовательность функций</b> $f_1,f_2,f_3,\\dots$: ряд картинок, которые меняются шаг за шагом, как кадры фильма.</li><li><b>Множество меры нуль</b>: множество без «ширины», например одна точка. В площадь оно ничего не добавляет.</li><li><b>f.ü.</b> (fast überall) = почти всюду = везде, кроме множества меры нуль.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Die große Frage dieses Themas: <b>Darf ich erst den Grenzwert nehmen und dann integrieren?</b> Meistens will man das, weil es Rechnungen viel leichter macht. Manchmal ist es aber falsch: Die Fläche kann in einer immer dünneren, immer höheren Nadel „verschwinden“. Der Satz von der majorisierten Konvergenz ist der Sicherheitsgurt: Findest du <b>ein festes Dach</b> $g$ mit endlicher Fläche, unter dem alle $f_n$ bleiben, dann kann keine Fläche heimlich entwischen, und du darfst tauschen.",
+      "ru": "Главный вопрос темы: <b>можно ли сначала перейти к пределу, а потом интегрировать?</b> Обычно этого хочется, потому что так считать намного проще. Но иногда это неверно: площадь может «убежать» в всё более тонкую и высокую иглу. Теорема о мажорированной сходимости — ремень безопасности: если найдёшь <b>одну неподвижную крышу</b> $g$ с конечной площадью, под которой остаются все $f_n$, площадь не сможет тайком сбежать, и менять местами можно."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$f_n(x)=x^n$ auf $[0,1]$:</b><ol><li>Grenzwert: Für $0\\le x\\lt 1$ gilt $x^n\\to0$. Nur bei $x=1$ bleibt $1^n=1$ – ein einzelner Punkt, also eine Nullmenge. Damit $f_n\\to0$ f.ü.</li><li>Dach: $|x^n|\\le1$ auf $[0,1]$, und $\\int_0^1 1\\,dx=1\\lt\\infty$ ✓.</li><li>Also darf man tauschen: $\\lim\\int_0^1x^n\\,dx=\\int_0^1 0\\,dx=0$.</li><li>Kontrolle direkt: $\\int_0^1x^n\\,dx=\\frac1{n+1}\\to0$ ✓.</li></ol><b>Wo es schiefgeht:</b> $f_n=n$ auf $(0,\\frac1n)$, sonst 0. Fläche immer $n\\cdot\\frac1n=1$, aber $f_n\\to0$. Ein gemeinsames Dach gibt es nicht – die Nadel wird beliebig hoch.",
+      "ru": "<b>$f_n(x)=x^n$ на $[0,1]$:</b><ol><li>Предел: при $0\\le x\\lt 1$ имеем $x^n\\to0$. Только при $x=1$ остаётся $1^n=1$ — одна точка, то есть множество меры нуль. Значит, $f_n\\to0$ почти всюду.</li><li>Крыша: $|x^n|\\le1$ на $[0,1]$, и $\\int_0^1 1\\,dx=1\\lt\\infty$ ✓.</li><li>Значит, менять можно: $\\lim\\int_0^1x^n\\,dx=\\int_0^1 0\\,dx=0$.</li><li>Проверка напрямую: $\\int_0^1x^n\\,dx=\\frac1{n+1}\\to0$ ✓.</li></ol><b>Где ломается:</b> $f_n=n$ на $(0,\\frac1n)$, иначе 0. Площадь всегда $n\\cdot\\frac1n=1$, но $f_n\\to0$. Общей крыши нет — игла становится сколь угодно высокой."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -965,6 +998,39 @@ window.ANA3 = {
     "de": "Fouriertransformation"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Welle</b> $e^{ixy}=\\cos(xy)+i\\sin(xy)$: eine Schwingung; $y$ sagt, wie schnell sie schwingt (Frequenz).</li><li><b>Frequenz</b>: kleine $y$ = langsame, tiefe Töne; große $y$ = schnelle, hohe Töne.</li><li>$\\hat u$ (sprich „u Dach“) = die Fouriertransformierte von $u$.</li></ul>",
+      "ru": "<ul><li><b>Волна</b> $e^{ixy}=\\cos(xy)+i\\sin(xy)$: колебание; $y$ говорит, как быстро оно колеблется (частота).</li><li><b>Частота</b>: малые $y$ — медленные, низкие звуки; большие $y$ — быстрые, высокие.</li><li>$\\hat u$ («u с крышечкой») — преобразование Фурье функции $u$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Smoothie zurück in Früchte zerlegen: Du gibst ein Signal hinein, und die Fouriertransformation sagt dir, <b>wie viel von jeder Frequenz</b> drinsteckt – wie die Balken eines Equalizers. Der eigentliche Grund, warum Physiker das lieben: Ableiten wird zu Multiplizieren. Eine schwierige Differentialgleichung wird im Frequenzraum zu einer einfachen Gleichung mit Zahlen.",
+      "ru": "Разобрать смузи обратно на фрукты: подаёшь сигнал, и преобразование Фурье говорит, <b>сколько в нём каждой частоты</b> — как столбики эквалайзера. Главная причина, почему физики это любят: дифференцирование превращается в умножение. Трудное дифференциальное уравнение в частотах становится простым уравнением с числами."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Rechteck $u=\\mathbf 1_{[-1,1]}$</b> (1 zwischen $-1$ und $1$, sonst 0):<ol><li>Einsetzen: $\\hat u(y)=\\frac1{\\sqrt{2\\pi}}\\int_{-1}^{1}e^{-ixy}\\,dx$.</li><li>Integrieren: $\\int_{-1}^{1}e^{-ixy}dx=\\frac{e^{-iy}-e^{iy}}{-iy}=\\frac{2\\sin y}{y}$.</li><li>Ergebnis: $\\hat u(y)=\\sqrt{\\tfrac2\\pi}\\,\\frac{\\sin y}{y}$.</li><li>Check $y=0$: $\\frac{\\sin y}y\\to1$, also $\\hat u(0)=\\sqrt{\\tfrac2\\pi}$. Und $\\frac1{\\sqrt{2\\pi}}\\cdot(\\text{Fläche }2)=\\sqrt{\\tfrac2\\pi}$ ✓.</li></ol>Bild: Ein Rechteck hat scharfe Kanten → das Spektrum wackelt weit hinaus und fällt nur langsam ab (wie $\\frac1y$).",
+      "ru": "<b>Прямоугольник $u=\\mathbf 1_{[-1,1]}$</b> (1 между $-1$ и $1$, иначе 0):<ol><li>Подставляем: $\\hat u(y)=\\frac1{\\sqrt{2\\pi}}\\int_{-1}^{1}e^{-ixy}\\,dx$.</li><li>Интегрируем: $\\int_{-1}^{1}e^{-ixy}dx=\\frac{e^{-iy}-e^{iy}}{-iy}=\\frac{2\\sin y}{y}$.</li><li>Итог: $\\hat u(y)=\\sqrt{\\tfrac2\\pi}\\,\\frac{\\sin y}{y}$.</li><li>Проверка при $y=0$: $\\frac{\\sin y}y\\to1$, значит $\\hat u(0)=\\sqrt{\\tfrac2\\pi}$. А $\\frac1{\\sqrt{2\\pi}}\\cdot(\\text{площадь }2)=\\sqrt{\\tfrac2\\pi}$ ✓.</li></ol>Картинка: у прямоугольника острые края → спектр колеблется далеко и убывает медленно (как $\\frac1y$)."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -1031,6 +1097,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Verschieben</b>: $u(x-y)$ ist der Graph von $u$, um $y$ nach rechts geschoben.</li><li><b>Indikatorfunktion</b> $\\mathbf 1_{[a,b]}$: $1$ auf $[a,b]$, sonst $0$ – ein Rechteck.</li><li><b>Träger</b> = der Bereich, wo die Funktion nicht null ist.</li></ul>",
+      "ru": "<ul><li><b>Сдвиг</b>: $u(x-y)$ — график $u$, сдвинутый на $y$ вправо.</li><li><b>Индикатор</b> $\\mathbf 1_{[a,b]}$: $1$ на $[a,b]$, иначе $0$ — прямоугольник.</li><li><b>Носитель</b> — область, где функция не равна нулю.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Gleitender Durchschnitt: Deine Note an jedem Tag wird ersetzt durch den Schnitt der umliegenden Tage – so wird eine zackige Kurve weicher. Faltung macht genau das, nur mit beliebigen Gewichten: Die Funktion $v$ ist der „Pinsel“, mit dem $u$ verwischt wird. Ein unscharfes Foto ist das scharfe Foto, gefaltet mit der Form eines Lichtflecks.",
+      "ru": "Скользящее среднее: оценку каждого дня заменяют средним по соседним дням — и зубчатая кривая становится плавнее. Свёртка делает ровно это, только с любыми весами: функция $v$ — «кисточка», которой размазывают $u$. Размытое фото — это чёткое фото, свёрнутое с формой светового пятна."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Rechteck mal Rechteck: $u=v=\\mathbf 1_{[0,1]}$.</b><ol><li>$(u*v)(x)=\\int u(x-y)v(y)\\,dy$ = Länge des Stücks, auf dem sich $[0,1]$ und das verschobene $[x-1,x]$ überlappen.</li><li>Für $0\\le x\\le1$: Überlappung $[0,x]$ → Wert $x$. Für $1\\le x\\le2$: Überlappung $[x-1,1]$ → Wert $2-x$. Sonst $0$.</li><li>Ergebnis: ein <b>Dreieck</b> auf $[0,2]$ mit Spitze $1$ bei $x=1$.</li><li>Checks: Fläche des Dreiecks $=\\frac12\\cdot2\\cdot1=1=\\int u\\cdot\\int v$ ✓. Träger $[0+0,\\,1+1]=[0,2]$ ✓.</li></ol>Zwei Ecken-Rechtecke ergeben ein glatteres Dreieck: Falten glättet.",
+      "ru": "<b>Прямоугольник на прямоугольник: $u=v=\\mathbf 1_{[0,1]}$.</b><ol><li>$(u*v)(x)=\\int u(x-y)v(y)\\,dy$ — длина куска, где $[0,1]$ перекрывается со сдвинутым $[x-1,x]$.</li><li>При $0\\le x\\le1$: перекрытие $[0,x]$ → значение $x$. При $1\\le x\\le2$: перекрытие $[x-1,1]$ → значение $2-x$. Иначе $0$.</li><li>Итог: <b>треугольник</b> на $[0,2]$ с вершиной $1$ в $x=1$.</li><li>Проверки: площадь треугольника $=\\frac12\\cdot2\\cdot1=1=\\int u\\cdot\\int v$ ✓. Носитель $[0+0,\\,1+1]=[0,2]$ ✓.</li></ol>Два прямоугольника с углами дают более гладкий треугольник: свёртка сглаживает."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1073,6 +1172,39 @@ window.ANA3 = {
     "de": "Schwartzraum und Fourier auf $L^2$"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Glatt</b> = beliebig oft ableitbar, ohne Ecken und Sprünge.</li><li><b>Schnell abfallend</b>: Für große $|x|$ wird die Funktion schneller klein als $\\frac1{|x|^k}$ – für jedes $k$.</li><li><b>$L^2$</b> = Funktionen mit endlicher „Energie“ $\\int|u|^2\\lt\\infty$. $\\|u\\|_{L^2}=\\sqrt{\\int|u|^2}$.</li></ul>",
+      "ru": "<ul><li><b>Гладкая</b> — сколько угодно раз дифференцируемая, без углов и скачков.</li><li><b>Быстро убывающая</b>: при больших $|x|$ функция становится маленькой быстрее, чем $\\frac1{|x|^k}$, — для любого $k$.</li><li><b>$L^2$</b> — функции с конечной «энергией» $\\int|u|^2\\lt\\infty$. $\\|u\\|_{L^2}=\\sqrt{\\int|u|^2}$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Schwartz-Funktionen sind die „Musterschüler“: keine Ecken, und weit draußen verschwinden sie blitzschnell. Für sie funktioniert Fourier perfekt – hin und zurück ohne Verlust. Plancherel sagt: Beim Umrechnen in Frequenzen bleibt die <b>Energie gleich</b>, wie Geld beim Wechseln ohne Gebühr. Das ist ein super Kontrollwerkzeug: Rechne die Energie auf beiden Seiten aus – stimmt sie nicht, ist irgendwo ein $2\\pi$ verloren gegangen.",
+      "ru": "Функции Шварца — «отличники»: без углов, а вдали исчезают молниеносно. Для них Фурье работает идеально — туда и обратно без потерь. Планшерель говорит: при переходе к частотам <b>энергия не меняется</b>, как деньги при обмене без комиссии. Это отличный инструмент проверки: посчитай энергию с обеих сторон — не совпало, значит, где-то потерялся $2\\pi$."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Plancherel am Gauß prüfen: $u=e^{-x^2/2}$.</b><ol><li>Laut Tabelle ist $\\hat u(y)=e^{-y^2/2}$ – derselbe Gauß.</li><li>Energie links: $\\int|u|^2dx=\\int e^{-x^2}dx=\\sqrt\\pi$.</li><li>Energie rechts: $\\int|\\hat u|^2dy=\\int e^{-y^2}dy=\\sqrt\\pi$ ✓ gleich.</li></ol><b>Kein Musterschüler:</b> $\\frac1{1+x^2}$ ist glatt, fällt aber nur wie $\\frac1{x^2}$ ab: $x^2\\cdot\\frac1{1+x^2}\\to1$, nicht $0$. Also nicht in $\\mathcal S$ (aber in $L^2$).",
+      "ru": "<b>Проверяем Планшереля на гауссе: $u=e^{-x^2/2}$.</b><ol><li>По таблице $\\hat u(y)=e^{-y^2/2}$ — тот же гаусс.</li><li>Энергия слева: $\\int|u|^2dx=\\int e^{-x^2}dx=\\sqrt\\pi$.</li><li>Энергия справа: $\\int|\\hat u|^2dy=\\int e^{-y^2}dy=\\sqrt\\pi$ ✓ совпало.</li></ol><b>Не отличник:</b> $\\frac1{1+x^2}$ гладкая, но убывает только как $\\frac1{x^2}$: $x^2\\cdot\\frac1{1+x^2}\\to1$, а не $0$. Значит, не в $\\mathcal S$ (но в $L^2$)."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -1117,6 +1249,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Testfunktion</b> $\\varphi$: eine sehr brave Funktion – glatt und außerhalb eines Intervalls genau 0.</li><li><b>Funktional</b>: eine Maschine, die eine Funktion frisst und eine <b>Zahl</b> ausspuckt.</li><li>$\\langle T,\\varphi\\rangle$ = „was die Maschine $T$ bei $\\varphi$ ausspuckt“.</li></ul>",
+      "ru": "<ul><li><b>Пробная функция</b> $\\varphi$: очень послушная функция — гладкая и ровно 0 вне некоторого отрезка.</li><li><b>Функционал</b>: машина, которая ест функцию и выдаёт <b>число</b>.</li><li>$\\langle T,\\varphi\\rangle$ — «что машина $T$ выдаёт на $\\varphi$».</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Foto mit Blitz an genau einer Stelle: δ schaut sich eine Funktion an und meldet nur ihren Wert bei 0. Als echte Funktion („unendlich hoch, unendlich schmal, Fläche 1“) ergibt δ keinen Sinn – als <b>Messvorschrift</b> ist es völlig harmlos. Der Trick der Distributionen: Wir fragen nie „Was ist der Wert im Punkt?“, sondern immer nur „Was kommt heraus, wenn ich mit einer Testfunktion mittle?“.",
+      "ru": "Фото со вспышкой ровно в одной точке: δ смотрит на функцию и сообщает только её значение в 0. Как настоящая функция («бесконечно высокая, бесконечно узкая, площадь 1») δ не имеет смысла — а как <b>правило измерения</b> она совершенно безобидна. Трюк дистрибуций: мы никогда не спрашиваем «какое значение в точке?», а только «что получится, если усреднить с пробной функцией?»."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>So wird eine Folge zu δ:</b> $g_k=k$ auf $[0,\\frac1k]$, sonst 0 (ein Rechteck mit Fläche 1, immer schmaler und höher).<ol><li>$\\langle g_k,\\varphi\\rangle=k\\int_0^{1/k}\\varphi(x)\\,dx$ = Mittelwert von $\\varphi$ auf $[0,\\frac1k]$.</li><li>Wird das Intervall winzig, ist der Mittelwert einfach $\\varphi(0)$. Also $g_k\\to\\delta$.</li><li>Mit Zahlen: Sieht $\\varphi$ nahe 0 aus wie $\\cos x$, dann ist der Wert $k\\sin\\frac1k$. Für $k=10$: $10\\sin(0{,}1)\\approx0{,}998$ – fast genau $\\cos0=1$ ✓.</li></ol>Und $\\langle\\delta_2,\\varphi\\rangle=\\varphi(2)$: δ an der Stelle 2 liest den Wert bei 2 ab.",
+      "ru": "<b>Как последовательность становится δ:</b> $g_k=k$ на $[0,\\frac1k]$, иначе 0 (прямоугольник площади 1, всё уже и выше).<ol><li>$\\langle g_k,\\varphi\\rangle=k\\int_0^{1/k}\\varphi(x)\\,dx$ — среднее значение $\\varphi$ на $[0,\\frac1k]$.</li><li>Когда отрезок крошечный, среднее — это просто $\\varphi(0)$. Значит, $g_k\\to\\delta$.</li><li>В числах: если около 0 функция $\\varphi$ выглядит как $\\cos x$, значение равно $k\\sin\\frac1k$. При $k=10$: $10\\sin(0{,}1)\\approx0{,}998$ — почти ровно $\\cos0=1$ ✓.</li></ol>А $\\langle\\delta_2,\\varphi\\rangle=\\varphi(2)$: δ в точке 2 считывает значение в 2."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1159,6 +1324,39 @@ window.ANA3 = {
     "de": "Ableitung von Distributionen"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Partielle Integration</b>: $\\int u'\\varphi=-\\int u\\varphi'$, wenn die Randterme wegfallen (bei Testfunktionen immer).</li><li><b>Heaviside</b> $H(x)$: $0$ für $x\\lt0$, $1$ für $x\\gt0$ – eine Stufe.</li><li><b>Sprung</b> = um wie viel die Funktion an einer Stelle plötzlich hochspringt (rechts minus links).</li></ul>",
+      "ru": "<ul><li><b>Интегрирование по частям</b>: $\\int u'\\varphi=-\\int u\\varphi'$, если граничные члены исчезают (у пробных функций — всегда).</li><li><b>Хевисайд</b> $H(x)$: $0$ при $x\\lt0$, $1$ при $x\\gt0$ — ступенька.</li><li><b>Скачок</b> — на сколько функция внезапно подпрыгивает в точке (справа минус слева).</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Eine Treppe: Wo sie flach ist, ist die Steigung 0. Genau an der Stufe ist sie „unendlich steil“ – klassisch keine Ableitung. Distributionen sagen: Die Ableitung dort ist eine δ-Spitze, mal der Stufenhöhe. So bekommt <b>jede</b> Funktion eine Ableitung: Glatte Stücke ganz normal ableiten, und an jeder Sprungstelle eine δ mit der Sprunghöhe dazuschreiben.",
+      "ru": "Лестница: где она плоская, наклон 0. Ровно на ступеньке она «бесконечно крутая» — классической производной нет. Дистрибуции говорят: производная там — δ-пик, умноженный на высоту ступеньки. Так <b>любая</b> функция получает производную: гладкие куски дифференцируем как обычно, а в каждой точке скачка дописываем δ с высотой скачка."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$u(x)=x$ für $x\\lt0$ und $u(x)=x+2$ für $x\\gt0$.</b><ol><li>Stückweise ableiten: links und rechts ist $u'=1$.</li><li>Sprung bei 0: rechts $0+2=2$, links $0$ → Sprung $2$.</li><li>Ergebnis: $u'=1+2\\delta$. (Denn $u=x+2H$ und $H'=\\delta$.)</li></ol><b>Zweites Beispiel $|x|$:</b> Ableitung $\\operatorname{sgn}x$ ($-1$ links, $+1$ rechts). Das springt bei 0 um $2$ → $|x|''=2\\delta$.",
+      "ru": "<b>$u(x)=x$ при $x\\lt0$ и $u(x)=x+2$ при $x\\gt0$.</b><ol><li>Дифференцируем по кускам: слева и справа $u'=1$.</li><li>Скачок в 0: справа $0+2=2$, слева $0$ → скачок $2$.</li><li>Итог: $u'=1+2\\delta$. (Ведь $u=x+2H$ и $H'=\\delta$.)</li></ol><b>Второй пример $|x|$:</b> производная $\\operatorname{sgn}x$ ($-1$ слева, $+1$ справа). Она прыгает в 0 на $2$ → $|x|''=2\\delta$."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -1214,6 +1412,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Differentialoperator</b> $P(\\partial)$: eine Rechenvorschrift aus Ableitungen, z. B. $-\\frac{d^2}{dx^2}$.</li><li><b>Faltung</b> $E*f$: siehe Thema „Faltung“ – $f$ mit dem Pinsel $E$ verwischen.</li><li><b>δ</b>: siehe „Distributionen“ – eine punktförmige Quelle.</li></ul>",
+      "ru": "<ul><li><b>Дифференциальный оператор</b> $P(\\partial)$: правило, составленное из производных, например $-\\frac{d^2}{dx^2}$.</li><li><b>Свёртка</b> $E*f$: см. тему «Свёртка» — размазать $f$ кисточкой $E$.</li><li><b>δ</b>: см. «Дистрибуции» — точечный источник.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Klatsch einmal in einem Raum und nimm das Echo auf. Mit dieser einen Aufnahme kannst du vorhersagen, wie jede beliebige Musik in diesem Raum klingt: Musik ist ja nur eine Folge vieler Klatscher. Die Fundamentallösung $E$ ist das Echo eines einzigen Klatschers (δ). Die Lösung für jede Quelle $f$ ist dann „alle Echos zusammengezählt“ – die Faltung $E*f$.",
+      "ru": "Хлопни один раз в комнате и запиши эхо. По этой одной записи можно предсказать, как в этой комнате будет звучать любая музыка: музыка ведь — просто последовательность многих хлопков. Фундаментальное решение $E$ — это эхо одного хлопка (δ). Решение для любого источника $f$ — «сумма всех эх», то есть свёртка $E*f$."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>1D: $-u''=f$.</b><ol><li>Fundamentallösung: $E(x)=-\\frac{|x|}2$. Check: $E''=-\\frac12\\cdot|x|''=-\\frac12\\cdot2\\delta=-\\delta$, also $-E''=\\delta$ ✓.</li><li>Quelle $f=\\mathbf 1_{[-1,1]}$: $u(x)=(E*f)(x)=-\\frac12\\int_{-1}^{1}|x-y|\\,dy$.</li><li>Für $|x|\\le1$: $\\int_{-1}^{1}|x-y|\\,dy=\\frac{(x+1)^2+(1-x)^2}{2}=x^2+1$, also $u=-\\frac{x^2+1}2$.</li><li>Kontrolle: $u''=-1$, also $-u''=1=f$ auf $[-1,1]$ ✓.</li></ol>",
+      "ru": "<b>1D: $-u''=f$.</b><ol><li>Фундаментальное решение: $E(x)=-\\frac{|x|}2$. Проверка: $E''=-\\frac12\\cdot|x|''=-\\frac12\\cdot2\\delta=-\\delta$, значит $-E''=\\delta$ ✓.</li><li>Источник $f=\\mathbf 1_{[-1,1]}$: $u(x)=(E*f)(x)=-\\frac12\\int_{-1}^{1}|x-y|\\,dy$.</li><li>При $|x|\\le1$: $\\int_{-1}^{1}|x-y|\\,dy=\\frac{(x+1)^2+(1-x)^2}{2}=x^2+1$, значит $u=-\\frac{x^2+1}2$.</li><li>Проверка: $u''=-1$, то есть $-u''=1=f$ на $[-1,1]$ ✓.</li></ol>"
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1257,6 +1488,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>PDE</b> (partielle Differentialgleichung): eine Gleichung für eine Funktion mehrerer Variablen, z. B. Ort $x$ und Zeit $t$, mit Ableitungen nach beiden.</li><li><b>Laplace-Operator</b> $\\Delta u=u_{xx}+u_{yy}\\,(+u_{zz})$: Summe der zweiten Ableitungen. Er misst, wie sehr $u$ vom Durchschnitt seiner Nachbarn abweicht.</li><li>$\\partial_tu$ = Ableitung nach der Zeit, $\\partial_t^2u$ = zweite Ableitung nach der Zeit.</li></ul>",
+      "ru": "<ul><li><b>PDE</b> (уравнение в частных производных): уравнение для функции нескольких переменных, например координаты $x$ и времени $t$, с производными по обеим.</li><li><b>Оператор Лапласа</b> $\\Delta u=u_{xx}+u_{yy}\\,(+u_{zz})$: сумма вторых производных. Он показывает, насколько $u$ отличается от среднего по соседям.</li><li>$\\partial_tu$ — производная по времени, $\\partial_t^2u$ — вторая производная по времени.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Drei Charaktere: <b>Laplace</b> ist ein gespanntes Trampolin, das ruhig daliegt – nichts bewegt sich mehr. <b>Wärmeleitung</b> ist ein Tropfen Tinte im Wasser: Er verschwimmt, wird immer gleichmäßiger, und rückwärts geht es nie. <b>Welle</b> ist ein geschütteltes Seil: Die Form läuft weg, mit fester Geschwindigkeit, und kommt notfalls zurück. Wenn du eine Aufgabe siehst, frag zuerst: Welcher der drei ist es?",
+      "ru": "Три характера: <b>Лаплас</b> — натянутый батут, который спокойно лежит: ничего уже не движется. <b>Теплопроводность</b> — капля чернил в воде: расплывается, становится всё равномернее, и назад не бывает. <b>Волна</b> — встряхнутая верёвка: форма убегает с постоянной скоростью и может вернуться. Видишь задачу — сначала спроси: какой из трёх?"
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Drei Funktionen, drei Gleichungen – einfach einsetzen:</b><ol><li>$u=x^2-y^2$: $u_{xx}=2$, $u_{yy}=-2$ → $\\Delta u=0$ ✓ löst Laplace.</li><li>$u=e^{-t}\\sin x$: $u_t=-e^{-t}\\sin x$ und $u_{xx}=-e^{-t}\\sin x$ → $u_t=u_{xx}$ ✓ löst die Wärmeleitung.</li><li>$u=\\sin(x-ct)$: $u_{tt}=-c^2\\sin(x-ct)$ und $u_{xx}=-\\sin(x-ct)$ → $u_{tt}=c^2u_{xx}$ ✓ löst die Wellengleichung.</li></ol>Das „Einsetzen und Vergleichen“ ist der wichtigste Check des ganzen Teils.",
+      "ru": "<b>Три функции, три уравнения — просто подставляем:</b><ol><li>$u=x^2-y^2$: $u_{xx}=2$, $u_{yy}=-2$ → $\\Delta u=0$ ✓ решает Лапласа.</li><li>$u=e^{-t}\\sin x$: $u_t=-e^{-t}\\sin x$ и $u_{xx}=-e^{-t}\\sin x$ → $u_t=u_{xx}$ ✓ решает уравнение теплопроводности.</li><li>$u=\\sin(x-ct)$: $u_{tt}=-c^2\\sin(x-ct)$ и $u_{xx}=-\\sin(x-ct)$ → $u_{tt}=c^2u_{xx}$ ✓ решает волновое уравнение.</li></ol>«Подставить и сравнить» — самая важная проверка во всей части."
+     }
+    },
+    {
      "type": "tabelle",
      "label": {
       "ru": "",
@@ -1288,6 +1552,39 @@ window.ANA3 = {
     "de": "Separation der Variablen"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Randbedingung</b>: was am Rand gelten muss, z. B. $u(0,t)=u(L,t)=0$ (Saite an beiden Enden festgeklemmt).</li><li><b>Die ODE $X''=-\\lambda X$</b> hat als Lösungen $\\sin(\\sqrt\\lambda x)$ und $\\cos(\\sqrt\\lambda x)$.</li><li><b>Mode</b> = eine einzelne Grundschwingung, z. B. $\\sin(kx)$.</li><li><b>Fourierreihe</b>: eine Funktion als Summe von Sinus- und Cosinus-Moden schreiben.</li></ul>",
+      "ru": "<ul><li><b>Граничное условие</b>: что должно выполняться на краю, например $u(0,t)=u(L,t)=0$ (струна зажата с обоих концов).</li><li><b>ОДУ $X''=-\\lambda X$</b> имеет решения $\\sin(\\sqrt\\lambda x)$ и $\\cos(\\sqrt\\lambda x)$.</li><li><b>Мода</b> — одно отдельное базовое колебание, например $\\sin(kx)$.</li><li><b>Ряд Фурье</b>: запись функции как суммы синусов и косинусов (мод).</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Eine Gitarrensaite kann nicht jeden beliebigen Ton spielen, nur den Grundton und seine Obertöne – weil sie an beiden Enden festgeklemmt ist. Jeder dieser Töne (jede Mode) ist für sich ganz einfach: eine feste Form, die mit der Zeit nur lauter/leiser wird oder schwingt. Die Methode: Zerleg den Anfangszustand in diese Töne, lass jeden Ton für sich laufen, und addiere am Ende alles.",
+      "ru": "Гитарная струна не может играть любую ноту, только основной тон и обертоны — потому что она зажата с обоих концов. Каждая такая нота (мода) сама по себе очень простая: постоянная форма, которая со временем только затухает или колеблется. Метод: разложи начальное состояние на эти ноты, дай каждой жить отдельно и в конце всё сложи."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Wärme auf $[0,\\pi]$, Ränder auf 0, Start $u_0=\\sin x+\\frac12\\sin3x$.</b><ol><li>Mit $L=\\pi$ hat Mode $k$ den Abklingfaktor $e^{-k^2t}$.</li><li>$u_0$ besteht schon aus zwei Moden ($k=1$ und $k=3$) – keine Integrale nötig.</li><li>Lösung: $u(x,t)=e^{-t}\\sin x+\\frac12e^{-9t}\\sin3x$.</li><li>Checks: Bei $t=0$ kommt $u_0$ heraus ✓. Bei $x=0$ und $x=\\pi$ ist $u=0$ ✓.</li></ol>Bild: Schon bei $t=1$ ist $e^{-9}\\approx0{,}0001$ – die „zackige“ Mode $\\sin3x$ ist fast weg, übrig bleibt der sanfte Buckel $\\sin x$. Wärme glättet zuerst das Feine.",
+      "ru": "<b>Тепло на $[0,\\pi]$, края на 0, старт $u_0=\\sin x+\\frac12\\sin3x$.</b><ol><li>При $L=\\pi$ мода $k$ затухает с множителем $e^{-k^2t}$.</li><li>$u_0$ уже состоит из двух мод ($k=1$ и $k=3$) — интегралы не нужны.</li><li>Решение: $u(x,t)=e^{-t}\\sin x+\\frac12e^{-9t}\\sin3x$.</li><li>Проверки: при $t=0$ получается $u_0$ ✓. При $x=0$ и $x=\\pi$ имеем $u=0$ ✓.</li></ol>Картинка: уже при $t=1$ множитель $e^{-9}\\approx0{,}0001$ — «зубчатая» мода $\\sin3x$ почти исчезла, остался плавный горб $\\sin x$. Тепло сначала сглаживает мелочи."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -1343,6 +1640,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Harmonisch</b> = $\\Delta u=0$.</li><li><b>Mittelwert über einen Kreis</b>: alle Werte auf dem Kreis zusammenzählen und durch die Länge teilen.</li><li><b>Punktquelle</b> δ: alles „Material“ sitzt in einem Punkt (eine Punktladung).</li></ul>",
+      "ru": "<ul><li><b>Гармоническая</b> — $\\Delta u=0$.</li><li><b>Среднее по окружности</b>: сложить все значения на окружности и поделить на длину.</li><li><b>Точечный источник</b> δ: весь «материал» сидит в одной точке (точечный заряд).</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Eine Seifenhaut, gespannt in einen verbogenen Drahtrahmen: Innen gibt es keine Beulen und keine Dellen, jeder Punkt liegt genau auf dem Durchschnitt seiner Umgebung. Darum kommt das Höchste und das Tiefste immer am Rand vor. Die Fundamentallösung ist das Feld einer einzelnen Punktladung; die Greensche Funktion ist dasselbe mit „Spiegelladungen“, damit es zur Form des Rands passt.",
+      "ru": "Мыльная плёнка, натянутая на изогнутую проволочную рамку: внутри нет ни бугров, ни ямок, каждая точка лежит ровно на среднем своих соседей. Поэтому самое высокое и самое низкое всегда на краю. Фундаментальное решение — поле одного точечного заряда; функция Грина — то же самое с «зеркальными зарядами», чтобы подогнать под форму границы."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Mittelwert-Eigenschaft prüfen an $u=x^2-y^2$</b> (harmonisch, siehe „Drei Gleichungen“):<ol><li>Auf dem Kreis mit Radius $r$ um 0: $x=r\\cos\\varphi$, $y=r\\sin\\varphi$ → $u=r^2(\\cos^2\\varphi-\\sin^2\\varphi)=r^2\\cos2\\varphi$.</li><li>Mittelwert von $\\cos2\\varphi$ über eine volle Runde ist $0$ → Mittelwert $0$.</li><li>Und $u(0,0)=0$ ✓ – gleich dem Mittelwert.</li></ol><b>Maximumprinzip:</b> Auf der Einheitsscheibe ist das Maximum $1$, angenommen am Rand bei $(\\pm1,0)$. Innen, z. B. $u(0{,}5;\\,0)=0{,}25$, ist es kleiner ✓.",
+      "ru": "<b>Проверяем свойство среднего на $u=x^2-y^2$</b> (гармоническая, см. «Три уравнения»):<ol><li>На окружности радиуса $r$ вокруг 0: $x=r\\cos\\varphi$, $y=r\\sin\\varphi$ → $u=r^2(\\cos^2\\varphi-\\sin^2\\varphi)=r^2\\cos2\\varphi$.</li><li>Среднее $\\cos2\\varphi$ за полный круг равно $0$ → среднее $0$.</li><li>И $u(0,0)=0$ ✓ — совпадает со средним.</li></ol><b>Принцип максимума:</b> на единичном диске максимум равен $1$ и достигается на краю в $(\\pm1,0)$. Внутри, например $u(0{,}5;\\,0)=0{,}25$, меньше ✓."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1385,6 +1715,39 @@ window.ANA3 = {
     "de": "Variationsmethode und schwache Lösungen"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Energie</b> $E(u)$: eine Zahl, die angibt, wie „gespannt“ $u$ ist. $|\\nabla u|^2$ ist die Steilheit zum Quadrat.</li><li><b>Testfunktion</b> $\\varphi$: siehe „Distributionen“.</li><li><b>Klassische Lösung</b>: $u$ ist zweimal ableitbar und erfüllt die Gleichung in jedem Punkt.</li></ul>",
+      "ru": "<ul><li><b>Энергия</b> $E(u)$: число, показывающее, насколько $u$ «натянута». $|\\nabla u|^2$ — крутизна в квадрате.</li><li><b>Пробная функция</b> $\\varphi$: см. «Дистрибуции».</li><li><b>Классическое решение</b>: $u$ дважды дифференцируема и удовлетворяет уравнению в каждой точке.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Die Natur ist faul: Eine Seifenhaut, eine gespannte Membran, ein Seil im Gleichgewicht – sie alle nehmen die Form mit der <b>kleinsten Energie</b> an. Statt die Gleichung Punkt für Punkt zu prüfen (wofür man zwei Ableitungen bräuchte), prüft die schwache Form nur „im Durchschnitt“ gegen alle Testfunktionen. Dafür reicht eine Ableitung – also sind auch Lösungen mit Knicken erlaubt.",
+      "ru": "Природа ленива: мыльная плёнка, натянутая мембрана, верёвка в равновесии — все принимают форму с <b>наименьшей энергией</b>. Вместо того чтобы проверять уравнение в каждой точке (для этого нужны две производные), слабая форма проверяет только «в среднем» против всех пробных функций. Для этого хватает одной производной — значит, разрешены и решения с изломами."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$-u''=1$ auf $(0,1)$ mit $u(0)=u(1)=0$.</b><ol><li>Raten: $u=\\frac{x(1-x)}2$. Ableiten: $u'=\\frac{1-2x}2$, $u''=-1$ → $-u''=1$ ✓. Rand: $u(0)=u(1)=0$ ✓.</li><li>Schwache Form: $\\int_0^1u'\\varphi'\\,dx=\\int_0^1\\varphi\\,dx$ für alle $\\varphi$.</li><li>Check durch partielle Integration: $\\int u'\\varphi'=[u'\\varphi]_0^1-\\int u''\\varphi=0+\\int\\varphi$ ✓ (Randterm 0, weil $\\varphi$ am Rand 0 ist).</li></ol>Bild: Ein Seil, das unter seinem eigenen Gewicht durchhängt – eine Parabel.",
+      "ru": "<b>$-u''=1$ на $(0,1)$ с $u(0)=u(1)=0$.</b><ol><li>Угадываем: $u=\\frac{x(1-x)}2$. Производные: $u'=\\frac{1-2x}2$, $u''=-1$ → $-u''=1$ ✓. Граница: $u(0)=u(1)=0$ ✓.</li><li>Слабая форма: $\\int_0^1u'\\varphi'\\,dx=\\int_0^1\\varphi\\,dx$ для всех $\\varphi$.</li><li>Проверка интегрированием по частям: $\\int u'\\varphi'=[u'\\varphi]_0^1-\\int u''\\varphi=0+\\int\\varphi$ ✓ (граничный член 0, потому что $\\varphi$ на краю равна 0).</li></ol>Картинка: верёвка, провисающая под собственным весом, — парабола."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -1429,6 +1792,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Gaußglocke</b>: die typische Glockenkurve $e^{-x^2}$, hoch in der Mitte, schnell abfallend.</li><li><b>Anfangswert</b> $u_0$: die Temperaturverteilung zur Zeit $t=0$.</li><li><b>Faltung</b>: siehe „Faltung“ – verwischen.</li></ul>",
+      "ru": "<ul><li><b>Гауссов колокол</b>: типичная кривая $e^{-x^2}$, высокая в центре, быстро спадающая.</li><li><b>Начальное значение</b> $u_0$: распределение температуры в момент $t=0$.</li><li><b>Свёртка</b>: см. «Свёртка» — размазывание.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Milch in den Kaffee: Am Anfang ein weißer Klecks, dann verschwimmt er zu einer immer breiteren, flacheren Wolke, bis alles gleich hellbraun ist. Die Wärmeleitung macht genau das mit Temperatur. Jeder heiße Punkt wird zu einer Gaußglocke, die mit der Zeit breiter wird (Breite $\\sim\\sqrt t$). Die Gesamtmenge an Wärme bleibt dabei gleich – sie verteilt sich nur.",
+      "ru": "Молоко в кофе: сначала белая клякса, потом она расплывается во всё более широкое и плоское облако, пока всё не станет одинаково светло-коричневым. Теплопроводность делает ровно это с температурой. Каждая горячая точка превращается в гауссов колокол, который со временем расширяется (ширина $\\sim\\sqrt t$). Общее количество тепла при этом не меняется — оно только распределяется."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Start $u_0=\\sin x$ auf ganz $\\mathbb R$.</b><ol><li>Ansatz: Form bleibt, nur die Höhe schrumpft: $u=A(t)\\sin x$.</li><li>Einsetzen: $A'\\sin x=-A\\sin x$ → $A'=-A$ → $A=e^{-t}$.</li><li>Lösung: $u=e^{-t}\\sin x$. Check: $u_t=-e^{-t}\\sin x=u_{xx}$ ✓, und bei $t=0$ ist $u=\\sin x$ ✓.</li></ol>Zahlen: Die Höhe halbiert sich, wenn $e^{-t}=\\frac12$, also bei $t=\\ln2\\approx0{,}69$. Und ein Wärmepunkt hat zur Zeit $t=2$ die Breite $\\sqrt{2t}=2$.",
+      "ru": "<b>Старт $u_0=\\sin x$ на всей $\\mathbb R$.</b><ol><li>Догадка: форма сохраняется, уменьшается только высота: $u=A(t)\\sin x$.</li><li>Подставляем: $A'\\sin x=-A\\sin x$ → $A'=-A$ → $A=e^{-t}$.</li><li>Решение: $u=e^{-t}\\sin x$. Проверка: $u_t=-e^{-t}\\sin x=u_{xx}$ ✓, и при $t=0$ имеем $u=\\sin x$ ✓.</li></ol>В числах: высота уменьшается вдвое, когда $e^{-t}=\\frac12$, то есть при $t=\\ln2\\approx0{,}69$. А тепловая точка в момент $t=2$ имеет ширину $\\sqrt{2t}=2$."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1471,6 +1867,39 @@ window.ANA3 = {
     "de": "Wellengleichung"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li>$c$ = Ausbreitungsgeschwindigkeit der Welle.</li><li>$f$ = Anfangsform (wie das Seil bei $t=0$ aussieht), $g$ = Anfangsgeschwindigkeit (wie schnell sich jeder Punkt bei $t=0$ bewegt).</li><li><b>Charakteristiken</b> $x\\pm ct=\\text{const}$: die Linien, entlang derer Information läuft.</li></ul>",
+      "ru": "<ul><li>$c$ — скорость распространения волны.</li><li>$f$ — начальная форма (как выглядит верёвка при $t=0$), $g$ — начальная скорость (как быстро движется каждая точка при $t=0$).</li><li><b>Характеристики</b> $x\\pm ct=\\text{const}$: линии, по которым бежит информация.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Zieh ein Seil in der Mitte hoch und lass los: Der Buckel teilt sich in zwei halb so hohe Buckel, einer läuft nach links, einer nach rechts, beide mit Geschwindigkeit $c$ und ohne ihre Form zu ändern. Anders als bei Wärme verschwimmt nichts. Und: Ein Punkt erfährt von einer Störung erst, wenn die Welle ihn erreicht hat – nichts ist schneller als $c$.",
+      "ru": "Подними верёвку в середине и отпусти: горб делится на два горба вдвое ниже, один бежит влево, другой вправо, оба со скоростью $c$ и не меняя формы. В отличие от тепла, ничего не расплывается. И ещё: точка узнаёт о возмущении только тогда, когда до неё дошла волна, — ничто не быстрее $c$."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$c=1$, Anfangsform: Dreieck der Höhe 2 um $x=0$ (Breite 2), $g=0$.</b><ol><li>d'Alembert ohne $g$: $u(x,t)=\\frac{f(x+t)+f(x-t)}2$.</li><li>$f(x-t)$ ist das Dreieck, um $t$ nach rechts geschoben, $f(x+t)$ um $t$ nach links. Jedes wird halbiert.</li><li>Bei $t=5$: zwei Dreiecke der Höhe $1$, Spitzen bei $x=5$ und $x=-5$.</li><li>Check in der Mitte: $u(0,5)=\\frac{f(5)+f(-5)}2=0$ – die Welle ist weg ✓.</li></ol>",
+      "ru": "<b>$c=1$, начальная форма: треугольник высоты 2 вокруг $x=0$ (ширина 2), $g=0$.</b><ol><li>Даламбер без $g$: $u(x,t)=\\frac{f(x+t)+f(x-t)}2$.</li><li>$f(x-t)$ — треугольник, сдвинутый на $t$ вправо, $f(x+t)$ — на $t$ влево. Каждый делится пополам.</li><li>При $t=5$: два треугольника высоты $1$, вершины в $x=5$ и $x=-5$.</li><li>Проверка в центре: $u(0,5)=\\frac{f(5)+f(-5)}2=0$ — волна ушла ✓.</li></ol>"
+     }
+    },
     {
      "type": "kern",
      "label": {
