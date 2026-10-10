@@ -173,6 +173,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Komplexe Zahl</b> $z=x+iy$: ein Punkt in der Ebene, $x$ nach rechts, $y$ nach oben. $i$ ist die Zahl mit $i^2=-1$.</li><li><b>Mal $i$</b> heißt: den Punkt um 90° drehen. Beispiel: $i\\cdot 1=i$, der Punkt 1 auf der x-Achse landet oben auf der y-Achse.</li><li><b>Ableitung</b> = wie stark sich der Ausgang ändert, wenn du den Eingang ein kleines bisschen bewegst.</li><li><b>$u$ und $v$</b>: Jede komplexe Funktion hat einen Realteil $u(x,y)$ und einen Imaginärteil $v(x,y)$: $f=u+iv$.</li></ul>",
+      "ru": "<ul><li><b>Комплексное число</b> $z=x+iy$: точка на плоскости, $x$ вправо, $y$ вверх. $i$ — число, у которого $i^2=-1$.</li><li><b>Умножить на $i$</b> значит повернуть точку на 90°. Пример: $i\\cdot 1=i$, точка 1 на оси x переезжает наверх, на ось y.</li><li><b>Производная</b> — насколько сильно меняется выход, если чуть-чуть сдвинуть вход.</li><li><b>$u$ и $v$</b>: у любой комплексной функции есть вещественная часть $u(x,y)$ и мнимая часть $v(x,y)$: $f=u+iv$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Stell dir vor, du druckst ein Foto auf ein Gummituch und dehnst es. Bei einer <b>holomorphen</b> Funktion darf jedes kleine Stück nur <b>gedreht und gleichmäßig vergrößert</b> werden, wie beim Zoomen am Handy. Verzerren (ein Quadrat wird zur schiefen Raute) ist verboten. Die zwei Cauchy-Riemann-Gleichungen sind genau diese Regel „nur drehen und zoomen“, als Formel geschrieben.",
+      "ru": "Представь: печатаешь фото на резиновой плёнке и растягиваешь её. У <b>голоморфной</b> функции каждый маленький кусочек можно только <b>повернуть и равномерно увеличить</b>, как при зуме на телефоне. Перекашивать (квадрат превращается в косой ромб) нельзя. Два уравнения Коши–Римана — это ровно правило «только поворот и зум», записанное формулой."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Ist $f(z)=z^2$ holomorph?</b><ol><li>Ausrechnen: $(x+iy)^2=x^2-y^2+2ixy$, also $u=x^2-y^2$, $v=2xy$.</li><li>Ableitungen: $u_x=2x$, $v_y=2x$ → gleich ✓. $u_y=-2y$, $v_x=2y$ → $u_y=-v_x$ ✓.</li><li>Beide Gleichungen stimmen → holomorph.</li></ol><b>Gegenbeispiel $f(z)=\\bar z=x-iy$:</b> $u=x$, $v=-y$, also $u_x=1$, aber $v_y=-1$ ✗. Nicht holomorph: $\\bar z$ spiegelt, und Spiegeln ist kein Drehen.",
+      "ru": "<b>Голоморфна ли $f(z)=z^2$?</b><ol><li>Раскрываем: $(x+iy)^2=x^2-y^2+2ixy$, значит $u=x^2-y^2$, $v=2xy$.</li><li>Производные: $u_x=2x$, $v_y=2x$ → совпали ✓. $u_y=-2y$, $v_x=2y$ → $u_y=-v_x$ ✓.</li><li>Оба уравнения выполнены → голоморфна.</li></ol><b>Контрпример $f(z)=\\bar z=x-iy$:</b> $u=x$, $v=-y$, то есть $u_x=1$, а $v_y=-1$ ✗. Не голоморфна: $\\bar z$ отражает, а отражение — это не поворот."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -226,6 +259,39 @@ window.ANA3 = {
     "de": "Komplexes Kurvenintegral"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Weg / Kurve</b> $\\gamma$: eine Route in der Ebene, beschrieben durch eine „Zeit“ $t$: zur Zeit $t$ bist du am Punkt $\\gamma(t)$.</li><li><b>Einheitskreis</b>: $\\gamma(t)=e^{it}=\\cos t+i\\sin t$ für $t$ von $0$ bis $2\\pi$ – einmal gegen den Uhrzeigersinn herum.</li><li><b>$\\oint$</b> = Integral über einen geschlossenen Weg (Ende = Anfang).</li></ul>",
+      "ru": "<ul><li><b>Путь / кривая</b> $\\gamma$: маршрут на плоскости, заданный «временем» $t$: в момент $t$ ты в точке $\\gamma(t)$.</li><li><b>Единичная окружность</b>: $\\gamma(t)=e^{it}=\\cos t+i\\sin t$ при $t$ от $0$ до $2\\pi$ — один круг против часовой стрелки.</li><li><b>$\\oint$</b> — интеграл по замкнутому пути (конец = начало).</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Spaziergang mit Schrittzähler: Bei jedem kleinen Schritt $dz$ schaust du, welchen Wert $f$ dort hat, multiplizierst mit dem Schritt und schreibst es auf. Am Ende addierst du alles. Weil Schritte eine <b>Richtung</b> haben, kann sich vieles gegenseitig wegheben – genau deshalb kommt bei geschlossenen Wegen so oft $0$ heraus.",
+      "ru": "Прогулка с шагомером: на каждом маленьком шаге $dz$ смотришь, чему равно $f$ в этой точке, умножаешь на шаг и записываешь. В конце всё складываешь. У шагов есть <b>направление</b>, поэтому многое взаимно сокращается — именно поэтому по замкнутому пути так часто получается $0$."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\oint_{|z|=1}\\frac1z\\,dz$ ausrechnen:</b><ol><li>Weg: $z=e^{it}$, $t\\in[0,2\\pi]$. Dann $dz=ie^{it}\\,dt$.</li><li>Einsetzen: $\\frac1z=e^{-it}$, also $\\frac1z\\,dz=e^{-it}\\cdot ie^{it}\\,dt=i\\,dt$.</li><li>Integrieren: $\\int_0^{2\\pi}i\\,dt=2\\pi i$.</li></ol><b>Zum Vergleich $\\oint_{|z|=1}z\\,dz$:</b> $e^{it}\\cdot ie^{it}=ie^{2it}$, und $\\int_0^{2\\pi}e^{2it}dt=0$. Also $0$. Merke: Nur $\\frac1z$ „überlebt“ einen Umlauf.",
+      "ru": "<b>Считаем $\\oint_{|z|=1}\\frac1z\\,dz$:</b><ol><li>Путь: $z=e^{it}$, $t\\in[0,2\\pi]$. Тогда $dz=ie^{it}\\,dt$.</li><li>Подставляем: $\\frac1z=e^{-it}$, значит $\\frac1z\\,dz=e^{-it}\\cdot ie^{it}\\,dt=i\\,dt$.</li><li>Интегрируем: $\\int_0^{2\\pi}i\\,dt=2\\pi i$.</li></ol><b>Для сравнения $\\oint_{|z|=1}z\\,dz$:</b> $e^{it}\\cdot ie^{it}=ie^{2it}$, а $\\int_0^{2\\pi}e^{2it}dt=0$. Значит, $0$. Запомни: только $\\frac1z$ «выживает» после обхода."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -281,6 +347,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Singularität</b> = Stelle, an der $f$ kaputt ist, meist weil durch 0 geteilt wird. Bei $\\frac1{z-3}$ ist das $z=3$.</li><li><b>Einfach zusammenhängend</b> = ein Gebiet ohne Löcher (eine Scheibe ja, ein Ring nein).</li><li><b>Holomorph</b>: siehe erstes Thema – „nur drehen und zoomen“.</li></ul>",
+      "ru": "<ul><li><b>Особенность (сингулярность)</b> — место, где $f$ «ломается», обычно из-за деления на 0. У $\\frac1{z-3}$ это $z=3$.</li><li><b>Односвязная</b> область — без дырок (диск — да, кольцо — нет).</li><li><b>Голоморфна</b>: см. первую тему — «только поворот и зум».</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Wanderung im Gebirge: Du gehst eine Runde und kommst zum Start zurück. Die Summe aller Höhenänderungen ist $0$ – egal welche Route. Genauso ist das Integral einer holomorphen Funktion über eine geschlossene Runde $0$. Das klappt nur, wenn im Inneren der Runde <b>kein Loch</b> ist (keine Singularität). Ein Loch ist wie ein Brunnen in der Mitte, um den man herumläuft – dann kann etwas übrig bleiben.",
+      "ru": "Поход в горах: идёшь по кругу и возвращаешься к старту. Сумма всех подъёмов и спусков равна $0$ — какой бы маршрут ты ни выбрал. Так же и интеграл голоморфной функции по замкнутому кругу равен $0$. Работает это, только если внутри круга <b>нет дырки</b> (нет особенности). Дырка — как колодец в центре, вокруг которого ходишь: тогда что-то может остаться."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\oint_{|z|=1}\\frac{1}{z-3}\\,dz=?$</b><ol><li>Wo ist $f$ kaputt? Nenner $z-3=0$ → bei $z=3$.</li><li>Liegt $z=3$ im Kreis $|z|\\le1$? Abstand von 0 ist $3>1$ → <b>nein</b>, draußen.</li><li>Innen kein Loch → Cauchy → Antwort $0$. Nichts zu rechnen.</li></ol><b>Achtung:</b> Bei $\\oint_{|z|=5}\\frac{1}{z-3}\\,dz$ liegt $z=3$ innen ($3<5$). Dann gilt der Satz nicht, und tatsächlich kommt $2\\pi i$ heraus (siehe Residuen).",
+      "ru": "<b>$\\oint_{|z|=1}\\frac{1}{z-3}\\,dz=?$</b><ol><li>Где $f$ ломается? Знаменатель $z-3=0$ → в $z=3$.</li><li>Лежит ли $z=3$ в круге $|z|\\le1$? Расстояние до 0 равно $3>1$ → <b>нет</b>, снаружи.</li><li>Внутри дырок нет → Коши → ответ $0$. Считать нечего.</li></ol><b>Внимание:</b> у $\\oint_{|z|=5}\\frac{1}{z-3}\\,dz$ точка $z=3$ внутри ($3<5$). Тогда теорема не работает, и действительно получается $2\\pi i$ (см. вычеты)."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -323,6 +422,39 @@ window.ANA3 = {
     "de": "Cauchysche Integralformel"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Cauchyscher Integralsatz</b> (vorheriges Thema): ohne Loch innen ist das Integral $0$.</li><li>Hier gibt es <b>genau ein</b> „Loch“, bei $z=a$, und es kommt von uns selbst: Wir teilen absichtlich durch $(z-a)$.</li><li>$g^{(m)}$ = $m$-te Ableitung von $g$; $m!=1\\cdot2\\cdots m$.</li></ul>",
+      "ru": "<ul><li><b>Интегральная теорема Коши</b> (прошлая тема): без дырки внутри интеграл равен $0$.</li><li>Здесь ровно <b>одна</b> «дырка», в $z=a$, и сделали её мы сами: специально делим на $(z-a)$.</li><li>$g^{(m)}$ — $m$-я производная $g$; $m!=1\\cdot2\\cdots m$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Ring aus Thermometern um eine Tasse: Wenn die Temperatur sich „brav“ verteilt, kannst du aus den Werten am Ring ausrechnen, wie warm es genau in der Mitte ist. Die Integralformel ist dieser Trick: Das Integral um $a$ herum „liest“ den Wert $g(a)$ in der Mitte ab. Steht im Nenner eine höhere Potenz, liest es statt des Werts eine Ableitung ab.",
+      "ru": "Кольцо из термометров вокруг чашки: если температура распределена «прилично», по показаниям на кольце можно точно вычислить, какая она в центре. Интегральная формула — именно этот трюк: интеграл вокруг $a$ «считывает» значение $g(a)$ в центре. Если в знаменателе степень выше, он считывает не значение, а производную."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\oint_{|z|=2}\\frac{e^z}{z-1}\\,dz$:</b><ol><li>Form $\\frac{g(z)}{z-a}$ mit $g(z)=e^z$, $a=1$.</li><li>$a=1$ liegt im Kreis mit Radius 2 ✓, $e^z$ hat keine Löcher ✓.</li><li>Antwort: $2\\pi i\\cdot g(1)=2\\pi i\\,e$.</li></ol><b>Mit Quadrat: $\\oint_{|z|=2}\\frac{z^2}{(z-1)^2}\\,dz$.</b> Hier $m=2$, $g(z)=z^2$, $g'(z)=2z$, $g'(1)=2$. Antwort: $2\\pi i\\cdot\\frac{2}{1!}=4\\pi i$.",
+      "ru": "<b>$\\oint_{|z|=2}\\frac{e^z}{z-1}\\,dz$:</b><ol><li>Вид $\\frac{g(z)}{z-a}$, где $g(z)=e^z$, $a=1$.</li><li>$a=1$ лежит в круге радиуса 2 ✓, у $e^z$ дырок нет ✓.</li><li>Ответ: $2\\pi i\\cdot g(1)=2\\pi i\\,e$.</li></ol><b>С квадратом: $\\oint_{|z|=2}\\frac{z^2}{(z-1)^2}\\,dz$.</b> Здесь $m=2$, $g(z)=z^2$, $g'(z)=2z$, $g'(1)=2$. Ответ: $2\\pi i\\cdot\\frac{2}{1!}=4\\pi i$."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -378,6 +510,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Potenzreihe</b> $\\sum a_nz^n=a_0+a_1z+a_2z^2+\\dots$: ein „unendlich langes Polynom“.</li><li><b>Konvergiert</b> = die Summe nähert sich einer festen Zahl. <b>Divergiert</b> = sie wächst über alle Grenzen oder springt herum.</li><li><b>Konvergenzradius $R$</b>: Für $|z|\\lt R$ konvergiert die Reihe, für $|z|>R$ nicht.</li></ul>",
+      "ru": "<ul><li><b>Степенной ряд</b> $\\sum a_nz^n=a_0+a_1z+a_2z^2+\\dots$: «бесконечно длинный многочлен».</li><li><b>Сходится</b> — сумма приближается к определённому числу. <b>Расходится</b> — растёт без предела или скачет.</li><li><b>Радиус сходимости $R$</b>: при $|z|\\lt R$ ряд сходится, при $|z|>R$ — нет.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Blas einen Luftballon um den Mittelpunkt auf. Er wächst gleichmäßig in alle Richtungen, bis er das <b>erste Loch</b> der Funktion berührt – dann platzt er. Der Radius in diesem Moment ist der Konvergenzradius. Deshalb hängt $R$ davon ab, wo die nächste Singularität liegt, auch wenn sie nicht auf der reellen Achse liegt.",
+      "ru": "Надуваешь воздушный шарик вокруг центра. Он растёт одинаково во все стороны, пока не коснётся <b>первой дырки</b> функции — тогда лопается. Радиус в этот момент и есть радиус сходимости. Поэтому $R$ зависит от того, где ближайшая особенность, даже если она не на вещественной оси."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\frac1{1-z}=1+z+z^2+z^3+\\dots$</b><ol><li>Wo ist die Funktion kaputt? Bei $z=1$. Abstand zu 0: $1$ → $R=1$.</li><li>Test mit $z=\\frac12$: Reihe $1+\\frac12+\\frac14+\\dots=2$, Funktion $\\frac1{1-1/2}=2$ ✓.</li><li>Test mit $z=2$: Reihe $1+2+4+\\dots$ explodiert, obwohl $\\frac1{1-2}=-1$ existiert. Außerhalb von $R$ hilft die Reihe nicht.</li></ol><b>Überraschung:</b> $\\frac1{1+x^2}$ ist auf ganz $\\mathbb R$ harmlos, aber hat Löcher bei $\\pm i$ (Abstand 1). Darum ist auch hier $R=1$.",
+      "ru": "<b>$\\frac1{1-z}=1+z+z^2+z^3+\\dots$</b><ol><li>Где функция ломается? В $z=1$. Расстояние до 0: $1$ → $R=1$.</li><li>Проверка при $z=\\frac12$: ряд $1+\\frac12+\\frac14+\\dots=2$, функция $\\frac1{1-1/2}=2$ ✓.</li><li>Проверка при $z=2$: ряд $1+2+4+\\dots$ взрывается, хотя $\\frac1{1-2}=-1$ существует. За пределами $R$ ряд не помогает.</li></ol><b>Сюрприз:</b> $\\frac1{1+x^2}$ на всей $\\mathbb R$ безобидна, но у неё есть дырки в $\\pm i$ (расстояние 1). Поэтому и здесь $R=1$."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -421,6 +586,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Polarform</b>: $z=r\\,e^{i\\varphi}$, wobei $r=|z|$ der Abstand zu 0 und $\\varphi$ der Winkel ist.</li><li><b>$\\arg z$</b> = dieser Winkel. Problem: $\\varphi$ und $\\varphi+2\\pi$ beschreiben denselben Punkt.</li><li>$\\ln$ = gewöhnlicher reeller Logarithmus, $\\log$ = komplexer.</li></ul>",
+      "ru": "<ul><li><b>Полярная форма</b>: $z=r\\,e^{i\\varphi}$, где $r=|z|$ — расстояние до 0, а $\\varphi$ — угол.</li><li><b>$\\arg z$</b> — этот угол. Проблема: $\\varphi$ и $\\varphi+2\\pi$ задают одну и ту же точку.</li><li>$\\ln$ — обычный вещественный логарифм, $\\log$ — комплексный.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Parkhaus mit Wendelrampe: Du fährst eine volle Runde und stehst wieder über demselben Punkt – aber ein Stockwerk höher. Der Logarithmus merkt sich das Stockwerk: Nach einer Runde um die 0 ist sein Wert um $2\\pi i$ größer. Damit $\\log$ trotzdem eine normale Funktion ist, sperrt man eine „Wand“ (den Schnitt), durch die man nicht durchfahren darf. Dann bleibt man immer im selben Stockwerk.",
+      "ru": "Паркинг со спиральным пандусом: проезжаешь полный круг и снова стоишь над той же точкой — но этажом выше. Логарифм запоминает этаж: после круга вокруг 0 его значение больше на $2\\pi i$. Чтобы $\\log$ всё же был нормальной функцией, ставят «стену» (разрез), через которую проезжать нельзя. Тогда всегда остаёшься на одном этаже."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\log(1+i)$ im Hauptzweig:</b><ol><li>Abstand: $|1+i|=\\sqrt{1+1}=\\sqrt2$.</li><li>Winkel: $1+i$ liegt auf der Diagonalen → $\\arg=\\frac\\pi4$ (liegt in $(-\\pi,\\pi)$ ✓).</li><li>$\\log(1+i)=\\ln\\sqrt2+i\\frac\\pi4=\\frac{\\ln2}{2}+i\\frac\\pi4$.</li></ol><b>Eine Runde weiter:</b> Gehst du einmal um die 0 herum, ist der Winkel $\\frac\\pi4+2\\pi$, und $\\log$ wird $\\frac{\\ln2}{2}+i\\frac{9\\pi}4$ – derselbe Punkt, anderes „Stockwerk“.",
+      "ru": "<b>$\\log(1+i)$ на главной ветви:</b><ol><li>Расстояние: $|1+i|=\\sqrt{1+1}=\\sqrt2$.</li><li>Угол: $1+i$ лежит на диагонали → $\\arg=\\frac\\pi4$ (входит в $(-\\pi,\\pi)$ ✓).</li><li>$\\log(1+i)=\\ln\\sqrt2+i\\frac\\pi4=\\frac{\\ln2}{2}+i\\frac\\pi4$.</li></ol><b>На круг дальше:</b> если обойти 0 один раз, угол станет $\\frac\\pi4+2\\pi$, и $\\log$ станет $\\frac{\\ln2}{2}+i\\frac{9\\pi}4$ — та же точка, другой «этаж»."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -463,6 +661,39 @@ window.ANA3 = {
     "de": "Isolierte Singularitäten und Laurentreihe"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Taylorreihe</b>: $f$ als Summe $a_0+a_1(z-a)+a_2(z-a)^2+\\dots$ (nur positive Potenzen).</li><li><b>Laurentreihe</b>: dasselbe, aber auch mit $\\frac1{z-a},\\frac1{(z-a)^2},\\dots$ erlaubt.</li><li><b>Pol der Ordnung $m$</b>: $f$ benimmt sich bei $a$ wie $\\frac{1}{(z-a)^m}$.</li></ul>",
+      "ru": "<ul><li><b>Ряд Тейлора</b>: $f$ в виде суммы $a_0+a_1(z-a)+a_2(z-a)^2+\\dots$ (только положительные степени).</li><li><b>Ряд Лорана</b>: то же самое, но разрешены и $\\frac1{z-a},\\frac1{(z-a)^2},\\dots$</li><li><b>Полюс порядка $m$</b>: в точке $a$ функция $f$ ведёт себя как $\\frac{1}{(z-a)^m}$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Drei Arten von Löchern in einer Straße: <b>Hebbar</b> – ein Schlagloch, das man einfach zuschütten kann, danach ist die Straße glatt. <b>Pol</b> – ein Brunnen: tief, aber mit messbarer Tiefe ($m$). <b>Wesentlich</b> – eine bodenlose Höhle, in der alles Mögliche passiert. Die Laurentreihe misst die Tiefe: Wie viele negative Potenzen gibt es?",
+      "ru": "Три вида дыр на дороге: <b>устранимая</b> — выбоина, которую можно засыпать, и дорога снова ровная. <b>Полюс</b> — колодец: глубокий, но глубину можно измерить ($m$). <b>Существенная</b> — бездонная пещера, где творится что угодно. Ряд Лорана измеряет глубину: сколько в нём отрицательных степеней?"
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Drei Funktionen bei $z=0$:</b><ol><li>$\\frac{\\sin z}{z}=\\frac{z-\\frac{z^3}{6}+\\dots}{z}=1-\\frac{z^2}6+\\dots$ → keine negativen Potenzen → <b>hebbar</b>, Wert in 0 ist $1$.</li><li>$\\frac{3}{z^2}$ → negative Potenzen bis $z^{-2}$ → <b>Pol der Ordnung 2</b>.</li><li>$e^{1/z}=1+\\frac1z+\\frac1{2z^2}+\\frac1{6z^3}+\\dots$ → unendlich viele negative Potenzen → <b>wesentlich</b>.</li></ol>Bonus: Das Residuum ist der Koeffizient vor $\\frac1z$: bei $\\frac3{z^2}$ ist er $0$ (es gibt kein $\\frac1z$!), bei $e^{1/z}$ ist er $1$. Ein Pol kann also Residuum $0$ haben.",
+      "ru": "<b>Три функции в $z=0$:</b><ol><li>$\\frac{\\sin z}{z}=\\frac{z-\\frac{z^3}{6}+\\dots}{z}=1-\\frac{z^2}6+\\dots$ → отрицательных степеней нет → <b>устранимая</b>, значение в 0 равно $1$.</li><li>$\\frac{3}{z^2}$ → отрицательные степени до $z^{-2}$ → <b>полюс порядка 2</b>.</li><li>$e^{1/z}=1+\\frac1z+\\frac1{2z^2}+\\frac1{6z^3}+\\dots$ → бесконечно много отрицательных степеней → <b>существенная</b>.</li></ol>Бонус: вычет — это коэффициент при $\\frac1z$: у $\\frac3{z^2}$ он $0$ (там нет $\\frac1z$!), у $e^{1/z}$ он $1$. Значит, у полюса вычет может быть равен $0$."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -518,6 +749,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Residuum</b> $\\operatorname{Res}_af$ = eine einzige Zahl: der Koeffizient vor $\\frac1{z-a}$ in der Laurentreihe. Nicht dasselbe wie der Pol selbst!</li><li><b>Einfacher Pol</b> = Pol der Ordnung 1, wie bei $\\frac1{z-a}$.</li><li>„Innen“ = innerhalb des geschlossenen Wegs.</li></ul>",
+      "ru": "<ul><li><b>Вычет</b> $\\operatorname{Res}_af$ — одно-единственное число: коэффициент при $\\frac1{z-a}$ в ряде Лорана. Не то же самое, что сам полюс!</li><li><b>Простой полюс</b> — полюс порядка 1, как у $\\frac1{z-a}$.</li><li>«Внутри» — внутри замкнутого пути.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Das Integral ist ein Mikrofon, das du um eine Gruppe von Lautsprechern trägst. Es hört nur die Lautsprecher <b>innerhalb</b> deiner Runde, und von jedem nur einen Ton – sein Residuum. Alles andere hebt sich auf. Ergebnis: $2\\pi i$ mal die Summe der Töne. Statt zu integrieren, musst du also nur die Löcher finden, prüfen, welche innen liegen, und für jedes eine Zahl ausrechnen.",
+      "ru": "Интеграл — это микрофон, который ты проносишь по кругу вокруг группы динамиков. Он слышит только динамики <b>внутри</b> твоего круга, и от каждого — только одну ноту, его вычет. Всё остальное взаимно гасится. Итог: $2\\pi i$, умноженное на сумму нот. То есть вместо интегрирования нужно найти дырки, проверить, какие внутри, и для каждой посчитать одно число."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\oint_{|z|=2}\\frac{1}{z(z-1)}\\,dz$:</b><ol><li>Löcher: Nenner $=0$ bei $z=0$ und $z=1$. Beide liegen im Kreis mit Radius 2 ✓.</li><li>$\\operatorname{Res}_0$: den Faktor $z$ abdecken und $z=0$ einsetzen: $\\frac{1}{0-1}=-1$.</li><li>$\\operatorname{Res}_1$: den Faktor $(z-1)$ abdecken und $z=1$ einsetzen: $\\frac11=1$.</li><li>Summe $-1+1=0$ → Integral $=2\\pi i\\cdot0=0$.</li></ol><b>Kleiner Kreis $|z|=\\frac12$:</b> Nur $z=0$ liegt innen → $2\\pi i\\cdot(-1)=-2\\pi i$. Gleiche Funktion, anderer Weg, andere Antwort.",
+      "ru": "<b>$\\oint_{|z|=2}\\frac{1}{z(z-1)}\\,dz$:</b><ol><li>Дырки: знаменатель $=0$ в $z=0$ и $z=1$. Обе внутри круга радиуса 2 ✓.</li><li>$\\operatorname{Res}_0$: закрываем множитель $z$ и подставляем $z=0$: $\\frac{1}{0-1}=-1$.</li><li>$\\operatorname{Res}_1$: закрываем множитель $(z-1)$ и подставляем $z=1$: $\\frac11=1$.</li><li>Сумма $-1+1=0$ → интеграл $=2\\pi i\\cdot0=0$.</li></ol><b>Маленький круг $|z|=\\frac12$:</b> внутри только $z=0$ → $2\\pi i\\cdot(-1)=-2\\pi i$. Та же функция, другой путь — другой ответ."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -560,6 +824,39 @@ window.ANA3 = {
     "de": "Reelle Integrale mit Residuen"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Residuensatz</b> (vorheriges Thema).</li><li><b>Obere Halbebene</b> = alle $z$ mit $\\operatorname{Im}z>0$, also oberhalb der reellen Achse.</li><li>$\\deg$ = Grad eines Polynoms (höchste Potenz). „Fällt schnell ab“ heißt: Nennergrad mindestens 2 größer als Zählergrad.</li></ul>",
+      "ru": "<ul><li><b>Теорема о вычетах</b> (прошлая тема).</li><li><b>Верхняя полуплоскость</b> — все $z$ с $\\operatorname{Im}z>0$, то есть выше вещественной оси.</li><li>$\\deg$ — степень многочлена (старшая степень). «Быстро убывает» значит: степень знаменателя хотя бы на 2 больше степени числителя.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein reelles Integral ist wie eine lange gerade Straße. Statt sie mühsam abzulaufen, baust du einen riesigen Halbkreis-Zaun darüber und machst daraus eine geschlossene Runde. Der Zaun ist so weit weg, dass er nichts beiträgt. Jetzt zählt nur, welche Löcher im eingezäunten Bereich liegen – und das ist der Residuensatz.",
+      "ru": "Вещественный интеграл — как длинная прямая дорога. Вместо того чтобы мучительно проходить её всю, строишь над ней огромный полукруглый забор и получаешь замкнутый круг. Забор так далеко, что ничего не добавляет. Теперь важно только, какие дырки оказались за забором, — а это теорема о вычетах."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\int_{-\\infty}^{\\infty}\\frac{dx}{x^2+4}$:</b><ol><li>Löcher: $z^2+4=0$ → $z=\\pm2i$. Oben liegt nur $2i$.</li><li>Residuum mit $\\frac{g}{h'}$: $\\frac{1}{2z}$ bei $z=2i$ → $\\frac1{4i}$.</li><li>Antwort: $2\\pi i\\cdot\\frac1{4i}=\\frac\\pi2$.</li><li>Kontrolle: Stammfunktion $\\frac12\\arctan\\frac x2$ → $\\frac12\\big(\\frac\\pi2+\\frac\\pi2\\big)=\\frac\\pi2$ ✓. Reell und positiv ✓.</li></ol>",
+      "ru": "<b>$\\int_{-\\infty}^{\\infty}\\frac{dx}{x^2+4}$:</b><ol><li>Дырки: $z^2+4=0$ → $z=\\pm2i$. Сверху только $2i$.</li><li>Вычет по формуле $\\frac{g}{h'}$: $\\frac{1}{2z}$ при $z=2i$ → $\\frac1{4i}$.</li><li>Ответ: $2\\pi i\\cdot\\frac1{4i}=\\frac\\pi2$.</li><li>Проверка: первообразная $\\frac12\\arctan\\frac x2$ → $\\frac12\\big(\\frac\\pi2+\\frac\\pi2\\big)=\\frac\\pi2$ ✓. Вещественный и положительный ✓.</li></ol>"
+     }
+    },
     {
      "type": "kern",
      "label": {

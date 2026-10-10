@@ -14,6 +14,7 @@
     --bg: radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%);
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; }
   body {
     min-height: 100vh;
@@ -168,6 +169,16 @@
   .step.s-check { border-color: #2fb67c; background: #effaf4; }
   .step.s-rezept { border-color: #8a5cf6; background: #f6f2ff; }
   .step.s-falle { border-color: #ef8a17; background: #fff4e8; }
+  .step.s-vorher { border-color: #14a3b8; background: #ecfafc; }
+  .step.s-einfach { border-color: #ff7eb3; background: #fff0f6; font-size: 1.02rem; }
+  .step.s-beispiel { border-color: #f59e0b; background: #fffbeb; }
+  .exakt-sep { margin: 10px 0 0; text-align: center; font-weight: 800; font-size: .95rem; color: var(--want); display: flex; align-items: center; gap: 10px; }
+  .exakt-sep::before, .exakt-sep::after { content: ""; flex: 1; height: 2px; background: rgba(138, 92, 246, .25); }
+  .ana .neu { margin: 10px 0 0; padding: 10px 12px; border-radius: 12px; background: #ecfafc; font-size: .9rem; line-height: 1.45; }
+  .unklar { display: block; margin: 12px auto 0; background: #fff; color: var(--want); border: 2px solid var(--want); font-size: .98rem; padding: 11px 18px; }
+  .unklar-out { margin-top: 10px; text-align: center; font-size: .92rem; line-height: 1.45; }
+  .unklar-out textarea { width: 100%; font: inherit; font-size: .8rem; border-radius: 10px; padding: 8px; }
+  .unklar-out a { color: var(--want); font-weight: 700; }
   .step.s-tabelle, .step.s-text { border-color: #9aa3b2; }
   .fm { margin: .35em 0 .6em; line-height: 2.1; font-size: 1.05em; }
   .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; margin: .5em 0; }
@@ -722,11 +733,19 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     de: { title: 'Analysis III – einfach erklärt', done: 'verstanden', map: '🗺️ So hängt alles zusammen',
           next: 'Weiter →', all: 'Alles zeigen', got: '✓ Verstanden', gotDone: '✓ Verstanden!', prev: '← ', nextT: ' →',
           kern: '💡 Kern', formel: '📐 Formel', check: '✅ Check', rezept: '🍳 Rezept', falle: '⚠️ Falle', tabelle: '📊 Überblick', text: '📝 Merke',
-          ref: 'im Skriptum', error: 'Konnte nicht laden. Bitte Seite neu laden.' },
+          ref: 'im Skriptum', error: 'Konnte nicht laden. Bitte Seite neu laden.',
+          vorher: '🧩 Vorher wissen', einfach: '👶 Ganz einfach', beispiel: '🔢 Beispiel mit Zahlen', exakt: '📚 Kurz & exakt (fürs Wiederholen)',
+          neu: 'Jede Karte startet ganz einfach: 🧩 Vorher wissen → 👶 Ganz einfach → 🔢 Beispiel. Danach kommt 📚 Kurz & exakt zum Wiederholen.',
+          unklar: '🤖 Immer noch unklar? Prompt für Claude kopieren', copied: '✅ Kopiert! Jetzt in Claude einfügen:', open: 'claude.ai öffnen',
+          copyFail: 'Kopieren ging nicht – hier ist der Text zum Markieren:' },
     ru: { title: 'Analysis III на пальцах', done: 'понятно', map: '🗺️ Как всё связано',
           next: 'Дальше →', all: 'Показать всё', got: '✓ Понятно', gotDone: '✓ Понятно!', prev: '← ', nextT: ' →',
           kern: '💡 Суть', formel: '📐 Формула', check: '✅ Проверка', rezept: '🍳 Рецепт', falle: '⚠️ Ловушка', tabelle: '📊 Обзор', text: '📝 Запомни',
-          ref: 'в скрипте', error: 'Не удалось загрузить. Обнови страницу.' },
+          ref: 'в скрипте', error: 'Не удалось загрузить. Обнови страницу.',
+          vorher: '🧩 Что нужно знать', einfach: '👶 Совсем просто', beispiel: '🔢 Пример с числами', exakt: '📚 Коротко и точно (для повторения)',
+          neu: 'Каждая карточка начинается просто: 🧩 Что нужно знать → 👶 Совсем просто → 🔢 Пример. Потом идёт 📚 Коротко и точно — для повторения.',
+          unklar: '🤖 Всё ещё непонятно? Скопировать промпт для Claude', copied: '✅ Скопировано! Теперь вставь в Claude:', open: 'открыть claude.ai',
+          copyFail: 'Скопировать не вышло — вот текст, выдели его вручную:' },
   };
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
@@ -761,6 +780,22 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     });
   }
   const t = k => UI[anaLang][k];
+  const TUTOR = {
+    de: (title, ref) => `Ich lerne für Analysis III (Physik, Uni Wien, Skriptum von Hörmann). Das Thema „${title}“${ref ? ' (' + ref + ')' : ''} verstehe ich noch nicht. Erklär es mir so, als hätte ich die Fachbegriffe noch nie gehört:
+1. Frag mich zuerst mit einer kurzen Frage, was ich schon weiß.
+2. Dann ein Bild aus dem Alltag und die Idee in höchstens 3 Sätzen.
+3. Ein Beispiel mit konkreten Zahlen, Schritt für Schritt.
+4. Erst danach die Formel – und erklär jedes Symbol darin.
+5. Zum Schluss 2 kurze Kontrollfragen an mich. Die Lösung zeigst du erst, wenn ich geantwortet habe.
+Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, statt weiterzumachen. Antworte auf Deutsch, kurz, Formeln in LaTeX.`,
+    ru: (title, ref) => `Я учу Analysis III (физика, Венский университет, скрипт Hörmann). Тему «${title}»${ref ? ' (' + ref + ')' : ''} я пока не понимаю. Объясни так, будто я никогда не слышал этих терминов:
+1. Сначала задай мне один короткий вопрос: что я уже знаю.
+2. Потом образ из жизни и идея максимум в 3 предложениях.
+3. Пример с конкретными числами, шаг за шагом.
+4. Только после этого формула — и объясни каждый символ в ней.
+5. В конце 2 коротких вопроса мне для проверки. Решение показывай только после моего ответа.
+Если я что-то не понимаю, объясни именно этот шаг ещё проще, а не иди дальше. Отвечай по-русски, коротко, формулы в LaTeX.`,
+  };
   function topicOrder() { return ['toolkit', ...ANA3.meta.parts.flatMap(p => p.topics)]; }
   function setLang(l) { anaLang = l; store.set('ana3-lang', l); }
 
@@ -784,6 +819,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     root.innerHTML = `
       <div class="ana-top"><h2>∫ ${t('title')}</h2>${langSwitch()}</div>
       <p class="hero">${m.hero[anaLang]}</p>
+      <p class="neu">${t('neu')}</p>
       <div class="progress"><div style="width:${(100 * n / total).toFixed(1)}%"></div></div>
       <span class="progress-label">${n} / ${total} ${t('done')}</span>
       <details class="map"><summary>${t('map')}</summary><div class="map-grid">
@@ -816,17 +852,27 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
       <div class="steps" id="steps"></div>
       <div class="step-nav" id="step-nav"></div>
       <button type="button" class="verstanden" id="verstanden" aria-pressed="${anaDone.has(id)}" hidden>${anaDone.has(id) ? t('gotDone') : t('got')}</button>
+      <button type="button" class="unklar" id="unklar" hidden>${t('unklar')}</button>
+      <div class="unklar-out" id="unklar-out" hidden></div>
       <div class="thema-nav">
         ${prevId ? `<button type="button" data-topic="${prevId}">${t('prev')}${ANA3.topics[prevId].emoji} ${ANA3.topics[prevId].title[anaLang]}</button>` : '<span></span>'}
         ${nextId ? `<button type="button" data-topic="${nextId}">${ANA3.topics[nextId].emoji} ${ANA3.topics[nextId].title[anaLang]}${t('nextT')}</button>` : '<span></span>'}
       </div>`;
     const stepsEl = root.querySelector('#steps'), nav = root.querySelector('#step-nav'), got = root.querySelector('#verstanden');
     let shown = 0;
+    const EASY = ['vorher', 'einfach', 'beispiel'];
     function addStep() {
       const b = tp.blocks[shown++];
+      const prev = tp.blocks[shown - 2];
+      if (prev && EASY.includes(prev.type) && !EASY.includes(b.type)) {
+        const sep = document.createElement('div');
+        sep.className = 'exakt-sep';
+        sep.textContent = t('exakt');
+        stepsEl.appendChild(sep);
+      }
       const div = document.createElement('div');
       div.className = 'step s-' + b.type;
-      const label = b.type === 'kern' ? t('kern') : (t(b.type).split(' ')[0] + ' ' + (b.label[anaLang] || t(b.type).split(' ').slice(1).join(' ')));
+      const label = (b.type === 'kern' || EASY.includes(b.type)) ? t(b.type) : (t(b.type).split(' ')[0] + ' ' + (b.label[anaLang] || t(b.type).split(' ').slice(1).join(' ')));
       let html = b.html[anaLang];
       // display formulas as breakable inline math so long lines wrap on phones
       if (b.type === 'formel') html = html.replace(/\$\$([\s\S]+?)\$\$/g, (m, x) =>
@@ -836,7 +882,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
       tex(div);
     }
     function updateNav() {
-      if (shown >= tp.blocks.length) { nav.innerHTML = ''; got.hidden = false; return; }
+      if (shown >= tp.blocks.length) { nav.innerHTML = ''; got.hidden = false; root.querySelector('#unklar').hidden = false; return; }
       nav.innerHTML = `<button type="button" class="weiter">${t('next')}</button><button type="button" class="alle">${t('all')}</button>`;
       nav.querySelector('.weiter').addEventListener('click', () => {
         addStep(); updateNav();
@@ -851,6 +897,17 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     tex(root.querySelector('.thema-nav'));
     root.querySelectorAll('.thema-nav [data-topic]').forEach(b => b.addEventListener('click', () => go({ id: 'thema', topic: b.dataset.topic })));
     wireLang(root, () => renderThema(id, true));
+    root.querySelector('#unklar').addEventListener('click', async () => {
+      const text = TUTOR[anaLang](tp.title[anaLang], tp.ref);
+      const out = root.querySelector('#unklar-out');
+      let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
+      out.hidden = false;
+      out.innerHTML = ok
+        ? `<p>${t('copied')} <a href="https://claude.ai/new" target="_blank" rel="noopener">${t('open')}</a></p>`
+        : `<p>${t('copyFail')}</p><textarea readonly rows="8"></textarea><p><a href="https://claude.ai/new" target="_blank" rel="noopener">${t('open')}</a></p>`;
+      if (!ok) out.querySelector('textarea').value = text;
+    });
     got.addEventListener('click', () => {
       anaDone.has(id) ? anaDone.delete(id) : anaDone.add(id);
       store.set('ana3-done', [...anaDone]);
