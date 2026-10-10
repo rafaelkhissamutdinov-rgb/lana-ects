@@ -145,6 +145,7 @@
     position: relative; background: #fff; color: var(--text); border: 2px solid rgba(138, 92, 246, .25);
     border-radius: 16px; padding: 12px 10px; font-size: .92rem; font-weight: 600; line-height: 1.25;
     display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
+    hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; min-width: 0;
   }
   .tile .em { font-size: 1.9rem; line-height: 1; }
   .tile.done { border-color: #2fb67c; background: #effaf4; }
@@ -815,6 +816,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
 
   function renderAnaList() {
     const root = document.getElementById('ana3-list');
+    root.lang = anaLang;
     const m = ANA3.meta, total = topicOrder().length, n = topicOrder().filter(id => anaDone.has(id)).length;
     root.innerHTML = `
       <div class="ana-top"><h2>∫ ${t('title')}</h2>${langSwitch()}</div>
@@ -839,6 +841,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
 
   function renderThema(id, revealAll) {
     const root = document.getElementById('ana3-thema');
+    root.lang = anaLang;
     const tp = ANA3.topics[id];
     const order = topicOrder(), i = order.indexOf(id);
     const prevId = order[i - 1], nextId = order[i + 1];

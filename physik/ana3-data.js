@@ -1944,6 +1944,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Vektor</b>: ein Pfeil, z. B. $(3,4)$. <b>Skalarprodukt</b> im $\\mathbb R^3$: $a\\cdot b=a_1b_1+a_2b_2+a_3b_3$. Ist es 0, stehen die Pfeile senkrecht.</li><li><b>Länge</b>: $\\|a\\|=\\sqrt{a\\cdot a}$, z. B. $\\|(3,4)\\|=5$.</li><li><b>Komplex konjugiert</b> $\\bar z$: Vorzeichen vor $i$ umdrehen, $\\overline{2+3i}=2-3i$.</li></ul>",
+      "ru": "<ul><li><b>Вектор</b>: стрелка, например $(3,4)$. <b>Скалярное произведение</b> в $\\mathbb R^3$: $a\\cdot b=a_1b_1+a_2b_2+a_3b_3$. Если оно 0, стрелки перпендикулярны.</li><li><b>Длина</b>: $\\|a\\|=\\sqrt{a\\cdot a}$, например $\\|(3,4)\\|=5$.</li><li><b>Комплексное сопряжение</b> $\\bar z$: меняем знак перед $i$, $\\overline{2+3i}=2-3i$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Eine Funktion ist ein Pfeil mit unendlich vielen Koordinaten: Ihr Wert an jeder Stelle $x$ ist eine Koordinate. Das Skalarprodukt zweier Funktionen funktioniert wie im $\\mathbb R^3$ – „Koordinaten multiplizieren und aufsummieren“ –, nur dass aus der Summe ein Integral wird. Damit kann man plötzlich sagen, wie „lang“ eine Funktion ist und ob zwei Funktionen „senkrecht“ aufeinander stehen.",
+      "ru": "Функция — это стрелка с бесконечным числом координат: её значение в каждой точке $x$ — одна координата. Скалярное произведение двух функций устроено как в $\\mathbb R^3$ — «перемножить координаты и сложить», — только сумма превращается в интеграл. И вдруг можно сказать, какой «длины» функция и «перпендикулярны» ли две функции."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$\\sin$ und $\\cos$ auf $[0,2\\pi]$:</b><ol><li>$\\langle\\sin,\\cos\\rangle=\\int_0^{2\\pi}\\sin x\\cos x\\,dx=\\frac12\\int_0^{2\\pi}\\sin2x\\,dx=0$ → senkrecht.</li><li>Länge: $\\|\\sin\\|^2=\\int_0^{2\\pi}\\sin^2x\\,dx=\\pi$ → $\\|\\sin\\|=\\sqrt\\pi$.</li></ol><b>Warum der Strich über $u$?</b> Nimm $u=(1,i)$ im $\\mathbb C^2$. Ohne Konjugieren: $1\\cdot1+i\\cdot i=1-1=0$ – eine Länge 0 für einen Vektor, der nicht 0 ist. Unsinn! Mit Konjugieren: $|1|^2+|i|^2=2$, also $\\|u\\|=\\sqrt2$ ✓.",
+      "ru": "<b>$\\sin$ и $\\cos$ на $[0,2\\pi]$:</b><ol><li>$\\langle\\sin,\\cos\\rangle=\\int_0^{2\\pi}\\sin x\\cos x\\,dx=\\frac12\\int_0^{2\\pi}\\sin2x\\,dx=0$ → перпендикулярны.</li><li>Длина: $\\|\\sin\\|^2=\\int_0^{2\\pi}\\sin^2x\\,dx=\\pi$ → $\\|\\sin\\|=\\sqrt\\pi$.</li></ol><b>Зачем черта над $u$?</b> Возьми $u=(1,i)$ в $\\mathbb C^2$. Без сопряжения: $1\\cdot1+i\\cdot i=1-1=0$ — длина 0 у ненулевого вектора. Чепуха! С сопряжением: $|1|^2+|i|^2=2$, значит $\\|u\\|=\\sqrt2$ ✓."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -1986,6 +2019,39 @@ window.ANA3 = {
     "de": "Orthogonalität, Projektion, Orthonormalbasis"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Orthogonal</b> = senkrecht = Skalarprodukt 0.</li><li><b>Normiert</b> = Länge 1.</li><li><b>Unterraum</b>: eine „flache“ Teilmenge durch 0, z. B. eine Ebene oder eine Gerade im Raum.</li></ul>",
+      "ru": "<ul><li><b>Ортогональны</b> = перпендикулярны = скалярное произведение 0.</li><li><b>Нормирован</b> = длина 1.</li><li><b>Подпространство</b>: «плоское» подмножество через 0, например плоскость или прямая в пространстве.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Schatten an der Wand: Die Projektion eines Pfeils auf eine Ebene ist sein Schatten, wenn das Licht genau senkrecht von oben kommt. Der Schatten ist der Punkt der Ebene, der dem Pfeil am nächsten liegt. Eine Orthonormalbasis ist ein Satz von Richtungen, alle senkrecht zueinander und Länge 1 – wie Norden, Osten, Oben. Jeder Pfeil ist dann einfach „so viel Norden + so viel Osten + so viel Oben“.",
+      "ru": "Тень на стене: проекция стрелки на плоскость — её тень, когда свет падает строго перпендикулярно. Тень — ближайшая к стрелке точка плоскости. Ортонормированный базис — набор направлений, все перпендикулярны друг другу и длины 1, как север, восток, верх. Тогда любая стрелка — просто «столько-то на север + столько-то на восток + столько-то вверх»."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$u=(3,4,0)$ mit der Standardbasis $e_1,e_2,e_3$:</b><ol><li>Koeffizienten: $\\langle e_1,u\\rangle=3$, $\\langle e_2,u\\rangle=4$, $\\langle e_3,u\\rangle=0$.</li><li>Parseval: $3^2+4^2+0^2=25=\\|u\\|^2$ ✓.</li><li>Projektion auf die $x$-Achse: $Pu=(3,0,0)$. Fehler $u-Pu=(0,4,0)$, und $(0,4,0)\\cdot e_1=0$ → steht senkrecht ✓.</li></ol>Bei Funktionen ist es dasselbe: Die Fourierkoeffizienten sind genau diese „wie viel in jede Richtung“-Zahlen.",
+      "ru": "<b>$u=(3,4,0)$ в стандартном базисе $e_1,e_2,e_3$:</b><ol><li>Коэффициенты: $\\langle e_1,u\\rangle=3$, $\\langle e_2,u\\rangle=4$, $\\langle e_3,u\\rangle=0$.</li><li>Парсеваль: $3^2+4^2+0^2=25=\\|u\\|^2$ ✓.</li><li>Проекция на ось $x$: $Pu=(3,0,0)$. Ошибка $u-Pu=(0,4,0)$, и $(0,4,0)\\cdot e_1=0$ → перпендикулярна ✓.</li></ol>С функциями всё так же: коэффициенты Фурье — ровно эти числа «сколько в каждом направлении»."
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -2030,6 +2096,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Operator</b>: eine Maschine, die aus einem Vektor (oder einer Funktion) einen anderen macht – wie eine Matrix.</li><li><b>Linear</b>: Doppelte Eingabe → doppelte Ausgabe, Summe rein → Summe raus.</li><li><b>Konjugiert transponiert</b>: Matrix an der Diagonale spiegeln und alle Einträge konjugieren.</li></ul>",
+      "ru": "<ul><li><b>Оператор</b>: машина, которая из вектора (или функции) делает другой — как матрица.</li><li><b>Линейный</b>: двойной вход → двойной выход, сумма на входе → сумма на выходе.</li><li><b>Сопряжённо-транспонированная</b>: отразить матрицу относительно диагонали и сопрячь все элементы.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein Verstärker mit Lautstärkeregler: Er kann jedes Signal lauter machen, aber nie mehr als um einen bestimmten Faktor – das ist die Norm $\\|T\\|$. „Beschränkt“ heißt einfach: Es gibt so einen Höchstfaktor. Der adjungierte Operator $T^*$ ist das Gegenstück der „gespiegelten“ Matrix. Ist $T=T^*$ (selbstadjungiert), verhält sich $T$ wie eine symmetrische Matrix: reelle Eigenwerte, senkrechte Eigenrichtungen.",
+      "ru": "Усилитель с регулятором громкости: он может сделать любой сигнал громче, но никогда не больше чем в определённое число раз — это норма $\\|T\\|$. «Ограниченный» значит просто: такой максимальный множитель есть. Сопряжённый оператор $T^*$ — аналог «отражённой» матрицы. Если $T=T^*$ (самосопряжённый), $T$ ведёт себя как симметричная матрица: вещественные собственные значения, перпендикулярные собственные направления."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ol><li><b>Norm:</b> $A=\\begin{pmatrix}2&0\\\\0&3\\end{pmatrix}$ streckt die $x$-Richtung um 2, die $y$-Richtung um 3. Stärkste Streckung → $\\|A\\|=3$.</li><li><b>Adjungiert:</b> $T=\\begin{pmatrix}1&i\\\\0&2\\end{pmatrix}$ → spiegeln und konjugieren → $T^*=\\begin{pmatrix}1&0\\\\-i&2\\end{pmatrix}$. Da $T^*\\neq T$, nicht selbstadjungiert.</li><li><b>Multiplikation</b> mit $m(x)=x^2$ auf $[0,1]$: größter Wert von $|m|$ ist $1$ → $\\|M_m\\|=1$.</li></ol>",
+      "ru": "<ol><li><b>Норма:</b> $A=\\begin{pmatrix}2&0\\\\0&3\\end{pmatrix}$ растягивает направление $x$ в 2 раза, направление $y$ в 3. Самое сильное растяжение → $\\|A\\|=3$.</li><li><b>Сопряжённый:</b> $T=\\begin{pmatrix}1&i\\\\0&2\\end{pmatrix}$ → отражаем и сопрягаем → $T^*=\\begin{pmatrix}1&0\\\\-i&2\\end{pmatrix}$. Так как $T^*\\neq T$, не самосопряжённый.</li><li><b>Умножение</b> на $m(x)=x^2$ на $[0,1]$: наибольшее значение $|m|$ равно $1$ → $\\|M_m\\|=1$.</li></ol>"
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -2072,6 +2171,39 @@ window.ANA3 = {
     "de": "Spektrum"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Eigenwert</b> $\\lambda$: Es gibt einen Vektor $v\\neq0$ mit $Tv=\\lambda v$ – $T$ streckt $v$ nur, ohne die Richtung zu ändern.</li><li><b>Inverse</b>: die Maschine, die $T$ rückgängig macht.</li><li><b>Beschränkte Inverse</b>: Diese Rückgängig-Maschine verstärkt nicht unendlich stark.</li></ul>",
+      "ru": "<ul><li><b>Собственное значение</b> $\\lambda$: есть вектор $v\\neq0$ с $Tv=\\lambda v$ — $T$ только растягивает $v$, не меняя направления.</li><li><b>Обратный</b>: машина, которая отменяет действие $T$.</li><li><b>Ограниченный обратный</b>: эта машина-отмена не усиливает бесконечно сильно.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Das Spektrum ist die Liste der „Problemzahlen“: alle $\\lambda$, bei denen sich $T-\\lambda$ nicht sauber rückgängig machen lässt. Bei Matrizen sind das genau die Eigenwerte. In unendlich vielen Dimensionen gibt es eine neue Sorte Problem: $T-\\lambda$ lässt sich zwar umkehren, aber die Umkehrung explodiert. Das passiert z. B. beim Ort in der Quantenmechanik – jeder Ort ist möglich, aber es gibt keine echte „Ortsfunktion“.",
+      "ru": "Спектр — список «проблемных чисел»: все $\\lambda$, при которых $T-\\lambda$ нельзя аккуратно обратить. У матриц это ровно собственные значения. В бесконечной размерности появляется новый вид проблемы: $T-\\lambda$ обратить можно, но обратный взрывается. Так происходит, например, с координатой в квантовой механике — возможна любая координата, но настоящей «функции координаты» нет."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ol><li><b>Matrix</b> $A=\\begin{pmatrix}2&0\\\\0&5\\end{pmatrix}$: $\\sigma(A)=\\{2,5\\}$. Ist $3$ im Spektrum? $A-3=\\begin{pmatrix}-1&0\\\\0&2\\end{pmatrix}$, Inverse $\\begin{pmatrix}-1&0\\\\0&\\frac12\\end{pmatrix}$ existiert → nein.</li><li><b>Multiplikation mit $x$</b> auf $L^2[0,1]$, $\\lambda=2$: Umkehrung = Multiplikation mit $\\frac1{x-2}$. Auf $[0,1]$ ist $|x-2|\\ge1$, also $\\big|\\frac1{x-2}\\big|\\le1$ → beschränkt → $2\\notin\\sigma$.</li><li>Gleicher Operator, $\\lambda=\\frac12$: $\\frac1{x-1/2}$ explodiert bei $x=\\frac12$ → $\\frac12\\in\\sigma$, obwohl es keine Eigenfunktion gibt.</li></ol>",
+      "ru": "<ol><li><b>Матрица</b> $A=\\begin{pmatrix}2&0\\\\0&5\\end{pmatrix}$: $\\sigma(A)=\\{2,5\\}$. Лежит ли $3$ в спектре? $A-3=\\begin{pmatrix}-1&0\\\\0&2\\end{pmatrix}$, обратная $\\begin{pmatrix}-1&0\\\\0&\\frac12\\end{pmatrix}$ существует → нет.</li><li><b>Умножение на $x$</b> в $L^2[0,1]$, $\\lambda=2$: обращение — умножение на $\\frac1{x-2}$. На $[0,1]$ имеем $|x-2|\\ge1$, значит $\\big|\\frac1{x-2}\\big|\\le1$ → ограничен → $2\\notin\\sigma$.</li><li>Тот же оператор, $\\lambda=\\frac12$: $\\frac1{x-1/2}$ взрывается в $x=\\frac12$ → $\\frac12\\in\\sigma$, хотя собственной функции нет.</li></ol>"
+     }
+    },
     {
      "type": "kern",
      "label": {
@@ -2116,6 +2248,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Diagonalisieren</b>: eine Basis aus Eigenvektoren finden; in dieser Basis ist die Matrix diagonal (nur Zahlen auf der Diagonale).</li><li><b>Hermitesch / selbstadjungiert</b>: $A=A^*$.</li><li>$f(A)$: eine Funktion auf eine Matrix anwenden, z. B. $A^2$ oder $e^A$.</li></ul>",
+      "ru": "<ul><li><b>Диагонализовать</b>: найти базис из собственных векторов; в этом базисе матрица диагональна (числа только на диагонали).</li><li><b>Эрмитова / самосопряжённая</b>: $A=A^*$.</li><li>$f(A)$: применить функцию к матрице, например $A^2$ или $e^A$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Die richtige Brille aufsetzen: In der falschen Basis sieht eine Matrix kompliziert aus, alles hängt mit allem zusammen. Setzt du die „Eigenvektor-Brille“ auf, macht die Matrix in jeder Richtung nur noch eines: mit einer Zahl multiplizieren. Dann ist alles leicht – auch $A^{100}$ oder $e^A$: einfach jede Zahl hoch 100 nehmen oder $e^{\\text{Zahl}}$. Der Spektralsatz sagt: Diese Brille gibt es für jeden selbstadjungierten Operator.",
+      "ru": "Надеть правильные очки: в неудобном базисе матрица выглядит сложно, всё связано со всем. Надеваешь «очки из собственных векторов» — и матрица в каждом направлении делает только одно: умножает на число. Тогда всё просто — даже $A^{100}$ или $e^A$: каждое число в степень 100 или $e^{\\text{число}}$. Спектральная теорема говорит: такие очки есть у любого самосопряжённого оператора."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$</b> (symmetrisch):<ol><li>Eigenvektoren: $(1,1)$ mit $A(1,1)=(3,3)$ → Eigenwert $3$; $(1,-1)$ mit $A(1,-1)=(1,-1)$ → Eigenwert $1$.</li><li>Also $\\sigma(A)=\\{1,3\\}$. Die zwei Eigenvektoren stehen senkrecht: $(1,1)\\cdot(1,-1)=0$ ✓.</li><li>$A^2$: Eigenwerte $1^2=1$ und $3^2=9$. Direkt: $A^2=\\begin{pmatrix}5&4\\\\4&5\\end{pmatrix}$, Eigenwerte $5\\pm4=9,1$ ✓.</li></ol>Genau das ist $\\sigma(f(A))=f(\\sigma(A))$ für $f(x)=x^2$.",
+      "ru": "<b>$A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$</b> (симметричная):<ol><li>Собственные векторы: $(1,1)$, так как $A(1,1)=(3,3)$ → собственное значение $3$; $(1,-1)$, так как $A(1,-1)=(1,-1)$ → собственное значение $1$.</li><li>Значит, $\\sigma(A)=\\{1,3\\}$. Два собственных вектора перпендикулярны: $(1,1)\\cdot(1,-1)=0$ ✓.</li><li>$A^2$: собственные значения $1^2=1$ и $3^2=9$. Напрямую: $A^2=\\begin{pmatrix}5&4\\\\4&5\\end{pmatrix}$, собственные значения $5\\pm4=9,1$ ✓.</li></ol>Это и есть $\\sigma(f(A))=f(\\sigma(A))$ для $f(x)=x^2$."
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -2159,6 +2324,39 @@ window.ANA3 = {
    },
    "blocks": [
     {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Zustand</b> $\\psi$: ein Vektor der Länge 1, der alles über das System enthält.</li><li><b>Observable</b>: eine messbare Größe (Ort, Impuls, Spin), dargestellt durch einen selbstadjungierten Operator.</li><li><b>Kommutator</b> $[A,B]=AB-BA$: 0, wenn die Reihenfolge egal ist.</li><li><b>Spur</b> $\\operatorname{tr}$: Summe der Diagonaleinträge.</li></ul>",
+      "ru": "<ul><li><b>Состояние</b> $\\psi$: вектор длины 1, содержащий всё о системе.</li><li><b>Наблюдаемая</b>: измеримая величина (координата, импульс, спин), представленная самосопряжённым оператором.</li><li><b>Коммутатор</b> $[A,B]=AB-BA$: равен 0, если порядок не важен.</li><li><b>След</b> $\\operatorname{tr}$: сумма диагональных элементов.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ein gezinkter Würfel: Der Zustand $\\psi$ legt fest, mit welcher Wahrscheinlichkeit welches Messergebnis kommt; die möglichen Ergebnisse sind die Eigenwerte der Observable. Unschärfe ist wie ein Foto eines schnellen Autos: Mit kurzer Belichtung siehst du genau, wo es ist, aber nicht, wie schnell; mit langer Belichtung siehst du die Geschwindigkeit (Wischspur), aber nicht den Ort. Beides gleichzeitig scharf geht nicht.",
+      "ru": "Шулерский кубик: состояние $\\psi$ задаёт, с какой вероятностью выпадет какой результат измерения; возможные результаты — собственные значения наблюдаемой. Неопределённость — как фото быстрой машины: при короткой выдержке точно видно, где она, но не видно скорость; при длинной видно скорость (смазанный след), но не место. Чётко и то и другое одновременно нельзя."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>Spin: $A=\\begin{pmatrix}1&0\\\\0&-1\\end{pmatrix}$, Zustand $\\psi=\\frac1{\\sqrt2}(1,1)$.</b><ol><li>Mögliche Ergebnisse: Eigenwerte $+1$ und $-1$, je mit Wahrscheinlichkeit $\\big(\\frac1{\\sqrt2}\\big)^2=\\frac12$.</li><li>Erwartungswert: $\\langle\\psi,A\\psi\\rangle=\\frac12(1-1)=0$.</li><li>Streuung: $\\|(A-0)\\psi\\|^2=\\big\\|\\tfrac1{\\sqrt2}(1,-1)\\big\\|^2=1$. Passt: Ergebnisse $\\pm1$ um den Mittelwert 0.</li><li>Dichtematrix $\\rho=\\begin{pmatrix}\\frac12&\\frac12\\\\\\frac12&\\frac12\\end{pmatrix}$: $\\rho^2=\\rho$, $\\operatorname{tr}\\rho^2=1$ → reiner Zustand ✓. Das Gemisch $\\begin{pmatrix}\\frac12&0\\\\0&\\frac12\\end{pmatrix}$ hat $\\operatorname{tr}\\rho^2=\\frac12\\lt1$.</li></ol>",
+      "ru": "<b>Спин: $A=\\begin{pmatrix}1&0\\\\0&-1\\end{pmatrix}$, состояние $\\psi=\\frac1{\\sqrt2}(1,1)$.</b><ol><li>Возможные результаты: собственные значения $+1$ и $-1$, каждое с вероятностью $\\big(\\frac1{\\sqrt2}\\big)^2=\\frac12$.</li><li>Среднее: $\\langle\\psi,A\\psi\\rangle=\\frac12(1-1)=0$.</li><li>Разброс: $\\|(A-0)\\psi\\|^2=\\big\\|\\tfrac1{\\sqrt2}(1,-1)\\big\\|^2=1$. Сходится: результаты $\\pm1$ вокруг среднего 0.</li><li>Матрица плотности $\\rho=\\begin{pmatrix}\\frac12&\\frac12\\\\\\frac12&\\frac12\\end{pmatrix}$: $\\rho^2=\\rho$, $\\operatorname{tr}\\rho^2=1$ → чистое состояние ✓. Смесь $\\begin{pmatrix}\\frac12&0\\\\0&\\frac12\\end{pmatrix}$ имеет $\\operatorname{tr}\\rho^2=\\frac12\\lt1$.</li></ol>"
+     }
+    },
+    {
      "type": "kern",
      "label": {
       "ru": "Суть",
@@ -2201,6 +2399,39 @@ window.ANA3 = {
     "de": "Unbeschränkte Operatoren"
    },
    "blocks": [
+    {
+     "type": "vorher",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<ul><li><b>Beschränkt</b>: siehe „Beschränkte Operatoren“ – es gibt einen maximalen Verstärkungsfaktor.</li><li><b>Definitionsbereich</b> $D(A)$: die Funktionen, auf die man $A$ überhaupt anwenden darf (z. B. nur ableitbare).</li><li><b>Symmetrisch</b>: $\\langle Au,v\\rangle=\\langle u,Av\\rangle$ für alle $u,v$ aus $D(A)$.</li></ul>",
+      "ru": "<ul><li><b>Ограниченный</b>: см. «Ограниченные операторы» — есть максимальный множитель усиления.</li><li><b>Область определения</b> $D(A)$: функции, к которым $A$ вообще можно применять (например, только дифференцируемые).</li><li><b>Симметричный</b>: $\\langle Au,v\\rangle=\\langle u,Av\\rangle$ для всех $u,v$ из $D(A)$.</li></ul>"
+     }
+    },
+    {
+     "type": "einfach",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "Ableiten ist ein Verstärker ohne Obergrenze: Je schneller eine Funktion wackelt, desto stärker verstärkt die Ableitung sie – hohe Töne werden beliebig laut. Deshalb ist die Ableitung „unbeschränkt“ und nur auf genügend glatten Funktionen definiert. Die Feinheit des Themas: Ob ein solcher Operator selbstadjungiert ist (und damit eine echte Observable), entscheiden die <b>Randbedingungen</b>.",
+      "ru": "Дифференцирование — усилитель без верхнего предела: чем быстрее функция колеблется, тем сильнее производная её усиливает — высокие ноты становятся сколь угодно громкими. Поэтому производная «неограниченна» и определена только на достаточно гладких функциях. Тонкость темы: будет ли такой оператор самосопряжённым (то есть настоящей наблюдаемой), решают <b>граничные условия</b>."
+     }
+    },
+    {
+     "type": "beispiel",
+     "label": {
+      "de": "",
+      "ru": ""
+     },
+     "html": {
+      "de": "<b>$u_k=\\sin(kx)$ auf $[0,\\pi]$:</b><ol><li>Länge: $\\|u_k\\|^2=\\int_0^\\pi\\sin^2(kx)\\,dx=\\frac\\pi2$ – für jedes $k$ gleich.</li><li>Ableitung: $u_k'=k\\cos(kx)$, $\\|u_k'\\|^2=k^2\\cdot\\frac\\pi2$.</li><li>Verstärkung: $\\frac{\\|u_k'\\|}{\\|u_k\\|}=k$. Für $k=10$: Faktor 10, für $k=1000$: Faktor 1000 → kein Höchstfaktor → unbeschränkt.</li></ol>",
+      "ru": "<b>$u_k=\\sin(kx)$ на $[0,\\pi]$:</b><ol><li>Длина: $\\|u_k\\|^2=\\int_0^\\pi\\sin^2(kx)\\,dx=\\frac\\pi2$ — одинаковая для всех $k$.</li><li>Производная: $u_k'=k\\cos(kx)$, $\\|u_k'\\|^2=k^2\\cdot\\frac\\pi2$.</li><li>Усиление: $\\frac{\\|u_k'\\|}{\\|u_k\\|}=k$. При $k=10$ множитель 10, при $k=1000$ — 1000 → максимального множителя нет → неограничен.</li></ol>"
+     }
+    },
     {
      "type": "kern",
      "label": {
