@@ -102,6 +102,23 @@
   .soon { text-align: center; opacity: .7; font-style: italic; }
   .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
   .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
+  /* TP2: electric chaos scene */
+  #scene-tp2 { background: radial-gradient(circle at 50% 30%, #3d2b7a 0%, #1d1442 55%, #090616 100%); }
+  #scene-tp2::after { /* lightning flashes */
+    content: ""; position: absolute; inset: 0; background: #e8e4ff; opacity: 0;
+    animation: flash 4.5s infinite;
+  }
+  @keyframes flash {
+    0%, 88%, 100% { opacity: 0; }
+    89% { opacity: .35; } 90% { opacity: 0; } 92% { opacity: .22; } 93% { opacity: 0; }
+  }
+  .tumble { position: absolute; top: -70px; line-height: 1; animation: tumble linear infinite; }
+  @keyframes tumble { to { transform: translateY(120vh) rotate(var(--spin)); } }
+  .tp2 .sad { font-size: 5rem; line-height: 1; margin-bottom: 10px; display: inline-block; animation: sigh 3s ease-in-out infinite; }
+  @keyframes sigh { 50% { transform: translateY(6px) rotate(-6deg); } }
+  .tp2 p { margin: 14px 0 0; font-size: clamp(1.1rem, 4.5vw, 1.3rem); line-height: 1.45; }
+  .tp2 .uebung { font-weight: 800; color: var(--accent); }
+
   /* Laborpraktikum: prompt builder */
   .labor { text-align: left; }
   .labor .hilfe-icon, .labor h2, .labor > .sub { text-align: center; }
@@ -219,6 +236,7 @@
 <div id="bg" aria-hidden="true"></div>
 <div id="scene-happy" class="scene" aria-hidden="true"><div class="rainbow"></div><div class="sun"></div></div>
 <div id="scene-gloom" class="scene" aria-hidden="true"></div>
+<div id="scene-tp2" class="scene" aria-hidden="true"></div>
 
 <section id="frage" class="screen active">
   <div class="card">
@@ -260,6 +278,16 @@
 
 <section id="opa" class="screen">
   <video id="video-opa" src="opa.mp4" playsinline loop controls preload="auto"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="tp2" class="screen">
+  <div class="card tp2">
+    <div class="sad">😔</div>
+    <h2>Theoretische Physik 2</h2>
+    <p>Ich bin leider zu dumm für Elektrodynamik – deshalb kann ich dir hier nicht helfen.</p>
+    <p class="uebung">Hättest du mal die Übungen besucht.</p>
+  </div>
   <button class="back" type="button">zurück</button>
 </section>
 
@@ -415,7 +443,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
 <script>
   // ---------- subjects: content for each option goes into `html` ----------
   const FAECHER = {
-    tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', html: '' },
+    tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', screen: 'tp2' },
     ana3:   { icon: '∫',  title: 'Analysis 3',            html: '' },
     labor:  { icon: '🧪', title: 'Laborpraktikum',        screen: 'labor' },
     schach: { icon: '♟️', title: 'Schach',
@@ -619,7 +647,33 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     opa: document.getElementById('video-opa'),
   };
   const thumbs = { ja: ['👍'], nein: ['👎'], katze: ['😄', '😁', '🥳', '🌈', '☀️', '✨', '🌻', '🎉', '💛', '🦋'] };
-  const scenes = { katze: 'scene-happy', opa: 'scene-gloom' };
+  const scenes = { katze: 'scene-happy', opa: 'scene-gloom', tp2: 'scene-tp2' };
+
+  // ---------- TP2 scene: monkeys, electricity, brains + falling charts ----------
+  const tp2Scene = document.getElementById('scene-tp2');
+  const TP2_EMOJI = ['🐒', '🙈', '🙉', '🙊', '🦍', '🐵', '🧠', '⚡', '🔌', '💡', '🔋', '🧲', '⚡', '🧠'];
+  TP2_EMOJI.forEach(e => {
+    const d = document.createElement('span');
+    d.className = 'deco';
+    d.textContent = e;
+    d.style.left = (Math.random() * 90) + '%';
+    d.style.top = (Math.random() * 90) + '%';
+    d.style.fontSize = (26 + Math.random() * 28) + 'px';
+    d.style.setProperty('--dur', (1.5 + Math.random() * 2) + 's');
+    d.style.setProperty('--delay', (-Math.random() * 2) + 's');
+    tp2Scene.appendChild(d);
+  });
+  for (let i = 0; i < 12; i++) {
+    const f = document.createElement('span');
+    f.className = 'tumble';
+    f.textContent = '📉';
+    f.style.left = (Math.random() * 92) + '%';
+    f.style.fontSize = (28 + Math.random() * 26) + 'px';
+    f.style.animationDuration = (3 + Math.random() * 4) + 's';
+    f.style.animationDelay = (-Math.random() * 7) + 's';
+    f.style.setProperty('--spin', ((Math.random() - .5) * 540) + 'deg');
+    tp2Scene.appendChild(f);
+  }
 
   // ---------- happy cat: remove the green screen on a canvas ----------
   const katzeVideo = videos.katze;
