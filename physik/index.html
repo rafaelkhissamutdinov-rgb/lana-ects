@@ -1456,7 +1456,16 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
   document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
 
   // ---------- app install (PWA) ----------
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {});
+    // when a new version replaces an old one, reload once so the fresh page is shown
+    // (not on the very first visit, when there was no old version yet)
+    const hadController = !!navigator.serviceWorker.controller;
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (hadController && !reloaded) { reloaded = true; location.reload(); }
+    });
+  }
   const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
   const installBtn = document.getElementById('install-btn');
   const installHelp = document.getElementById('install-help');

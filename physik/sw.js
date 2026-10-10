@@ -2,7 +2,7 @@
 // Online: always the fresh version from the network (and the cache gets updated).
 // Offline: the cached copy. Icons and fonts come straight from the cache.
 // Videos are left to the network: phones fetch them in byte ranges, which a simple cache can't answer.
-const CACHE = 'physik-heute-v3';
+const CACHE = 'physik-heute-v4';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './manifest-l.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png', './schach.png',
@@ -36,10 +36,13 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // everything else: fresh from the network, cached copy when offline
-  const key = req.mode === 'navigate' ? './index.html' : req;
+  // everything else: fresh from the network, cached copy when offline.
+  // cache: 'no-cache' makes the browser re-check with the server instead of
+  // reusing its own short-lived copy, so updates show up on the next open.
+  const nav = req.mode === 'navigate';
+  const key = nav ? './index.html' : req;
   e.respondWith(
-    fetch(req)
+    fetch(nav ? req.url : req, { cache: 'no-cache' })
       .then(res => {
         if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(key, copy)); }
         return res;
