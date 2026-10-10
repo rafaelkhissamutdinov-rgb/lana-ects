@@ -639,7 +639,10 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
   const dateFmt = new Intl.DateTimeFormat('de-AT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const timeFmt = new Intl.DateTimeFormat('de-AT', { hour: '2-digit', minute: '2-digit' });
   // optional personal link: ?name=Lana → "Lana, hast du …" and "Guten Morgen, Lana!"
-  const NAME = (params.get('name') || '').trim().slice(0, 30);
+  // short codes keep the name out of the link: ?L → Lana
+  const SHORT_NAMES = { L: 'Lana' };
+  const short = Object.keys(SHORT_NAMES).find(k => params.has(k));
+  const NAME = short ? SHORT_NAMES[short] : (params.get('name') || '').trim().slice(0, 30);
   if (NAME) {
     document.getElementById('frage-name').textContent = NAME + ', ';
     const h1 = document.getElementById('frage-text');
