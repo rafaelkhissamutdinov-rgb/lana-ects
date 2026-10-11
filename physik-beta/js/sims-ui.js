@@ -15,7 +15,7 @@ const SIM_META = [
     cards: ['lorentz', 'ablenkung'], topics: [], n: 4 },
   { id: 'domain', glyph: 'ℂ', t: { de: 'Komplexe Funktionen in Farbe', ru: 'Комплексные функции в цвете' },
     sub: { de: 'Nullstellen, Pole, Verzweigungsschnitte – und ein Weg, der Residuen zählt', ru: 'Нули, полюса, разрезы – и контур, считающий вычеты' },
-    cards: [], topics: ['holo', 'sing', 'res', 'log', 'cauchy', 'cif', 'realint', 'series'] },
+    cards: [], topics: ['holo', 'sing', 'res', 'log', 'cauchy', 'cif', 'realint', 'series'], n: 5 },
   { id: 'epizykel', glyph: 'ℱ', t: { de: 'Fourier-Epizykel', ru: 'Эпициклы Фурье' },
     sub: { de: 'Zeichne eine Figur – Kreise auf Kreisen zeichnen sie nach', ru: 'Нарисуй фигуру – круги на кругах повторят её' },
     cards: ['komplex'], topics: ['fourier', 'onb'] },
@@ -36,7 +36,7 @@ const SIM_META = [
     cards: [], topics: ['conv', 'distr', 'dderiv', 'fund'] },
 ];
 // experiments that are finished (each one lives in sims/<id>.js)
-const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz']);
+const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz', 'domain']);
 const simList = () => SIM_META.filter(m => SIM_READY.has(m.id));
 const SIM_UI = {
   de: { title: 'Experimente', eyebrow: 'Physik zum Anfassen', sub: 'Ziehen, schieben, ausprobieren. Jedes Experiment gehört zu Karten oder Themen – und hat kleine Aufgaben, die sich selbst abhaken.',
