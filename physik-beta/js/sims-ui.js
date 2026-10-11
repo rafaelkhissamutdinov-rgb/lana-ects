@@ -33,10 +33,10 @@ const SIM_META = [
     cards: ['rc', 'rl', 'resonanz', 'phase', 'impedanz', 'effektiv'], topics: [], n: 4 },
   { id: 'faltung', glyph: '∗', t: { de: 'Faltung & δ', ru: 'Свёртка и δ' },
     sub: { de: 'Eine Funktion gleitet über die andere – Fläche = Faltung', ru: 'Одна функция скользит по другой – площадь = свёртка' },
-    cards: [], topics: ['conv', 'distr', 'dderiv', 'fund'] },
+    cards: [], topics: ['conv', 'distr', 'dderiv', 'fund'], n: 4 },
 ];
 // experiments that are finished (each one lives in sims/<id>.js)
-const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz', 'domain', 'epizykel', 'minkowski', 'linse', 'saite', 'kreis']);
+const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz', 'domain', 'epizykel', 'minkowski', 'linse', 'saite', 'kreis', 'faltung']);
 const simList = () => SIM_META.filter(m => SIM_READY.has(m.id));
 const SIM_UI = {
   de: { title: 'Experimente', eyebrow: 'Physik zum Anfassen', sub: 'Ziehen, schieben, ausprobieren. Jedes Experiment gehört zu Karten oder Themen – und hat kleine Aufgaben, die sich selbst abhaken.',
