@@ -105,7 +105,8 @@ a { color: var(--gold-hi); text-underline-offset: 3px; }
 
 /* ---------- screens ---------- */
 .screen { display: none; position: relative; z-index: 1; width: 100%; max-width: 600px; text-align: center; }
-.screen.active { display: block; animation: rise .55s var(--ease); }
+.screen.active { display: block; }
+.screen.active > :not(.back):not(.sheet) { animation: rise .55s var(--ease); }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
@@ -165,12 +166,12 @@ button:active { transform: scale(.97); }
 }
 .btn-ghost { background: transparent; border: 1px solid var(--line-2); color: var(--text); }
 
-.buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-#btn-ja, #btn-nein { flex: 1 1 0; max-width: 170px; font-size: 1.15rem; padding: 15px 20px; }
+.buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 380px; margin: 0 auto; }
+#btn-ja, #btn-nein { font-size: 1.15rem; padding: 15px 20px; }
 #btn-ja { background: linear-gradient(180deg, #7ce6c9, #3fbf9c); color: #062a20; box-shadow: 0 12px 30px -12px rgba(95, 214, 184, .7); }
 #btn-nein { background: linear-gradient(180deg, #ff9db3, #f06a8a); color: #3a0716; box-shadow: 0 12px 30px -12px rgba(255, 127, 159, .7); }
 #btn-will {
-  flex-basis: 100%; max-width: 352px; font-size: 1.05rem; padding: 14px 22px;
+  grid-column: 1 / -1; font-size: 1.05rem; padding: 14px 22px;
   background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink);
   box-shadow: 0 14px 34px -12px rgba(244, 200, 106, .65), 0 1px 0 rgba(255, 255, 255, .5) inset;
 }
@@ -276,7 +277,7 @@ button:active { transform: scale(.97); }
 .tile:hover { background: rgba(255, 255, 255, .07); border-color: var(--line-2); filter: none; }
 .glyph {
   font-family: 'KaTeX_Main', var(--serif); font-style: italic; font-weight: 400; font-size: 1.3rem; line-height: 1;
-  min-width: 40px; height: 40px; padding: 0 8px; border-radius: 12px; display: inline-grid; place-items: center;
+  min-width: 40px; height: 40px; padding: 0 8px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; flex: none;
   background: rgba(162, 148, 255, .12); color: var(--violet); white-space: nowrap; letter-spacing: 0;
 }
 .tile .cnt { font-size: .74rem; font-weight: 650; color: var(--text-3); margin-top: auto; }
@@ -651,3 +652,5 @@ body[data-screen="stern"] { padding: 0; overflow: hidden; }
 .sim-what h3, .sim-tasks h3 { display: flex; align-items: center; gap: 8px; }
 .sim-what h3 .ic, .sim-tasks h3 .ic { color: var(--gold); }
 .sim-toast { display: inline-flex; align-items: center; gap: 6px; }
+.glyph sub { font-size: .55em; align-self: flex-end; margin: 0 0 .3em .05em; line-height: 1; }
+.tile > span:not(.glyph):not(.cnt) { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; -webkit-hyphens: auto; }
