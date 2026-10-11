@@ -3,11 +3,13 @@ const E2UI = {
   de: { title: 'Experimentalphysik II', sub: 'Optik, Elektromagnetismus, Relativität – Theorie einfach erklärt und Karteikarten für die Altfragen.',
         all: 'Alle Karten lernen', known: 'Karten gewusst', learn: 'Diese Karten lernen', show: 'Antwort zeigen',
         again: 'Nochmal', got: 'Gewusst', answer: 'Antwort', einfach: 'Einfach erklärt', bild: 'Bild dazu',
+        zeichen: 'Was bedeuten die Zeichen?', heisst: 'Was heißt das?', rechnen: 'Rechenbeispiel', pruefung: 'In der Prüfung',
         left: 'noch', doneT: 'Runde geschafft!', doneS: 'Alle Karten dieser Runde sitzen.', restart: 'Neue Runde',
         cards: 'Karten', overview: 'Alle Karten zum Nachlesen' },
   ru: { title: 'Экспериментальная физика II', sub: 'Оптика, электромагнетизм, теория относительности — простая теория и карточки для Altfragen.',
         all: 'Учить все карточки', known: 'карточек выучено', learn: 'Учить эти карточки', show: 'Показать ответ',
         again: 'Ещё раз', got: 'Знаю', answer: 'Ответ', einfach: 'Просто', bild: 'Образ',
+        zeichen: 'Что значат обозначения', heisst: 'Что это значит', rechnen: 'Пример с числами', pruefung: 'На экзамене',
         left: 'осталось', doneT: 'Раунд пройден!', doneS: 'Все карточки этого раунда выучены.', restart: 'Новый раунд',
         cards: 'карточек', overview: 'Все карточки для чтения' },
 };
@@ -23,9 +25,15 @@ function loadE2() {
 }
 const isKnown = id => (e2Box[id] || 0) > 0;
 function cardBack(c, cid) {
-  return `<div class="step s-formel"><div class="step-title">${ic('sigma')}<span>${e2t('answer')}</span></div>${c.a[anaLang]}</div>` +
-    `<div class="step s-einfach"><div class="step-title">${ic('baby')}<span>${e2t('einfach')}</span></div>${c.e[anaLang]}</div>` +
-    `<div class="step s-beispiel"><div class="step-title">${ic('lightbulb')}<span>${e2t('bild')}</span></div>${c.b[anaLang]}</div>` +
+  const step = (cls, icon, label, html) => `<div class="step ${cls}"><div class="step-title">${ic(icon)}<span>${e2t(label)}</span></div>${html}</div>`;
+  const L = anaLang;
+  const body = c.s
+    ? step('s-formel', 'sigma', 'answer', c.a[L]) + step('s-vorher s-zeichen', 'book-open', 'zeichen', c.s[L]) +
+      step('s-einfach', 'eye', 'heisst', c.w[L]) + step('s-beispiel', 'list-checks', 'rechnen', c.x[L]) +
+      step('s-falle', 'target', 'pruefung', c.p[L])
+    : step('s-formel', 'sigma', 'answer', c.a[L]) + step('s-einfach', 'baby', 'einfach', c.e[L]) +
+      step('s-beispiel', 'lightbulb', 'bild', c.b[L]);
+  return body +
     (cid ? simLinks('card', cid) : '');
 }
 

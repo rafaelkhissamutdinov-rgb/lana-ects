@@ -830,3 +830,8 @@ body[data-screen="labor"] { --gold: #10b07a; --gold-hi: #10b07a; --gold-d: #0a8a
 .sim-limits h3 { display: flex; align-items: center; gap: 8px; font-size: .95rem; margin: 0 0 6px; color: var(--text); }
 .sim-limits p { margin: 0; }
 body[data-screen="stern"] .beta-tag { display: none; }
+/* E2 symbol legend: one symbol per row, symbol column first */
+.step.s-zeichen ul { list-style: none; padding-left: 0; gap: 8px; }
+.step.s-zeichen li { padding-left: .9em; text-indent: -.9em; }
+.step.s-zeichen li::before { content: "·"; display: inline-block; width: .9em; text-indent: 0; color: var(--c); font-weight: 800; }
+.step.s-einfach:has(+ .s-beispiel) { font-size: 1rem; }

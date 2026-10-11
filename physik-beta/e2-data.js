@@ -9,8 +9,8 @@ window.E2 = {
     "ru": "Электростатика"
    },
    "intro": {
-    "de": "Ruhende Ladungen und ihre Felder. Eine Ladung „verbiegt“ den Raum um sich herum so, dass jede andere Ladung eine Kraft spürt – das ist das elektrische Feld $\\vec E$. Fast alle Aufgaben laufen über drei Werkzeuge: Coulomb (Kraft zwischen zwei Ladungen), Superposition (Felder einfach addieren) und Gauß (Fluss durch eine geschlossene Fläche = eingeschlossene Ladung durch $\\varepsilon_0$).",
-    "ru": "Покоящиеся заряды и их поля. Заряд так «искривляет» пространство вокруг, что любой другой заряд чувствует силу — это электрическое поле $\\vec E$. Почти все задачи решаются тремя инструментами: Кулон (сила между двумя зарядами), суперпозиция (поля просто складываются) и Гаусс (поток через замкнутую поверхность = заключённый заряд, делённый на $\\varepsilon_0$)."
+    "de": "Ruhende Ladungen und ihre Felder. Jede Ladung erzeugt um sich herum ein elektrisches Feld $\\vec E$: An jedem Ort gibt es an, welche Kraft eine kleine Probeladung $q$ dort spüren würde, $\\vec F=q\\vec E$. Fast alle Aufgaben laufen über drei Werkzeuge: Coulomb (Kraft zwischen zwei Ladungen), Superposition (Felder als Vektoren addieren) und Gauß (Fluss durch eine geschlossene Fläche = eingeschlossene Ladung durch $\\varepsilon_0$).",
+    "ru": "Покоящиеся заряды и их поля. Каждый заряд создаёт вокруг себя электрическое поле $\\vec E$: в каждой точке оно показывает, какую силу почувствовал бы там маленький пробный заряд $q$, $\\vec F=q\\vec E$. Почти все задачи решаются тремя инструментами: Кулон (сила между двумя зарядами), суперпозиция (поля складываются как векторы) и Гаусс (поток через замкнутую поверхность = заключённый заряд, делённый на $\\varepsilon_0$)."
    },
    "cards": [
     "coulomb",
@@ -216,16 +216,24 @@ window.E2 = {
     "ru": "Закон Кулона: сила между двумя точечными зарядами?"
    },
    "a": {
-    "de": "$\\vec F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1q_2}{r^2}\\,\\hat r$",
-    "ru": "$\\vec F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1q_2}{r^2}\\,\\hat r$"
+    "de": "$\\vec F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1q_2}{r^2}\\,\\hat r$, Betrag $F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{|q_1q_2|}{r^2}$",
+    "ru": "$\\vec F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{q_1q_2}{r^2}\\,\\hat r$, модуль $F=\\frac{1}{4\\pi\\varepsilon_0}\\frac{|q_1q_2|}{r^2}$"
    },
-   "e": {
-    "de": "Gleiche Vorzeichen stoßen sich ab, ungleiche ziehen sich an. Doppelter Abstand → nur noch $\\frac14$ der Kraft.",
-    "ru": "Одинаковые знаки отталкиваются, разные притягиваются. Расстояние вдвое больше → остаётся только $\\frac14$ силы."
+   "s": {
+    "de": "<ul><li>$\\vec F$ – Kraft auf Ladung 2. Ein Vektor: Betrag in Newton plus Richtung.</li><li>$q_1,q_2$ – die Ladungen in Coulomb (C), mit Vorzeichen. Typisch $1\\,\\mu\\mathrm C=10^{-6}\\,\\mathrm C$; ein Elektron hat $-e=-1{,}6\\cdot10^{-19}\\,\\mathrm C$.</li><li>$r$ – Abstand der beiden Ladungen in Metern.</li><li>$\\hat r$ („r Dach“) – Einheitsvektor: ein Pfeil der Länge 1, der von Ladung 1 zu Ladung 2 zeigt. Er trägt nur die Richtung, keine Größe.</li><li>$\\frac{1}{4\\pi\\varepsilon_0}\\approx9\\cdot10^9\\,\\frac{\\mathrm N\\,\\mathrm m^2}{\\mathrm C^2}$ – Naturkonstante, $\\varepsilon_0=8{,}85\\cdot10^{-12}\\,\\frac{\\mathrm C^2}{\\mathrm N\\,\\mathrm m^2}$.</li></ul>",
+    "ru": "<ul><li>$\\vec F$ – сила, действующая на заряд 2. Вектор: модуль в ньютонах плюс направление.</li><li>$q_1,q_2$ – заряды в кулонах (Кл), со знаком. Обычно $1\\,\\mu\\mathrm C=10^{-6}\\,\\mathrm C$; у электрона $-e=-1{,}6\\cdot10^{-19}\\,\\mathrm C$.</li><li>$r$ – расстояние между зарядами в метрах.</li><li>$\\hat r$ («r с крышкой») – единичный вектор: стрелка длины 1 от заряда 1 к заряду 2. Несёт только направление, без величины.</li><li>$\\frac{1}{4\\pi\\varepsilon_0}\\approx9\\cdot10^9\\,\\frac{\\mathrm N\\,\\mathrm m^2}{\\mathrm C^2}$ – мировая константа, $\\varepsilon_0=8{,}85\\cdot10^{-12}\\,\\frac{\\mathrm C^2}{\\mathrm N\\,\\mathrm m^2}$.</li></ul>"
    },
-   "b": {
-    "de": "Wie Licht einer Lampe: Es verteilt sich auf eine Kugelfläche $4\\pi r^2$, deshalb $\\frac1{r^2}$.",
-    "ru": "Как свет лампы: он распределяется по сфере площадью $4\\pi r^2$, отсюда $\\frac1{r^2}$."
+   "w": {
+    "de": "Der Bruch sagt, wie stark die Kraft ist, $\\hat r$ sagt, wohin sie zeigt. Ist $q_1q_2\\gt0$ (gleiche Vorzeichen), zeigt $\\vec F$ in Richtung $\\hat r$, also von Ladung 1 weg: Abstoßung. Ist $q_1q_2\\lt0$, zeigt sie entgegengesetzt: Anziehung. Die Kraft fällt mit $\\frac1{r^2}$: doppelter Abstand, ein Viertel der Kraft. Sehen kannst du das an einem geriebenen Luftballon, der Papierschnipsel erst aus der Nähe hochhebt.",
+    "ru": "Дробь говорит, насколько велика сила, $\\hat r$ – куда она направлена. Если $q_1q_2\\gt0$ (знаки одинаковые), $\\vec F$ направлена вдоль $\\hat r$, то есть от заряда 1: отталкивание. Если $q_1q_2\\lt0$, она направлена наоборот: притяжение. Сила падает как $\\frac1{r^2}$: расстояние вдвое больше – сила вчетверо меньше. Это видно на натёртом воздушном шарике: он поднимает бумажки только вблизи."
+   },
+   "x": {
+    "de": "Zwei Ladungen $q_1=q_2=1\\,\\mu\\mathrm C$ im Abstand $r=10\\,\\mathrm{cm}=0{,}1\\,\\mathrm m$:<br>$F=9\\cdot10^9\\cdot\\frac{10^{-6}\\cdot10^{-6}}{0{,}1^2}\\,\\mathrm N=0{,}9\\,\\mathrm N$ – etwa das Gewicht von 90 g.<br>Bei $r=20\\,\\mathrm{cm}$: $F=0{,}225\\,\\mathrm N$, ein Viertel.",
+    "ru": "Два заряда $q_1=q_2=1\\,\\mu\\mathrm C$ на расстоянии $r=10\\,\\mathrm{cm}=0{,}1\\,\\mathrm m$:<br>$F=9\\cdot10^9\\cdot\\frac{10^{-6}\\cdot10^{-6}}{0{,}1^2}\\,\\mathrm N=0{,}9\\,\\mathrm N$ – примерно вес 90 г.<br>При $r=20\\,\\mathrm{cm}$: $F=0{,}225\\,\\mathrm N$, вчетверо меньше."
+   },
+   "p": {
+    "de": "Gefragt wird meist der Betrag oder ein Verhältnis („Abstand verdreifacht – Kraft?“ Antwort: $\\frac19$). Falle: µC und cm zuerst in C und m umrechnen. Die Richtung kommt aus den Vorzeichen, nicht aus dem Bruch.",
+    "ru": "Обычно спрашивают модуль или отношение («расстояние втрое больше – сила?» Ответ: $\\frac19$). Ловушка: мкКл и см сначала перевести в Кл и м. Направление определяют по знакам, а не по дроби."
    }
   },
   "superpos": {
@@ -235,16 +243,24 @@ window.E2 = {
     "ru": "Поле нескольких зарядов $Q_1,\\dots,Q_n$ в точке?"
    },
    "a": {
-    "de": "$\\vec E=\\sum_i\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q_i}{r_i^2}\\,\\hat r_i$ – Vektoren addieren.",
-    "ru": "$\\vec E=\\sum_i\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q_i}{r_i^2}\\,\\hat r_i$ — складываем векторы."
+    "de": "$\\vec E=\\sum_i\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q_i}{r_i^2}\\,\\hat r_i$ – die Felder werden als Vektoren addiert.",
+    "ru": "$\\vec E=\\sum_i\\frac{1}{4\\pi\\varepsilon_0}\\frac{Q_i}{r_i^2}\\,\\hat r_i$ – поля складываются как векторы."
    },
-   "e": {
-    "de": "Jede Ladung macht ihr Feld, als wäre sie allein. Am Ende werden die Pfeile addiert – mit Richtung! Nicht die Beträge, nicht die Ladungen vorher addieren.",
-    "ru": "Каждый заряд создаёт своё поле, будто он один. В конце складываем стрелки — с направлением! Не модули и не сначала заряды."
+   "s": {
+    "de": "<ul><li>$\\vec E$ – Feld an dem Ort, der dich interessiert, in N/C.</li><li>$Q_i$ – die $i$-te Ladung, mit Vorzeichen.</li><li>$r_i$ – Abstand von $Q_i$ zu diesem Ort.</li><li>$\\hat r_i$ – Einheitsvektor von $Q_i$ zum Ort (Länge 1, nur Richtung).</li><li>$\\sum_i$ – Summe über alle Ladungen.</li></ul>",
+    "ru": "<ul><li>$\\vec E$ – поле в интересующей точке, в Н/Кл.</li><li>$Q_i$ – $i$-й заряд, со знаком.</li><li>$r_i$ – расстояние от $Q_i$ до этой точки.</li><li>$\\hat r_i$ – единичный вектор от $Q_i$ к точке (длина 1, только направление).</li><li>$\\sum_i$ – сумма по всем зарядам.</li></ul>"
    },
-   "b": {
-    "de": "Mehrere Leute ziehen an einem Seil in verschiedene Richtungen: Es zählt die Summe der Zugpfeile.",
-    "ru": "Несколько человек тянут верёвку в разные стороны: важна сумма стрелок."
+   "w": {
+    "de": "Jede Ladung liefert am Ort einen eigenen Pfeil, als wäre sie allein: Länge $\\frac{|Q_i|}{4\\pi\\varepsilon_0r_i^2}$, Richtung von der Ladung weg (positiv) oder zu ihr hin (negativ). Das Gesamtfeld ist die Vektorsumme. Praktisch zerlegst du jeden Pfeil in $x$- und $y$-Anteil und addierst die Anteile getrennt. Entgegengesetzte Pfeile können sich aufheben.",
+    "ru": "Каждый заряд даёт в точке свою стрелку, как будто он один: длина $\\frac{|Q_i|}{4\\pi\\varepsilon_0r_i^2}$, направление от заряда (если он положительный) или к нему (если отрицательный). Итоговое поле – векторная сумма. На практике раскладываешь каждую стрелку на $x$- и $y$-составляющие и складываешь их отдельно. Противоположные стрелки могут взаимно уничтожиться."
+   },
+   "x": {
+    "de": "Zwei gleiche Ladungen $+Q$ bei $x=-a$ und $x=+a$.<br>Im Mittelpunkt: beide Pfeile gleich lang, entgegengesetzt, also $\\vec E=0$.<br>Im Punkt $(0,a)$ auf der $y$-Achse: Jede Ladung ist $\\sqrt2\\,a$ entfernt, die $x$-Anteile heben sich weg, die $y$-Anteile addieren sich: $E=2\\cdot\\frac{Q}{4\\pi\\varepsilon_0\\,2a^2}\\cdot\\frac{1}{\\sqrt2}=\\frac{Q}{4\\sqrt2\\,\\pi\\varepsilon_0a^2}$.",
+    "ru": "Два одинаковых заряда $+Q$ в точках $x=-a$ и $x=+a$.<br>В середине: стрелки равны и противоположны, значит $\\vec E=0$.<br>В точке $(0,a)$ на оси $y$: каждый заряд на расстоянии $\\sqrt2\\,a$, $x$-составляющие сокращаются, $y$-составляющие складываются: $E=2\\cdot\\frac{Q}{4\\pi\\varepsilon_0\\,2a^2}\\cdot\\frac{1}{\\sqrt2}=\\frac{Q}{4\\sqrt2\\,\\pi\\varepsilon_0a^2}$."
+   },
+   "p": {
+    "de": "Typisch: Feld oder Kraft an einem Punkt durch 2–3 Ladungen (Dreieck, Quadrat). Erst Skizze mit Pfeilen, dann Symmetrie nutzen (was hebt sich weg?), dann Komponenten addieren. Falle: einfach die Beträge addieren.",
+    "ru": "Типично: поле или сила в точке от 2–3 зарядов (треугольник, квадрат). Сначала рисунок со стрелками, потом симметрия (что сокращается?), потом сложение составляющих. Ловушка: просто сложить модули."
    }
   },
   "einheitE": {
@@ -257,32 +273,48 @@ window.E2 = {
     "de": "$[E]=\\frac{\\mathrm N}{\\mathrm C}=\\frac{\\mathrm V}{\\mathrm m}$",
     "ru": "$[E]=\\frac{\\mathrm N}{\\mathrm C}=\\frac{\\mathrm V}{\\mathrm m}$"
    },
-   "e": {
-    "de": "Feld = Kraft pro Ladung ($\\vec E=\\vec F/q$), also Newton pro Coulomb. Gleichzeitig Spannung pro Länge ($E=U/d$), also Volt pro Meter – beides ist dasselbe.",
-    "ru": "Поле = сила на единицу заряда ($\\vec E=\\vec F/q$), то есть ньютон на кулон. Одновременно это напряжение на длину ($E=U/d$), вольт на метр, — это одно и то же."
+   "s": {
+    "de": "<ul><li>$\\mathrm N$ – Newton (Kraft), $\\mathrm C$ – Coulomb (Ladung, $1\\,\\mathrm C=1\\,\\mathrm A\\,\\mathrm s$).</li><li>$\\mathrm V$ – Volt (Spannung, $1\\,\\mathrm V=1\\,\\frac{\\mathrm J}{\\mathrm C}$), $\\mathrm m$ – Meter.</li><li>$[E]$ – „Einheit von $E$“.</li></ul>",
+    "ru": "<ul><li>$\\mathrm N$ – ньютон (сила), $\\mathrm C$ – кулон (заряд, $1\\,\\mathrm C=1\\,\\mathrm A\\,\\mathrm s$).</li><li>$\\mathrm V$ – вольт (напряжение, $1\\,\\mathrm V=1\\,\\frac{\\mathrm J}{\\mathrm C}$), $\\mathrm m$ – метр.</li><li>$[E]$ – «единица $E$».</li></ul>"
    },
-   "b": {
-    "de": "Wie „Preis pro Kilo“: Das Feld sagt, wie viel Kraft du pro Coulomb Ladung bekommst.",
-    "ru": "Как «цена за килограмм»: поле говорит, сколько силы приходится на кулон заряда."
+   "w": {
+    "de": "$E$ sagt, wie stark eine Ladung an dieser Stelle geschoben wird: $F=qE$. $1\\,\\frac{\\mathrm N}{\\mathrm C}$ heißt: 1 Coulomb spürt 1 Newton. Dass das dasselbe wie $\\frac{\\mathrm V}{\\mathrm m}$ ist, folgt aus $1\\,\\frac{\\mathrm V}{\\mathrm m}=1\\,\\frac{\\mathrm J}{\\mathrm C\\,\\mathrm m}=1\\,\\frac{\\mathrm N\\,\\mathrm m}{\\mathrm C\\,\\mathrm m}=1\\,\\frac{\\mathrm N}{\\mathrm C}$.",
+    "ru": "$E$ показывает, насколько сильно толкается заряд в этой точке: $F=qE$. $1\\,\\frac{\\mathrm N}{\\mathrm C}$ значит: 1 кулон чувствует 1 ньютон. То, что это то же самое, что $\\frac{\\mathrm V}{\\mathrm m}$, следует из $1\\,\\frac{\\mathrm V}{\\mathrm m}=1\\,\\frac{\\mathrm J}{\\mathrm C\\,\\mathrm m}=1\\,\\frac{\\mathrm N\\,\\mathrm m}{\\mathrm C\\,\\mathrm m}=1\\,\\frac{\\mathrm N}{\\mathrm C}$."
+   },
+   "x": {
+    "de": "Feld der Erde bei schönem Wetter: etwa $100\\,\\frac{\\mathrm V}{\\mathrm m}$.<br>Plattenkondensator mit $U=10\\,\\mathrm V$, $d=1\\,\\mathrm{mm}$: $E=\\frac Ud=10^4\\,\\frac{\\mathrm V}{\\mathrm m}$.<br>Luft schlägt bei ungefähr $3\\cdot10^6\\,\\frac{\\mathrm V}{\\mathrm m}$ durch – es gibt einen Funken.",
+    "ru": "Поле Земли в ясную погоду: около $100\\,\\frac{\\mathrm V}{\\mathrm m}$.<br>Плоский конденсатор с $U=10\\,\\mathrm V$, $d=1\\,\\mathrm{mm}$: $E=\\frac Ud=10^4\\,\\frac{\\mathrm V}{\\mathrm m}$.<br>Воздух пробивается примерно при $3\\cdot10^6\\,\\frac{\\mathrm V}{\\mathrm m}$ – проскакивает искра."
+   },
+   "p": {
+    "de": "Kommt als Kurzfrage oder als Einheitenkontrolle am Ende einer Rechnung: Wenn bei einem Feld nicht N/C bzw. V/m herauskommt, steckt irgendwo ein Fehler.",
+    "ru": "Бывает как короткий вопрос или как проверка единиц в конце решения: если у поля получились не Н/Кл или В/м, где-то ошибка."
    }
   },
   "feldlinien": {
    "topic": "estat",
    "q": {
     "de": "Feldlinien zweier gleich großer Ladungen: Woran erkennst du, ob die Vorzeichen gleich oder verschieden sind?",
-    "ru": "Силовые линии двух одинаковых по модулю зарядов: как понять, одинаковые у них знаки или разные?"
+    "ru": "Силовые линии двух одинаковых по величине зарядов: как понять, одинаковые у них знаки или разные?"
    },
    "a": {
     "de": "Linien laufen von einer Ladung zur anderen → <b>verschiedene</b> Vorzeichen (Dipol). Linien weichen sich aus, Lücke in der Mitte → <b>gleiche</b> Vorzeichen.",
     "ru": "Линии идут от одного заряда к другому → знаки <b>разные</b> (диполь). Линии расходятся, в середине пусто → знаки <b>одинаковые</b>."
    },
-   "e": {
-    "de": "Feldlinien starten bei $+$ und enden bei $-$. Am Bild allein siehst du nicht, welche Seite plus ist – beide Zuordnungen sind möglich.",
-    "ru": "Линии начинаются на $+$ и заканчиваются на $-$. По одной картинке не видно, какая сторона плюс, — возможны оба варианта."
+   "s": {
+    "de": "<ul><li>Feldlinie – eine Kurve, deren Richtung an jedem Punkt die Richtung von $\\vec E$ dort ist.</li><li>Dichte der Linien – zeigt, wie stark das Feld ist (dicht = stark).</li><li>$+$ / $-$ – Vorzeichen der Ladung.</li></ul>",
+    "ru": "<ul><li>Силовая линия – кривая, направление которой в каждой точке совпадает с направлением $\\vec E$ там.</li><li>Густота линий – показывает, насколько поле сильное (густо = сильно).</li><li>$+$ / $-$ – знак заряда.</li></ul>"
    },
-   "b": {
-    "de": "Wie Wasser von einer Quelle zu einem Abfluss: Man sieht den Strom, aber nicht, wer Quelle und wer Abfluss ist, wenn keine Pfeile gezeichnet sind.",
-    "ru": "Как вода от источника к стоку: поток виден, а кто источник, кто сток, без стрелок не понять."
+   "w": {
+    "de": "Setzt man irgendwo eine kleine positive Probeladung hin, wird sie entlang der Linie geschoben. Linien beginnen bei positiven Ladungen und enden bei negativen (oder laufen ins Unendliche). Sie kreuzen sich nie, weil das Feld an jedem Ort nur eine Richtung hat.",
+    "ru": "Если поставить куда-нибудь маленький положительный пробный заряд, его потянет вдоль линии. Линии начинаются на положительных зарядах и кончаются на отрицательных (или уходят в бесконечность). Они никогда не пересекаются: у поля в каждой точке только одно направление."
+   },
+   "x": {
+    "de": "Dipol ($+Q$ und $-Q$): Die Linien laufen in Bögen von $+$ nach $-$, dicht zwischen den Ladungen.<br>Zwei gleiche positive Ladungen: Die Linien biegen voneinander weg, genau in der Mitte ist $\\vec E=0$.<br>Beides kannst du im Experiment „Feldlinien & Gauß“ selbst verschieben.",
+    "ru": "Диполь ($+Q$ и $-Q$): линии идут дугами от $+$ к $-$, густо между зарядами.<br>Два одинаковых положительных заряда: линии изгибаются друг от друга, ровно посередине $\\vec E=0$.<br>И то и другое можно подвигать в эксперименте «Силовые линии и Гаусс»."
+   },
+   "p": {
+    "de": "Gegeben ist ein Bild, gefragt: gleiche oder verschiedene Vorzeichen? Falle: Ohne Pfeile auf den Linien kannst du nicht sagen, welche Ladung plus ist – nur, ob die Vorzeichen gleich oder verschieden sind.",
+    "ru": "Дан рисунок, вопрос: знаки одинаковые или разные? Ловушка: без стрелок на линиях нельзя сказать, какой заряд плюс – только одинаковые знаки или разные."
    }
   },
   "gauss": {
@@ -295,32 +327,48 @@ window.E2 = {
     "de": "$\\Phi_E=\\oint\\vec E\\cdot d\\vec A=\\frac{Q_{\\text{innen}}}{\\varepsilon_0}$",
     "ru": "$\\Phi_E=\\oint\\vec E\\cdot d\\vec A=\\frac{Q_{\\text{innen}}}{\\varepsilon_0}$"
    },
-   "e": {
-    "de": "Der Fluss durch eine <b>geschlossene</b> Fläche hängt nur von der Ladung <b>innen</b> ab. Ladungen außerhalb tragen nichts bei, egal wie nah. Form und Größe der Fläche sind egal.",
-    "ru": "Поток через <b>замкнутую</b> поверхность зависит только от заряда <b>внутри</b>. Заряды снаружи ничего не добавляют, как бы близко они ни были. Форма и размер поверхности не важны."
+   "s": {
+    "de": "<ul><li>$\\Phi_E$ – elektrischer Fluss durch die Fläche (Einheit V·m).</li><li>$\\oint$ – Integral über eine <b>geschlossene</b> Fläche, die einen Raum ganz umschließt (Kugel, Würfel, Dose).</li><li>$d\\vec A$ – kleines Flächenstück als Vektor: Betrag = sein Flächeninhalt, Richtung = senkrecht nach außen.</li><li>$\\vec E\\cdot d\\vec A$ – Skalarprodukt: Nur der Teil des Feldes, der senkrecht durch die Fläche geht, zählt.</li><li>$Q_{\\text{innen}}$ – Summe aller Ladungen innerhalb der Fläche.</li></ul>",
+    "ru": "<ul><li>$\\Phi_E$ – электрический поток через поверхность (единица В·м).</li><li>$\\oint$ – интеграл по <b>замкнутой</b> поверхности, которая целиком окружает объём (сфера, куб, банка).</li><li>$d\\vec A$ – маленький кусочек поверхности как вектор: модуль = его площадь, направление = перпендикулярно наружу.</li><li>$\\vec E\\cdot d\\vec A$ – скалярное произведение: считается только та часть поля, что проходит сквозь поверхность перпендикулярно.</li><li>$Q_{\\text{innen}}$ – сумма всех зарядов внутри поверхности.</li></ul>"
    },
-   "b": {
-    "de": "Wie Zählen an einem Zaun: Wie viele Leute aus dem Garten herauskommen, hängt nur davon ab, wie viele drin waren.",
-    "ru": "Как подсчёт у забора: сколько людей выходит из сада, зависит только от того, сколько было внутри."
+   "w": {
+    "de": "Man zählt, wie viel Feld durch die Hülle nach außen tritt (hinaus positiv, hinein negativ). Das Ergebnis hängt nur davon ab, wie viel Ladung drin ist. In Aufgaben nutzt man es rückwärts: Ist die Lage sehr symmetrisch, ist $E$ auf der Fläche überall gleich groß und senkrecht, dann wird das Integral einfach $E\\cdot A$, und man kann $E$ ausrechnen.",
+    "ru": "Считаем, сколько поля выходит наружу через оболочку (наружу – плюс, внутрь – минус). Результат зависит только от того, сколько заряда внутри. В задачах её используют наоборот: если ситуация очень симметрична, $E$ на поверхности везде одинаково и перпендикулярно, тогда интеграл превращается просто в $E\\cdot A$, и можно найти $E$."
+   },
+   "x": {
+    "de": "Punktladung $Q$, Kugel mit Radius $r$ drumherum: $E$ ist auf der Kugel überall gleich und radial, also $\\Phi=E\\cdot4\\pi r^2=\\frac{Q}{\\varepsilon_0}$ und damit $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ – das Coulomb-Feld, aus Gauß hergeleitet.",
+    "ru": "Точечный заряд $Q$, вокруг сфера радиуса $r$: на сфере $E$ везде одинаково и направлено по радиусу, значит $\\Phi=E\\cdot4\\pi r^2=\\frac{Q}{\\varepsilon_0}$, откуда $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ – поле Кулона, выведенное из Гаусса."
+   },
+   "p": {
+    "de": "Standardaufgaben: Feld von Kugel, Kugelschale, langem Draht, großer Platte. Vorgehen: (1) passende Gauß-Fläche wählen (Kugel, Zylinder, Quader), (2) $\\oint\\vec E\\cdot d\\vec A$ durch Symmetrie zu $E\\cdot A$ vereinfachen, (3) eingeschlossene Ladung bestimmen, nach $E$ auflösen.",
+    "ru": "Стандартные задачи: поле шара, сферической оболочки, длинной нити, большой пластины. Порядок: (1) выбрать подходящую гауссову поверхность (сфера, цилиндр, параллелепипед), (2) по симметрии упростить $\\oint\\vec E\\cdot d\\vec A$ до $E\\cdot A$, (3) найти заключённый заряд и выразить $E$."
    }
   },
   "gaussfalle": {
    "topic": "estat",
    "q": {
     "de": "⚠️ Falle: Zwei Ladungen, Kugel um nur eine davon. Ist der Fluss $\\frac{q_{\\text{innen}}}{\\varepsilon_0}$? Und ist dann das Feld auf der Kugel überall gleich groß?",
-    "ru": "⚠️ Ловушка: два заряда, сфера только вокруг одного. Поток равен $\\frac{q_{\\text{innen}}}{\\varepsilon_0}$? И значит ли это, что поле на сфере везде одинаковое?"
+    "ru": "⚠️ Ловушка: два заряда, сфера только вокруг одного. Равен ли поток $\\frac{q_{\\text{innen}}}{\\varepsilon_0}$? И одинаково ли тогда поле по всей сфере?"
    },
    "a": {
     "de": "Fluss: <b>ja</b>, nur die innere Ladung zählt. Feld überall gleich: <b>nein</b> – ohne Kugelsymmetrie darf man $\\Phi=4\\pi r^2E$ nicht benutzen.",
-    "ru": "Поток: <b>да</b>, считается только внутренний заряд. Поле везде одинаковое: <b>нет</b> — без сферической симметрии формулу $\\Phi=4\\pi r^2E$ использовать нельзя."
+    "ru": "Поток: <b>да</b>, считается только внутренний заряд. Поле везде одинаковое: <b>нет</b> – без сферической симметрии формулой $\\Phi=4\\pi r^2E$ пользоваться нельзя."
    },
-   "e": {
-    "de": "Gauß gibt immer die Summe über die ganze Fläche. Den Betrag des Feldes bekommst du daraus nur, wenn die Symmetrie sagt, dass $E$ überall auf der Fläche gleich ist (Kugel um Punktladung, Zylinder um Draht).",
-    "ru": "Гаусс всегда даёт сумму по всей поверхности. Модуль поля из неё получается, только если симметрия гарантирует одинаковое $E$ на всей поверхности (сфера вокруг точечного заряда, цилиндр вокруг провода)."
+   "s": {
+    "de": "<ul><li>$q_{\\text{innen}}$ – Ladung innerhalb der Kugel.</li><li>$\\Phi$ – Fluss durch die ganze Kugel (eine einzige Zahl).</li><li>$E$ – Betrag des Feldes an einem einzelnen Punkt der Kugel.</li></ul>",
+    "ru": "<ul><li>$q_{\\text{innen}}$ – заряд внутри сферы.</li><li>$\\Phi$ – поток через всю сферу (одно число).</li><li>$E$ – модуль поля в одной точке сферы.</li></ul>"
    },
-   "b": {
-    "de": "Die Summe aller Noten der Klasse sagt nicht, dass jeder dieselbe Note hat.",
-    "ru": "Сумма оценок класса не говорит, что у всех одинаковые оценки."
+   "w": {
+    "de": "Der Fluss ist eine Summe über die ganze Fläche. Die äußere Ladung schickt an einer Stelle Feld hinein und an anderer Stelle genauso viel wieder hinaus – in der Summe null. Das Feld an den einzelnen Punkten wird dadurch aber sehr ungleich: nahe der äußeren Ladung anders als auf der abgewandten Seite.",
+    "ru": "Поток – это сумма по всей поверхности. Внешний заряд в одном месте «вносит» поле внутрь, а в другом столько же выводит наружу – в сумме ноль. Но поле в отдельных точках из-за него становится очень неравномерным: возле внешнего заряда одно, на противоположной стороне другое."
+   },
+   "x": {
+    "de": "Ladung $q$ im Mittelpunkt einer Kugel mit Radius $R$, eine zweite Ladung $q$ im Abstand $2R$ vom Mittelpunkt. Der Fluss bleibt $\\frac{q}{\\varepsilon_0}$. In Einheiten von $\\frac{q}{4\\pi\\varepsilon_0R^2}$: Am Punkt der Kugel, der der zweiten Ladung am nächsten ist, zeigen beide Felder entgegengesetzt und heben sich auf, $E=0$. Am gegenüberliegenden Punkt addieren sie sich: $E=1+\\frac19$.",
+    "ru": "Заряд $q$ в центре сферы радиуса $R$, второй заряд $q$ на расстоянии $2R$ от центра. Поток остаётся $\\frac{q}{\\varepsilon_0}$. В единицах $\\frac{q}{4\\pi\\varepsilon_0R^2}$: в ближайшей ко второму заряду точке сферы поля направлены противоположно и сокращаются, $E=0$. В противоположной точке они складываются: $E=1+\\frac19$."
+   },
+   "p": {
+    "de": "Kommt genau so als Verständnisfrage. Richtig: Fluss ja, gleiches Feld nein. Merksatz: $\\Phi=4\\pi r^2E$ gilt nur, wenn $E$ wegen der Symmetrie überall auf der Fläche gleich ist. Selbst ausprobieren im Experiment „Feldlinien & Gauß“, Aufgabe 3.",
+    "ru": "Встречается именно так как вопрос на понимание. Правильно: поток да, одинаковое поле нет. Запомнить: $\\Phi=4\\pi r^2E$ работает, только если $E$ из-за симметрии одинаково по всей поверхности. Проверить самому: эксперимент «Силовые линии и Гаусс», задание 3."
    }
   },
   "vollkugel": {
@@ -333,13 +381,21 @@ window.E2 = {
     "de": "Außen ($r\\gt R$): $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ wie eine Punktladung. Innen ($r\\lt R$): $E=\\frac{Q\\,r}{4\\pi\\varepsilon_0R^3}$, wächst linear mit $r$.",
     "ru": "Снаружи ($r\\gt R$): $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$, как у точечного заряда. Внутри ($r\\lt R$): $E=\\frac{Q\\,r}{4\\pi\\varepsilon_0R^3}$, растёт линейно с $r$."
    },
-   "e": {
-    "de": "Innen zählt nur die Ladung innerhalb von $r$: Sie wächst wie $r^3$, die Fläche wie $r^2$ → bleibt $r^1$. Im Zentrum ist das Feld null.",
-    "ru": "Внутри считается только заряд в радиусе $r$: он растёт как $r^3$, площадь как $r^2$ → остаётся $r^1$. В центре поле равно нулю."
+   "s": {
+    "de": "<ul><li>$R$ – Radius der Kugel, $Q$ – ihre Gesamtladung.</li><li>$r$ – Abstand vom Mittelpunkt zu dem Punkt, an dem du das Feld willst.</li><li>Homogen geladen – die Ladung ist gleichmäßig im ganzen Volumen verteilt (geht nur bei einem Nichtleiter).</li></ul>",
+    "ru": "<ul><li>$R$ – радиус шара, $Q$ – его полный заряд.</li><li>$r$ – расстояние от центра до точки, где ищем поле.</li><li>Равномерно заряжен – заряд равномерно распределён по всему объёму (возможно только у диэлектрика).</li></ul>"
    },
-   "b": {
-    "de": "Von außen „sieht“ man die Kugel nicht – sie wirkt wie ein Punkt mit derselben Ladung in der Mitte.",
-    "ru": "Снаружи шар «не виден» — он действует как точка с тем же зарядом в центре."
+   "w": {
+    "de": "Außen wirkt die Kugel wie eine Punktladung im Mittelpunkt. Innen zählt nur die Ladung in der kleineren Kugel mit Radius $r$, also der Anteil $Q\\frac{r^3}{R^3}$. Durch die Fläche $4\\pi r^2$ geteilt bleibt $E\\propto r$: in der Mitte null, am Rand am größten, außen fällt es wie $\\frac1{r^2}$.",
+    "ru": "Снаружи шар действует как точечный заряд в центре. Внутри важен только заряд меньшего шара радиуса $r$, то есть доля $Q\\frac{r^3}{R^3}$. После деления на площадь $4\\pi r^2$ остаётся $E\\propto r$: в центре ноль, на поверхности максимум, снаружи спадает как $\\frac1{r^2}$."
+   },
+   "x": {
+    "de": "$Q=1\\,\\mathrm{nC}$, $R=10\\,\\mathrm{cm}$. Am Rand: $E=\\frac{9\\cdot10^9\\cdot10^{-9}}{0{,}1^2}=900\\,\\frac{\\mathrm V}{\\mathrm m}$. Bei $r=5\\,\\mathrm{cm}$ (innen): halb so viel, $450\\,\\frac{\\mathrm V}{\\mathrm m}$. Bei $r=20\\,\\mathrm{cm}$ (außen): ein Viertel, $225\\,\\frac{\\mathrm V}{\\mathrm m}$.",
+    "ru": "$Q=1\\,\\mathrm{nC}$, $R=10\\,\\mathrm{cm}$. На поверхности: $E=\\frac{9\\cdot10^9\\cdot10^{-9}}{0{,}1^2}=900\\,\\frac{\\mathrm V}{\\mathrm m}$. При $r=5\\,\\mathrm{cm}$ (внутри): вдвое меньше, $450\\,\\frac{\\mathrm V}{\\mathrm m}$. При $r=20\\,\\mathrm{cm}$ (снаружи): вчетверо меньше, $225\\,\\frac{\\mathrm V}{\\mathrm m}$."
+   },
+   "p": {
+    "de": "Typisch: $E(r)$ innen und außen mit Gauß herleiten und skizzieren – eine Gerade bis $R$, danach Abfall wie $\\frac1{r^2}$. Falle: innen die ganze Ladung $Q$ einsetzen.",
+    "ru": "Типично: вывести $E(r)$ внутри и снаружи через Гаусса и нарисовать – прямая до $R$, потом спад как $\\frac1{r^2}$. Ловушка: внутри подставить весь заряд $Q$."
    }
   },
   "schale": {
@@ -350,34 +406,50 @@ window.E2 = {
    },
    "a": {
     "de": "Innen: $E=0$ (Fluss null). Außen: $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ – genauso wie Vollkugel oder Punktladung mit gleichem $Q$.",
-    "ru": "Внутри: $E=0$ (поток ноль). Снаружи: $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ — так же, как у шара или точечного заряда с тем же $Q$."
+    "ru": "Внутри: $E=0$ (поток ноль). Снаружи: $E=\\frac{Q}{4\\pi\\varepsilon_0r^2}$ – так же, как у шара или точечного заряда с тем же $Q$."
    },
-   "e": {
-    "de": "Innen ist keine Ladung eingeschlossen → kein Fluss → wegen Symmetrie kein Feld. Das ist das Prinzip des Faraday-Käfigs.",
-    "ru": "Внутри заряд не заключён → потока нет → по симметрии поля нет. Это принцип клетки Фарадея."
+   "s": {
+    "de": "<ul><li>$Q$ – Ladung auf der Schale, $R$ – Radius der Schale.</li><li>$r$ – Abstand vom Mittelpunkt.</li></ul>",
+    "ru": "<ul><li>$Q$ – заряд на оболочке, $R$ – радиус оболочки.</li><li>$r$ – расстояние от центра.</li></ul>"
    },
-   "b": {
-    "de": "Im Auto bei Gewitter bist du sicher: Die Ladung bleibt außen auf der Hülle.",
-    "ru": "В машине в грозу безопасно: заряд остаётся снаружи на корпусе."
+   "w": {
+    "de": "Eine Gauß-Kugel innerhalb der Schale schließt keine Ladung ein, der Fluss ist null; wegen der Kugelsymmetrie ist das Feld dort dann überall null. Außen sieht die Schale aus wie eine Punktladung. Am Rand springt $E$ von 0 auf $\\frac{Q}{4\\pi\\varepsilon_0R^2}$.",
+    "ru": "Гауссова сфера внутри оболочки не охватывает заряда, поток ноль; из-за сферической симметрии поле там везде ноль. Снаружи оболочка выглядит как точечный заряд. На поверхности $E$ скачком растёт от 0 до $\\frac{Q}{4\\pi\\varepsilon_0R^2}$."
+   },
+   "x": {
+    "de": "Faraday-Käfig: In einem geschlossenen Metallgehäuse verteilen sich die Ladungen so auf der Oberfläche, dass innen kein Feld ist. Deshalb schirmt eine Mikrowelle ihr Feld nach außen ab und ein Auto schützt bei Blitzschlag: Der Strom fließt über die Karosserie.",
+    "ru": "Клетка Фарадея: в замкнутом металлическом корпусе заряды распределяются по поверхности так, что внутри поля нет. Поэтому микроволновка не выпускает поле наружу, а машина защищает при ударе молнии: ток идёт по кузову."
+   },
+   "p": {
+    "de": "Wird gern zusammen mit der Vollkugel gefragt: Vollkugel innen $E\\propto r$, Schale innen $E=0$, außen beide gleich.",
+    "ru": "Часто спрашивают вместе с шаром: шар внутри $E\\propto r$, оболочка внутри $E=0$, снаружи одинаково."
    }
   },
   "linie": {
    "topic": "estat",
    "q": {
     "de": "Unendliche Linienladung (Dichte $\\lambda$) auf der $z$-Achse: Fluss durch die runde Grundfläche eines Zylinders um die Achse?",
-    "ru": "Бесконечная линейная заряженная нить (плотность $\\lambda$) на оси $z$: поток через круглое основание цилиндра вокруг оси?"
+    "ru": "Бесконечная заряженная нить (плотность $\\lambda$) на оси $z$: поток через круглое основание цилиндра вокруг оси?"
    },
    "a": {
     "de": "$\\Phi=0$. (Durch den Mantel: $\\Phi=\\frac{\\lambda h}{\\varepsilon_0}$, Feld $E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}$.)",
     "ru": "$\\Phi=0$. (Через боковую поверхность: $\\Phi=\\frac{\\lambda h}{\\varepsilon_0}$, поле $E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}$.)"
    },
-   "e": {
-    "de": "Das Feld zeigt radial von der Achse weg, also parallel zur Grundfläche. Fluss zählt nur den Anteil <b>durch</b> die Fläche – und der ist null.",
-    "ru": "Поле направлено радиально от оси, то есть параллельно основанию. Поток учитывает только часть <b>сквозь</b> поверхность — а она ноль."
+   "s": {
+    "de": "<ul><li>$\\lambda$ – Linienladungsdichte: Ladung pro Meter Draht, in C/m.</li><li>$h$ – Höhe des Zylinders, $r$ – sein Radius (Abstand von der Achse).</li><li>Grundfläche – Deckel oder Boden des Zylinders; Mantel – die gebogene Seitenfläche mit Inhalt $2\\pi rh$.</li></ul>",
+    "ru": "<ul><li>$\\lambda$ – линейная плотность заряда: заряд на метр нити, в Кл/м.</li><li>$h$ – высота цилиндра, $r$ – его радиус (расстояние от оси).</li><li>Основание – крышка или дно цилиндра; боковая поверхность – изогнутая, площадью $2\\pi rh$.</li></ul>"
    },
-   "b": {
-    "de": "Regen, der waagrecht fällt, macht ein liegendes Blatt nicht nass.",
-    "ru": "Дождь, летящий горизонтально, не намочит лежащий лист."
+   "w": {
+    "de": "Das Feld eines langen geraden Drahts zeigt überall radial von der Achse weg, senkrecht zum Draht. An Deckel und Boden läuft es nur entlang, nicht hindurch: dort ist $\\vec E\\cdot d\\vec A=0$. Der ganze Fluss geht durch den Mantel.",
+    "ru": "Поле длинной прямой нити везде направлено радиально от оси, перпендикулярно нити. Вдоль крышки и дна оно только скользит, не проходя сквозь: там $\\vec E\\cdot d\\vec A=0$. Весь поток идёт через боковую поверхность."
+   },
+   "x": {
+    "de": "$\\lambda=1\\,\\mathrm{nC/m}$, Abstand $r=1\\,\\mathrm{cm}$: $E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}=\\frac{10^{-9}}{2\\pi\\cdot8{,}85\\cdot10^{-12}\\cdot0{,}01}\\approx1{,}8\\cdot10^3\\,\\frac{\\mathrm V}{\\mathrm m}$. Doppelter Abstand, halbes Feld – nicht ein Viertel!",
+    "ru": "$\\lambda=1\\,\\mathrm{nC/m}$, расстояние $r=1\\,\\mathrm{cm}$: $E=\\frac{\\lambda}{2\\pi\\varepsilon_0r}=\\frac{10^{-9}}{2\\pi\\cdot8{,}85\\cdot10^{-12}\\cdot0{,}01}\\approx1{,}8\\cdot10^3\\,\\frac{\\mathrm V}{\\mathrm m}$. Расстояние вдвое больше – поле вдвое меньше, а не вчетверо!"
+   },
+   "p": {
+    "de": "Gefragt wird oft genau der Fluss durch den Deckel (null) oder $E(r)$ des Drahts. Falle: $\\frac1{r^2}$ wie bei einer Punktladung statt $\\frac1r$.",
+    "ru": "Часто спрашивают именно поток через крышку (ноль) или $E(r)$ нити. Ловушка: $\\frac1{r^2}$, как у точечного заряда, вместо $\\frac1r$."
    }
   },
   "potential": {
@@ -390,13 +462,21 @@ window.E2 = {
     "de": "$\\varphi(r)=\\frac{Q}{4\\pi\\varepsilon_0r}$, $\\vec E=-\\nabla\\varphi$, $U=\\varphi_1-\\varphi_2$",
     "ru": "$\\varphi(r)=\\frac{Q}{4\\pi\\varepsilon_0r}$, $\\vec E=-\\nabla\\varphi$, $U=\\varphi_1-\\varphi_2$"
    },
-   "e": {
-    "de": "Das Potential ist eine „Höhe“ für Ladungen. Das Feld zeigt immer bergab (Minuszeichen), und Spannung ist ein Höhenunterschied.",
-    "ru": "Потенциал — это «высота» для зарядов. Поле всегда направлено под гору (знак минус), а напряжение — разность высот."
+   "s": {
+    "de": "<ul><li>$\\varphi$ – elektrisches Potential in Volt: potentielle Energie pro Ladung, eine <b>Zahl</b> an jedem Ort, kein Pfeil.</li><li>$\\nabla\\varphi$ – Gradient: ein Pfeil in die Richtung, in der $\\varphi$ am schnellsten wächst.</li><li>$U$ – Spannung zwischen zwei Punkten = Differenz der Potentiale.</li></ul>",
+    "ru": "<ul><li>$\\varphi$ – электрический потенциал в вольтах: потенциальная энергия на единицу заряда, <b>число</b> в каждой точке, а не стрелка.</li><li>$\\nabla\\varphi$ – градиент: стрелка в направлении самого быстрого роста $\\varphi$.</li><li>$U$ – напряжение между двумя точками = разность потенциалов.</li></ul>"
    },
-   "b": {
-    "de": "Landkarte mit Höhenlinien: Das Feld ist die Richtung, in die ein Ball rollen würde.",
-    "ru": "Карта с горизонталями: поле — направление, куда покатится мяч."
+   "w": {
+    "de": "Das Feld zeigt dorthin, wo $\\varphi$ am schnellsten abnimmt – daher das Minus. Bewegt man eine Ladung $q$ von Punkt 1 nach Punkt 2, ändert sich ihre potentielle Energie um $q(\\varphi_2-\\varphi_1)$, egal auf welchem Weg. Mit Potentialen rechnet es sich oft leichter, weil man Zahlen statt Pfeile addiert.",
+    "ru": "Поле направлено туда, где $\\varphi$ быстрее всего убывает – отсюда минус. Если перенести заряд $q$ из точки 1 в точку 2, его потенциальная энергия изменится на $q(\\varphi_2-\\varphi_1)$, по какому бы пути его ни несли. С потенциалами часто считать проще: складываются числа, а не стрелки."
+   },
+   "x": {
+    "de": "Punktladung $Q=1\\,\\mathrm{nC}$: In $r=10\\,\\mathrm{cm}$ ist $\\varphi=\\frac{9\\cdot10^9\\cdot10^{-9}}{0{,}1}\\,\\mathrm V=90\\,\\mathrm V$, in $r=30\\,\\mathrm{cm}$ sind es $30\\,\\mathrm V$. Spannung zwischen den Punkten: $U=60\\,\\mathrm V$. Ein Elektron, das von $30\\,\\mathrm{cm}$ auf $10\\,\\mathrm{cm}$ an die Ladung heranfliegt, gewinnt dabei $60\\,\\mathrm{eV}$ Bewegungsenergie.",
+    "ru": "Точечный заряд $Q=1\\,\\mathrm{nC}$: при $r=10\\,\\mathrm{cm}$ потенциал $\\varphi=\\frac{9\\cdot10^9\\cdot10^{-9}}{0{,}1}\\,\\mathrm V=90\\,\\mathrm V$, при $r=30\\,\\mathrm{cm}$ – $30\\,\\mathrm V$. Напряжение между точками: $U=60\\,\\mathrm V$. Электрон, подлетая к заряду с $30\\,\\mathrm{cm}$ до $10\\,\\mathrm{cm}$, набирает $60\\,\\mathrm{eV}$ кинетической энергии."
+   },
+   "p": {
+    "de": "Typisch: Potential mehrerer Ladungen an einem Punkt – hier werden Zahlen mit Vorzeichen addiert, keine Pfeile. Falle: $\\varphi\\propto\\frac1r$ und $E\\propto\\frac1{r^2}$ verwechseln.",
+    "ru": "Типично: потенциал нескольких зарядов в точке – складываются числа со знаком, а не стрелки. Ловушка: перепутать $\\varphi\\propto\\frac1r$ и $E\\propto\\frac1{r^2}$."
    }
   },
   "platte": {
@@ -409,32 +489,48 @@ window.E2 = {
     "de": "$C=\\frac{Q}{U}=\\varepsilon_0\\varepsilon_r\\frac{A}{d}$, $E=\\frac{U}{d}$",
     "ru": "$C=\\frac{Q}{U}=\\varepsilon_0\\varepsilon_r\\frac{A}{d}$, $E=\\frac{U}{d}$"
    },
-   "e": {
-    "de": "Größere Fläche → mehr Platz für Ladung → größere Kapazität. Kleinerer Abstand → Plus und Minus ziehen sich stärker an → auch größer. Zwischen den Platten ist das Feld homogen.",
-    "ru": "Больше площадь → больше места для заряда → больше ёмкость. Меньше расстояние → плюс и минус сильнее притягиваются → тоже больше. Между пластинами поле однородное."
+   "s": {
+    "de": "<ul><li>$C$ – Kapazität in Farad ($1\\,\\mathrm F=1\\,\\frac{\\mathrm C}{\\mathrm V}$).</li><li>$Q$ – Ladung auf einer Platte (die andere trägt $-Q$), $U$ – Spannung zwischen den Platten.</li><li>$A$ – Fläche einer Platte, $d$ – Plattenabstand.</li><li>$\\varepsilon_r$ – Dielektrizitätszahl des Materials dazwischen (Luft $\\approx1$).</li></ul>",
+    "ru": "<ul><li>$C$ – ёмкость в фарадах ($1\\,\\mathrm F=1\\,\\frac{\\mathrm C}{\\mathrm V}$).</li><li>$Q$ – заряд одной пластины (на другой $-Q$), $U$ – напряжение между пластинами.</li><li>$A$ – площадь одной пластины, $d$ – расстояние между ними.</li><li>$\\varepsilon_r$ – диэлектрическая проницаемость материала между ними (воздух $\\approx1$).</li></ul>"
    },
-   "b": {
-    "de": "Kapazität ist wie die Größe eines Eimers: wie viel Ladung pro Volt „Füllhöhe“ hineinpasst.",
-    "ru": "Ёмкость — как размер ведра: сколько заряда помещается на вольт «уровня»."
+   "w": {
+    "de": "Kapazität heißt: wie viel Ladung pro Volt auf die Platten passt. Zwischen den Platten ist das Feld überall gleich groß und zeigt von $+$ nach $-$ (homogen), deshalb einfach $E=\\frac Ud$. Außerhalb ist es fast null.",
+    "ru": "Ёмкость – это сколько заряда помещается на пластины на один вольт. Между пластинами поле везде одинаковое и направлено от $+$ к $-$ (однородное), поэтому просто $E=\\frac Ud$. Снаружи его почти нет."
+   },
+   "x": {
+    "de": "$A=100\\,\\mathrm{cm}^2=10^{-2}\\,\\mathrm m^2$, $d=1\\,\\mathrm{mm}$, Luft: $C=8{,}85\\cdot10^{-12}\\cdot\\frac{10^{-2}}{10^{-3}}\\,\\mathrm F\\approx89\\,\\mathrm{pF}$. Bei $U=100\\,\\mathrm V$: $Q=CU\\approx8{,}9\\,\\mathrm{nC}$ und $E=10^5\\,\\frac{\\mathrm V}{\\mathrm m}$.",
+    "ru": "$A=100\\,\\mathrm{cm}^2=10^{-2}\\,\\mathrm m^2$, $d=1\\,\\mathrm{mm}$, воздух: $C=8{,}85\\cdot10^{-12}\\cdot\\frac{10^{-2}}{10^{-3}}\\,\\mathrm F\\approx89\\,\\mathrm{pF}$. При $U=100\\,\\mathrm V$: $Q=CU\\approx8{,}9\\,\\mathrm{nC}$ и $E=10^5\\,\\frac{\\mathrm V}{\\mathrm m}$."
+   },
+   "p": {
+    "de": "Typisch: $C$ aus der Geometrie, dann $Q$, $E$ oder die Energie. Falle: cm² und mm nicht in m² und m umgerechnet; $1\\,\\mathrm{pF}=10^{-12}\\,\\mathrm F$.",
+    "ru": "Типично: $C$ из геометрии, потом $Q$, $E$ или энергия. Ловушка: не перевести см² и мм в м² и м; $1\\,\\mathrm{pF}=10^{-12}\\,\\mathrm F$."
    }
   },
   "dielektrikum": {
    "topic": "estat",
    "q": {
     "de": "⚠️ Kondensator geladen, Quelle <b>abgetrennt</b>, dann Dielektrikum $\\varepsilon_r$ eingeschoben. Was passiert mit $Q$, $U$, Energie?",
-    "ru": "⚠️ Конденсатор заряжен, источник <b>отключён</b>, потом вставлен диэлектрик $\\varepsilon_r$. Что с $Q$, $U$, энергией?"
+    "ru": "⚠️ Конденсатор заряжен, источник <b>отключён</b>, затем вставлен диэлектрик $\\varepsilon_r$. Что происходит с $Q$, $U$, энергией?"
    },
    "a": {
-    "de": "$Q$ bleibt. $C\\to\\varepsilon_rC$, also $U\\to\\frac{U}{\\varepsilon_r}$ (z. B. $1000\\,\\mathrm V\\to200\\,\\mathrm V$ bei $\\varepsilon_r=5$). Energie $W=\\frac{Q^2}{2C}$ sinkt um Faktor $\\varepsilon_r$.",
-    "ru": "$Q$ не меняется. $C\\to\\varepsilon_rC$, значит $U\\to\\frac{U}{\\varepsilon_r}$ (например, $1000\\,\\mathrm V\\to200\\,\\mathrm V$ при $\\varepsilon_r=5$). Энергия $W=\\frac{Q^2}{2C}$ уменьшается в $\\varepsilon_r$ раз."
+    "de": "$Q$ bleibt. $C\\to\\varepsilon_rC$, also $U\\to\\frac{U}{\\varepsilon_r}$. Energie $W=\\frac{Q^2}{2C}$ sinkt um den Faktor $\\varepsilon_r$.",
+    "ru": "$Q$ не меняется. $C\\to\\varepsilon_rC$, значит $U\\to\\frac{U}{\\varepsilon_r}$. Энергия $W=\\frac{Q^2}{2C}$ уменьшается в $\\varepsilon_r$ раз."
    },
-   "e": {
-    "de": "Ohne Quelle kann keine Ladung zu- oder abfließen. Das Dielektrikum schwächt das Feld innen → kleinere Spannung → weniger Energie (die Platte wird sogar hineingezogen). <b>Mit</b> angeschlossener Quelle wäre es umgekehrt: $U$ bleibt, $Q$ und Energie steigen.",
-    "ru": "Без источника заряд не может притечь или утечь. Диэлектрик ослабляет поле внутри → меньше напряжение → меньше энергия (пластину даже втягивает). <b>С</b> подключённым источником наоборот: $U$ остаётся, $Q$ и энергия растут."
+   "s": {
+    "de": "<ul><li>$\\varepsilon_r$ – Dielektrizitätszahl, immer $\\ge1$ (Glas etwa 5, Wasser etwa 80).</li><li>$Q$ – Ladung, $C$ – Kapazität, $U$ – Spannung, $W$ – gespeicherte Energie.</li><li>Abgetrennt – keine Verbindung zur Spannungsquelle mehr.</li></ul>",
+    "ru": "<ul><li>$\\varepsilon_r$ – диэлектрическая проницаемость, всегда $\\ge1$ (стекло около 5, вода около 80).</li><li>$Q$ – заряд, $C$ – ёмкость, $U$ – напряжение, $W$ – запасённая энергия.</li><li>Отключён – больше не соединён с источником.</li></ul>"
    },
-   "b": {
-    "de": "Ein abgeschlossener Eimer: Die Wassermenge ($Q$) bleibt, aber wird der Eimer breiter ($C$ größer), sinkt der Wasserstand ($U$).",
-    "ru": "Закрытое ведро: количество воды ($Q$) не меняется, но если ведро шире ($C$ больше), уровень ($U$) падает."
+   "w": {
+    "de": "Ohne Quelle kann keine Ladung zu- oder abfließen, $Q$ ist fest. Das Dielektrikum wird im Feld polarisiert und schwächt das Feld innen um den Faktor $\\varepsilon_r$. Weniger Feld bedeutet weniger Spannung und weniger Energie; die Differenz hat das Feld beim Hineinziehen des Dielektrikums als Arbeit verrichtet. <b>Mit</b> angeschlossener Quelle wäre es umgekehrt: $U$ bleibt, $Q$ und Energie steigen.",
+    "ru": "Без источника заряд не может ни прийти, ни уйти, $Q$ фиксирован. Диэлектрик поляризуется в поле и ослабляет поле внутри в $\\varepsilon_r$ раз. Меньше поле – меньше напряжение и энергия; разницу поле потратило на работу, втягивая диэлектрик. <b>С</b> подключённым источником наоборот: $U$ не меняется, $Q$ и энергия растут."
+   },
+   "x": {
+    "de": "$C=1\\,\\mathrm{nF}$, auf $U=1000\\,\\mathrm V$ geladen: $Q=1\\,\\mu\\mathrm C$, $W=\\frac12CU^2=0{,}5\\,\\mathrm{mJ}$. Glas mit $\\varepsilon_r=5$ hinein: $C=5\\,\\mathrm{nF}$, $U=200\\,\\mathrm V$, $W=0{,}1\\,\\mathrm{mJ}$.",
+    "ru": "$C=1\\,\\mathrm{nF}$, заряжен до $U=1000\\,\\mathrm V$: $Q=1\\,\\mu\\mathrm C$, $W=\\frac12CU^2=0{,}5\\,\\mathrm{mJ}$. Вставляем стекло с $\\varepsilon_r=5$: $C=5\\,\\mathrm{nF}$, $U=200\\,\\mathrm V$, $W=0{,}1\\,\\mathrm{mJ}$."
+   },
+   "p": {
+    "de": "Fast immer als Paar gefragt: Quelle abgetrennt ($Q$ fest) oder angeschlossen ($U$ fest). Zuerst klären, was konstant bleibt – alles andere folgt aus $Q=CU$ und $W=\\frac12CU^2$.",
+    "ru": "Почти всегда спрашивают парой: источник отключён ($Q$ фиксирован) или подключён ($U$ фиксировано). Сначала выясни, что остаётся постоянным – остальное следует из $Q=CU$ и $W=\\frac12CU^2$."
    }
   },
   "energieC": {
@@ -447,51 +543,75 @@ window.E2 = {
     "de": "$W=\\frac12CU^2=\\frac12QU=\\frac{Q^2}{2C}$, $w=\\frac12\\varepsilon_0\\varepsilon_rE^2$",
     "ru": "$W=\\frac12CU^2=\\frac12QU=\\frac{Q^2}{2C}$, $w=\\frac12\\varepsilon_0\\varepsilon_rE^2$"
    },
-   "e": {
-    "de": "Warum $\\frac12$? Beim Aufladen steigt die Spannung von 0 auf $U$ – im Schnitt arbeitet man gegen $\\frac U2$.",
-    "ru": "Почему $\\frac12$? При зарядке напряжение растёт от 0 до $U$ — в среднем работаем против $\\frac U2$."
+   "s": {
+    "de": "<ul><li>$W$ – gespeicherte Energie in Joule.</li><li>$C,U,Q$ – Kapazität, Spannung, Ladung.</li><li>$w$ – Energiedichte: Energie pro Volumen in $\\frac{\\mathrm J}{\\mathrm m^3}$, sie steckt im Feld selbst.</li></ul>",
+    "ru": "<ul><li>$W$ – запасённая энергия в джоулях.</li><li>$C,U,Q$ – ёмкость, напряжение, заряд.</li><li>$w$ – плотность энергии: энергия на единицу объёма в $\\frac{\\mathrm J}{\\mathrm m^3}$, она хранится в самом поле.</li></ul>"
    },
-   "b": {
-    "de": "Wie eine Feder: Je weiter gespannt, desto schwerer – gespeichert wird $\\frac12kx^2$, hier $\\frac12CU^2$.",
-    "ru": "Как пружина: чем сильнее натянута, тем труднее — запасается $\\frac12kx^2$, здесь $\\frac12CU^2$."
+   "w": {
+    "de": "Die drei Formeln für $W$ sind gleich (wegen $Q=CU$); man nimmt die, deren Größen gegeben sind. Das $\\frac12$ kommt daher, dass die Spannung beim Aufladen von 0 auf $U$ steigt – im Mittel bewegt man jede Ladung gegen $\\frac U2$. Multipliziert man $w$ mit dem Volumen $A\\cdot d$ zwischen den Platten, kommt wieder $\\frac12CU^2$ heraus.",
+    "ru": "Три формулы для $W$ одинаковы (из-за $Q=CU$); берут ту, где известны величины. $\\frac12$ появляется потому, что при зарядке напряжение растёт от 0 до $U$ – в среднем каждый заряд переносят против $\\frac U2$. Если умножить $w$ на объём $A\\cdot d$ между пластинами, снова получится $\\frac12CU^2$."
+   },
+   "x": {
+    "de": "Kamerablitz: $C=100\\,\\mu\\mathrm F$, $U=300\\,\\mathrm V$: $W=\\frac12\\cdot10^{-4}\\cdot9\\cdot10^4\\,\\mathrm J=4{,}5\\,\\mathrm J$, abgegeben in etwa einer Millisekunde.",
+    "ru": "Вспышка фотоаппарата: $C=100\\,\\mu\\mathrm F$, $U=300\\,\\mathrm V$: $W=\\frac12\\cdot10^{-4}\\cdot9\\cdot10^4\\,\\mathrm J=4{,}5\\,\\mathrm J$, отдаётся примерно за миллисекунду."
+   },
+   "p": {
+    "de": "Typisch: Energie vorher und nachher (z. B. mit Dielektrikum oder beim Verbinden zweier Kondensatoren) oder Energiedichte bei gegebenem $E$. Das $\\frac12$ nicht vergessen.",
+    "ru": "Типично: энергия до и после (например, с диэлектриком или при соединении двух конденсаторов) или плотность энергии при данном $E$. Не забыть $\\frac12$."
    }
   },
   "kugelC": {
    "topic": "estat",
    "q": {
     "de": "Kapazität einer einzelnen Metallkugel und Spannung eines Kugelkondensators (Radien $r_1\\lt r_2$)?",
-    "ru": "Ёмкость отдельного металлического шара и напряжение сферического конденсатора (радиусы $r_1\\lt r_2$)?"
+    "ru": "Ёмкость уединённого металлического шара и напряжение сферического конденсатора (радиусы $r_1\\lt r_2$)?"
    },
    "a": {
     "de": "Kugel: $C=4\\pi\\varepsilon_0R$. Kugelkondensator: $U=\\frac{Q}{4\\pi\\varepsilon_0}\\Big(\\frac1{r_1}-\\frac1{r_2}\\Big)$, Feld nur zwischen den Kugeln.",
     "ru": "Шар: $C=4\\pi\\varepsilon_0R$. Сферический конденсатор: $U=\\frac{Q}{4\\pi\\varepsilon_0}\\Big(\\frac1{r_1}-\\frac1{r_2}\\Big)$, поле только между сферами."
    },
-   "e": {
-    "de": "Die Spannung ist die Potentialdifferenz zwischen innen und außen. Achtung Falle: Es ist $\\frac1r$, nicht $\\frac1{r^2}$ – das Potential fällt wie $\\frac1r$, das Feld wie $\\frac1{r^2}$.",
-    "ru": "Напряжение — разность потенциалов между внутренней и внешней сферой. Ловушка: здесь $\\frac1r$, а не $\\frac1{r^2}$ — потенциал падает как $\\frac1r$, поле как $\\frac1{r^2}$."
+   "s": {
+    "de": "<ul><li>$R$ – Radius der einzelnen Kugel.</li><li>$r_1$ – Radius der inneren, $r_2$ der äußeren Kugel.</li><li>$Q$ – Ladung der inneren Kugel (die äußere trägt $-Q$).</li></ul>",
+    "ru": "<ul><li>$R$ – радиус уединённого шара.</li><li>$r_1$ – радиус внутренней сферы, $r_2$ – внешней.</li><li>$Q$ – заряд внутренней сферы (на внешней $-Q$).</li></ul>"
    },
-   "b": {
-    "de": "Höhenunterschied zwischen zwei Stockwerken: zählt nur, wo du startest und wo du ankommst.",
-    "ru": "Разница высот между двумя этажами: важно только, откуда и куда."
+   "w": {
+    "de": "Eine einzelne Kugel hat ihr Gegenstück im Unendlichen: Ihr Potential gegenüber dem Unendlichen ist $\\frac{Q}{4\\pi\\varepsilon_0R}$, also $C=\\frac QU=4\\pi\\varepsilon_0R$. Beim Kugelkondensator ist die Spannung die Differenz der Potentiale bei $r_1$ und $r_2$ – deshalb $\\frac1r$, nicht $\\frac1{r^2}$.",
+    "ru": "У уединённого шара «вторая обкладка» в бесконечности: его потенциал относительно бесконечности $\\frac{Q}{4\\pi\\varepsilon_0R}$, значит $C=\\frac QU=4\\pi\\varepsilon_0R$. У сферического конденсатора напряжение – разность потенциалов при $r_1$ и $r_2$, поэтому $\\frac1r$, а не $\\frac1{r^2}$."
+   },
+   "x": {
+    "de": "Die Erde als Kugel ($R\\approx6{,}4\\cdot10^6\\,\\mathrm m$): $C=4\\pi\\varepsilon_0R\\approx7\\cdot10^{-4}\\,\\mathrm F=0{,}7\\,\\mathrm{mF}$ – überraschend wenig. Eine Kugel mit $R=10\\,\\mathrm{cm}$: etwa $11\\,\\mathrm{pF}$.",
+    "ru": "Земля как шар ($R\\approx6{,}4\\cdot10^6\\,\\mathrm m$): $C=4\\pi\\varepsilon_0R\\approx7\\cdot10^{-4}\\,\\mathrm F=0{,}7\\,\\mathrm{mF}$ – на удивление мало. Шар с $R=10\\,\\mathrm{cm}$: около $11\\,\\mathrm{pF}$."
+   },
+   "p": {
+    "de": "Falle: $\\frac1{r_1}-\\frac1{r_2}$ mit $\\frac1{r^2}$ verwechseln oder die Reihenfolge vertauschen – die Spannung muss positiv herauskommen, weil $r_1\\lt r_2$.",
+    "ru": "Ловушка: перепутать $\\frac1{r_1}-\\frac1{r_2}$ с $\\frac1{r^2}$ или поменять порядок – напряжение должно получиться положительным, ведь $r_1\\lt r_2$."
    }
   },
   "sigma": {
    "topic": "estat",
    "q": {
     "de": "Metallkugel, Radius $R=2\\,\\mathrm{cm}$, Flächenladungsdichte $\\sigma=5\\,\\mu\\mathrm C/\\mathrm{cm}^2$. Gesamtladung?",
-    "ru": "Металлический шар радиусом $R=2\\,\\mathrm{cm}$, поверхностная плотность заряда $\\sigma=5\\,\\mu\\mathrm C/\\mathrm{cm}^2$. Полный заряд?"
+    "ru": "Металлический шар, радиус $R=2\\,\\mathrm{cm}$, поверхностная плотность заряда $\\sigma=5\\,\\mu\\mathrm C/\\mathrm{cm}^2$. Полный заряд?"
    },
    "a": {
-    "de": "$Q=\\sigma\\cdot4\\pi R^2=5\\cdot4\\pi\\cdot4\\,\\mu\\mathrm C\\approx250\\,\\mu\\mathrm C$",
-    "ru": "$Q=\\sigma\\cdot4\\pi R^2=5\\cdot4\\pi\\cdot4\\,\\mu\\mathrm C\\approx250\\,\\mu\\mathrm C$"
+    "de": "$Q=\\sigma\\cdot4\\pi R^2=5\\cdot4\\pi\\cdot4\\,\\mu\\mathrm C\\approx251\\,\\mu\\mathrm C$",
+    "ru": "$Q=\\sigma\\cdot4\\pi R^2=5\\cdot4\\pi\\cdot4\\,\\mu\\mathrm C\\approx251\\,\\mu\\mathrm C$"
    },
-   "e": {
-    "de": "Ladung = Dichte × Fläche. Bei einem Leiter sitzt die Ladung immer auf der Oberfläche, also Kugeloberfläche $4\\pi R^2$ nehmen, nicht das Volumen.",
-    "ru": "Заряд = плотность × площадь. У проводника заряд всегда на поверхности, поэтому берём площадь сферы $4\\pi R^2$, а не объём."
+   "s": {
+    "de": "<ul><li>$\\sigma$ – Flächenladungsdichte: Ladung pro Fläche, hier in µC pro cm².</li><li>$R$ – Radius, $4\\pi R^2$ – Oberfläche der Kugel.</li><li>$Q$ – Gesamtladung.</li></ul>",
+    "ru": "<ul><li>$\\sigma$ – поверхностная плотность заряда: заряд на единицу площади, здесь в мкКл на см².</li><li>$R$ – радиус, $4\\pi R^2$ – площадь поверхности шара.</li><li>$Q$ – полный заряд.</li></ul>"
    },
-   "b": {
-    "de": "Wie Farbe auf einem Ball: Wie viel Farbe = Farbe pro cm² mal Oberfläche.",
-    "ru": "Как краска на мяче: сколько краски = краска на см² умножить на поверхность."
+   "w": {
+    "de": "Bei einem Leiter sitzt alle Ladung an der Oberfläche (innen ist das Feld null). Also: Gesamtladung = Dichte mal Oberfläche.",
+    "ru": "У проводника весь заряд сидит на поверхности (внутри поле ноль). Значит: полный заряд = плотность умножить на площадь поверхности."
+   },
+   "x": {
+    "de": "$4\\pi R^2=4\\pi\\cdot(2\\,\\mathrm{cm})^2\\approx50{,}3\\,\\mathrm{cm}^2$, also $Q\\approx5\\cdot50{,}3\\,\\mu\\mathrm C\\approx251\\,\\mu\\mathrm C$. Weil $\\sigma$ schon pro cm² gegeben ist, darf man hier direkt in cm² rechnen.",
+    "ru": "$4\\pi R^2=4\\pi\\cdot(2\\,\\mathrm{cm})^2\\approx50{,}3\\,\\mathrm{cm}^2$, значит $Q\\approx5\\cdot50{,}3\\,\\mu\\mathrm C\\approx251\\,\\mu\\mathrm C$. Так как $\\sigma$ уже дана на см², здесь можно считать прямо в см²."
+   },
+   "p": {
+    "de": "Falle: das Volumen $\\frac43\\pi R^3$ statt der Oberfläche nehmen, oder cm² und m² mischen.",
+    "ru": "Ловушка: взять объём $\\frac43\\pi R^3$ вместо площади поверхности или смешать см² и м²."
    }
   },
   "stromdef": {
