@@ -4,16 +4,16 @@ const UI = {
         next: 'Weiter', all: 'Alles zeigen', got: 'Verstanden', gotDone: 'Verstanden', prev: '', nextT: '',
         kern: 'Kern', formel: 'Formel', check: 'Check', rezept: 'Rezept', falle: 'Falle', tabelle: 'Überblick', text: 'Merke',
         ref: 'im Skriptum', error: 'Konnte nicht laden. Bitte Seite neu laden.',
-        vorher: 'Vorher wissen', einfach: 'Ganz einfach', beispiel: 'Beispiel mit Zahlen', exakt: 'Kurz & exakt – fürs Wiederholen',
-        neu: 'Jedes Thema startet ganz einfach: Vorher wissen → Ganz einfach → Beispiel. Danach kommt „Kurz & exakt“ zum Wiederholen.',
+        zeichen: 'Was bedeuten die Zeichen?', heisst: 'Was heißt das?', beispiel: 'Beispiel mit Zahlen', pruefung: 'Typisch in der Prüfung', exakt: 'Kurz & exakt – fürs Wiederholen',
+        neu: 'Jedes Thema: Zeichen → Was heißt das? → Beispiel, dann „Kurz & exakt“ zum Wiederholen und am Ende, was in der Prüfung typisch ist.',
         unklar: 'Immer noch unklar? Prompt für Claude kopieren', copied: 'Kopiert! Jetzt in Claude einfügen:', open: 'claude.ai öffnen',
         copyFail: 'Kopieren ging nicht – hier ist der Text zum Markieren:' },
-  ru: { title: 'Analysis III', titleSub: 'на пальцах', done: 'понятно', map: 'Как всё связано',
+  ru: { title: 'Analysis III', titleSub: 'по шагам', done: 'понятно', map: 'Как всё связано',
         next: 'Дальше', all: 'Показать всё', got: 'Понятно', gotDone: 'Понятно', prev: '', nextT: '',
         kern: 'Суть', formel: 'Формула', check: 'Проверка', rezept: 'Рецепт', falle: 'Ловушка', tabelle: 'Обзор', text: 'Запомни',
         ref: 'в скрипте', error: 'Не удалось загрузить. Обнови страницу.',
-        vorher: 'Что нужно знать', einfach: 'Совсем просто', beispiel: 'Пример с числами', exakt: 'Коротко и точно – для повторения',
-        neu: 'Каждая тема начинается просто: Что нужно знать → Совсем просто → Пример. Потом идёт «Коротко и точно» для повторения.',
+        zeichen: 'Что значат обозначения', heisst: 'Что это значит', beispiel: 'Пример с числами', pruefung: 'Типично на экзамене', exakt: 'Коротко и точно – для повторения',
+        neu: 'Каждая тема: обозначения → что это значит → пример, потом «Коротко и точно» для повторения и в конце – что типично на экзамене.',
         unklar: 'Всё ещё непонятно? Скопировать промпт для Claude', copied: 'Скопировано! Теперь вставь в Claude:', open: 'открыть claude.ai',
         copyFail: 'Скопировать не вышло — вот текст, выдели его вручную:' },
 };
@@ -44,7 +44,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
 Если я что-то не понимаю, объясни именно этот шаг ещё проще, а не иди дальше. Отвечай по-русски, коротко, формулы в LaTeX.`,
 };
 const STEP_ICON = { kern: 'lightbulb', formel: 'sigma', check: 'check-circle-2', rezept: 'list-checks', falle: 'triangle-alert',
-  tabelle: 'layers', text: 'scroll-text', vorher: 'puzzle', einfach: 'baby', beispiel: 'hash' };
+  tabelle: 'layers', text: 'scroll-text', zeichen: 'book-open', heisst: 'eye', beispiel: 'list-checks', pruefung: 'target' };
 function topicOrder() { return ['toolkit', ...ANA3.meta.parts.flatMap(p => p.topics)]; }
 function tile(id, wide) {
   const tp = ANA3.topics[id];
@@ -102,7 +102,7 @@ function renderThema(id, revealAll) {
     </div>`;
   const stepsEl = root.querySelector('#steps'), nav = root.querySelector('#step-nav'), got = root.querySelector('#verstanden');
   let shown = 0;
-  const EASY = ['vorher', 'einfach', 'beispiel'];
+  const EASY = ['zeichen', 'heisst', 'beispiel'];
   function addStep() {
     const b = tp.blocks[shown++];
     const prev = tp.blocks[shown - 2];
@@ -114,7 +114,7 @@ function renderThema(id, revealAll) {
     }
     const div = document.createElement('div');
     div.className = 'step s-' + b.type;
-    const name = (b.type === 'kern' || EASY.includes(b.type)) ? t(b.type) : (b.label[anaLang] || t(b.type));
+    const name = (b.type === 'kern' || b.type === 'pruefung' || EASY.includes(b.type)) ? t(b.type) : (b.label[anaLang] || t(b.type));
     const label = ic(STEP_ICON[b.type] || 'info') + '<span>' + name + '</span>';
     let html = b.html[anaLang];
     // display formulas as breakable inline math so long lines wrap on phones

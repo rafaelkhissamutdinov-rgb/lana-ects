@@ -835,3 +835,10 @@ body[data-screen="stern"] .beta-tag { display: none; }
 .step.s-zeichen li { padding-left: .9em; text-indent: -.9em; }
 .step.s-zeichen li::before { content: "·"; display: inline-block; width: .9em; text-indent: 0; color: var(--c); font-weight: 800; }
 .step.s-einfach:has(+ .s-beispiel) { font-size: 1rem; }
+/* Ana3 explanation layers reuse the E2 colours */
+.step.s-zeichen { --c: #6fdcea; }
+.step.s-heisst { --c: var(--rose); font-size: 1.02rem; }
+.step.s-pruefung { --c: var(--amber); background: rgba(255, 173, 97, .05); }
+[data-mode="light"] .step.s-zeichen { --c: #0891b2; }
+[data-mode="light"] .step.s-heisst { --c: #db2777; }
+[data-mode="light"] .step.s-pruefung { --c: #d97706; background: rgba(217, 119, 6, .06); }
