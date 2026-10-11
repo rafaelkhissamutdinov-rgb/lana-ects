@@ -24,7 +24,7 @@ const SIM_META = [
     cards: ['minkowski', 'lorentztrafo', 'dilatation', 'gamma', 'addition'], topics: [], n: 4 },
   { id: 'linse', glyph: 'f', t: { de: 'Linse: Strahlengang', ru: 'Линза: ход лучей' },
     sub: { de: 'Gegenstand verschieben, reelles und virtuelles Bild', ru: 'Двигай предмет: действительное и мнимое изображение' },
-    cards: ['linse', 'brechkraft', 'fernrohr', 'mikroskop'], topics: [] },
+    cards: ['linse', 'brechkraft', 'fernrohr', 'mikroskop'], topics: [], n: 4 },
   { id: 'saite', glyph: '∂<sub>t</sub>', t: { de: 'Wärme & Welle auf der Saite', ru: 'Тепло и волна на струне' },
     sub: { de: 'Anfangsform zeichnen und sehen, wie sie zerfließt oder schwingt', ru: 'Нарисуй начальную форму – она растечётся или заколеблется' },
     cards: [], topics: ['heat', 'wave', 'sep', 'three'] },
@@ -36,7 +36,7 @@ const SIM_META = [
     cards: [], topics: ['conv', 'distr', 'dderiv', 'fund'] },
 ];
 // experiments that are finished (each one lives in sims/<id>.js)
-const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz', 'domain', 'epizykel', 'minkowski']);
+const SIM_READY = new Set(['feld', 'brechung', 'spalt', 'lorentz', 'domain', 'epizykel', 'minkowski', 'linse']);
 const simList = () => SIM_META.filter(m => SIM_READY.has(m.id));
 const SIM_UI = {
   de: { title: 'Experimente', eyebrow: 'Physik zum Anfassen', sub: 'Ziehen, schieben, ausprobieren. Jedes Experiment gehört zu Karten oder Themen – und hat kleine Aufgaben, die sich selbst abhaken.',
