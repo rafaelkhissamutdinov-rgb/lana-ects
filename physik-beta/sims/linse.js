@@ -3,6 +3,7 @@ SIMS.def('linse', {
   aspect: w => w < 520 ? .8 : .52,
   text: {
     de: {
+      limits: 'Dünne Linse in paraxialer Näherung (achsennahe Strahlen), ohne Linsenfehler. Die Brechung wird vereinfacht an der Mittelebene der Linse gezeichnet.',
       hint: 'Zieh den Gegenstand (Pfeil links) nach links und rechts, seine Spitze nach oben und unten. Die Brennpunkte F und F′ sind markiert.',
       what: `<p>Für eine dünne Linse gilt $\\frac1f=\\frac1g+\\frac1b$ und der Abbildungsmaßstab $V=-\\frac bg$. Drei Strahlen genügen: der <b>Parallelstrahl</b> geht hinter der Linse durch $F'$, der <b>Mittelpunktstrahl</b> geht gerade durch, der <b>Brennpunktstrahl</b> durch $F$ wird zum Parallelstrahl.</p>
 <p>Für $g>f$ treffen sich die Strahlen hinter der Linse: ein <b>reelles</b>, umgekehrtes Bild (auf einem Schirm sichtbar). Für $g<f$ laufen sie auseinander; nur ihre Verlängerungen (gestrichelt) treffen sich vor der Linse: ein <b>virtuelles</b>, aufrechtes, vergrößertes Bild – die Lupe.</p>
@@ -15,6 +16,7 @@ SIMS.def('linse', {
       ],
     },
     ru: {
+      limits: 'Тонкая линза в параксиальном приближении (лучи близко к оси), без аберраций. Преломление упрощённо нарисовано в средней плоскости линзы.',
       hint: 'Тяни предмет (стрелку слева) влево-вправо, а его кончик – вверх-вниз. Фокусы F и F′ отмечены.',
       what: `<p>Для тонкой линзы $\\frac1f=\\frac1g+\\frac1b$, увеличение $V=-\\frac bg$. Хватает трёх лучей: <b>параллельный</b> после линзы идёт через $F'$, <b>центральный</b> проходит прямо, <b>фокальный</b> через $F$ становится параллельным.</p>
 <p>При $g>f$ лучи сходятся за линзой: <b>действительное</b> перевёрнутое изображение (видно на экране). При $g<f$ они расходятся, сходятся только их продолжения (пунктир) перед линзой: <b>мнимое</b> прямое увеличенное изображение – лупа.</p>
@@ -57,6 +59,7 @@ SIMS.def('linse', {
     }
     hud();
     return {
+      probe: { image },
       change() { hud(); checks(); },
       down(px, py) {
         const [ox, oy] = P(-api.v.g, G);

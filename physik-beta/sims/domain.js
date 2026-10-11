@@ -4,6 +4,7 @@ SIMS.def('domain', {
   aspect: w => w < 520 ? 1 : .66,
   text: {
     de: {
+      limits: 'Die Farben sind für jede Funktion exakt. Die Integrale entlang γ werden numerisch mit 2048 Stützstellen berechnet (Fehler etwa 10⁻⁶). Läuft der Weg genau durch einen Pol, ist das Integral nicht definiert – dann erscheint ein Hinweis.',
       hint: 'Farbe = Argument von f(z), Helligkeit = Betrag: Nullstellen sind dunkel, Pole hell. Zieh den Kreis (den Weg γ). Im Modus „frei“ kannst du Nullstellen (○) und Pole (●) verschieben.',
       what: `<p>Jeder Punkt $z$ bekommt die Farbe von $\\arg f(z)$: rot bei positiv reell, dann gelb, grün, blau … einmal rundherum. Die feinen Ringe sind Höhenlinien von $|f|$ (jede Stufe verdoppelt den Betrag).</p>
 <p>Um eine <b>Nullstelle der Ordnung k</b> laufen die Farben k-mal im Kreis (gegen den Uhrzeigersinn), um einen <b>Pol</b> andersherum. Das ist das <b>Argumentprinzip</b>: Die Farbumläufe entlang des Wegs sind $\\frac{1}{2\\pi i}\\oint\\frac{f'}{f}\\,dz=N-P$.</p>
@@ -17,6 +18,7 @@ SIMS.def('domain', {
       ],
     },
     ru: {
+      limits: 'Цвета для каждой функции точные. Интегралы по γ считаются численно по 2048 точкам (ошибка около 10⁻⁶). Если контур проходит точно через полюс, интеграл не определён – тогда появляется подсказка.',
       hint: 'Цвет = аргумент f(z), яркость = модуль: нули тёмные, полюса светлые. Тяни круг (контур γ). В режиме «свободно» можно двигать нули (○) и полюса (●).',
       what: `<p>Каждая точка $z$ окрашена по $\\arg f(z)$: красный – положительная вещественная, дальше жёлтый, зелёный, синий … полный круг. Тонкие кольца – линии уровня $|f|$ (каждая ступень удваивает модуль).</p>
 <p>Вокруг <b>нуля порядка k</b> цвета обходят круг k раз (против часовой стрелки), вокруг <b>полюса</b> – в обратную сторону. Это <b>принцип аргумента</b>: число оборотов цвета вдоль контура равно $\\frac{1}{2\\pi i}\\oint\\frac{f'}{f}\\,dz=N-P$.</p>
@@ -161,16 +163,19 @@ void main(){
     // ---------- contour integrals ----------
     function contour() {
       const n = 2048, r = api.v.r;
-      let I = [0, 0], wind = 0, prevArg = null;
+      let I = [0, 0], wind = 0, prevArg = null, firstArg = null;
       let prev = [C.x + r, C.y];
+      const step = d => { while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return d; };
       for (let k = 1; k <= n; k++) {
         const a = k / n * 2 * Math.PI, z = [C.x + r * Math.cos(a), C.y + r * Math.sin(a)];
         const mid = [(z[0] + prev[0]) / 2, (z[1] + prev[1]) / 2], fv = f(mid), dz = sub(z, prev);
         const t = mul(fv, dz); I = [I[0] + t[0], I[1] + t[1]];
         const arg = Math.atan2(fv[1], fv[0]);
-        if (prevArg !== null) { let d = arg - prevArg; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; wind += d; }
+        if (prevArg !== null) wind += step(arg - prevArg); else firstArg = arg;
         prevArg = arg; prev = z;
       }
+      wind += step(firstArg - prevArg);   // close the loop: back to the first point
+
       const res = div(I, [0, 2 * Math.PI]);   // (1/2πi) ∮ f dz
       const m = marks(), inside = p => Math.hypot(p[0] - C.x, p[1] - C.y) < r;
       const N = m.z.filter(inside).reduce((s, p) => s + p[2], 0), Pn = m.p.filter(inside).reduce((s, p) => s + p[2], 0);
@@ -196,6 +201,7 @@ void main(){
     }
     let last = hud();
     return {
+      probe: { f, contour, setC: (x, y) => { C = { x, y }; } },
       change(k) { dirty = true; last = hud(); checks(last); },
       action(k) {
         if (api.v.f !== 8) { api.set('f', 8); }

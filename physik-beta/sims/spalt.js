@@ -3,6 +3,7 @@ SIMS.def('spalt', {
   aspect: w => w < 520 ? .95 : .58,
   text: {
     de: {
+      limits: 'Das Muster auf dem Schirm ist die exakte Fraunhofer-Formel (Schirm sehr weit weg). Das Wellenbild davor ist eine Huygens-Summe aus wenigen Elementarwellen pro Spalt und nur qualitativ. Längen sind zur Anschauung skaliert, die Verhältnisse b/λ und d/λ stimmen.',
       hint: 'Links kommt eine ebene Welle an. Hinter dem Spalt siehst du die Elementarwellen (Huygens), rechts das Muster auf einem weit entfernten Schirm.',
       what: `<p><b>Einzelspalt</b> (Breite $b$): erstes Minimum bei $\\sin\\theta=\\lambda/b$. Je schmaler der Spalt, desto breiter das Muster.</p>
 <p><b>Doppelspalt</b> (Abstand $d$): helle Streifen bei $d\\sin\\theta=m\\lambda$. Der Gangunterschied der beiden Wege ist ein ganzes Vielfaches der Wellenlänge. Die Einhüllende kommt vom Einzelspalt – fällt ein Maximum auf ein Einzelspalt-Minimum, fehlt diese Ordnung.</p>
@@ -15,6 +16,7 @@ SIMS.def('spalt', {
       ],
     },
     ru: {
+      limits: 'Картина на экране – точная формула Фраунгофера (экран очень далеко). Волновая картина перед ним – сумма Гюйгенса из нескольких вторичных волн на щель, только качественно. Длины отмасштабированы, отношения b/λ и d/λ верные.',
       hint: 'Слева приходит плоская волна. За щелью видны вторичные волны (Гюйгенс), справа – картина на далёком экране.',
       what: `<p><b>Одна щель</b> (ширина $b$): первый минимум при $\\sin\\theta=\\lambda/b$. Чем уже щель, тем шире картина.</p>
 <p><b>Две щели</b> (расстояние $d$): светлые полосы при $d\\sin\\theta=m\\lambda$ – разность хода кратна длине волны. Огибающая – от одной щели: если максимум попадает на минимум одной щели, этот порядок пропадает.</p>
@@ -71,6 +73,7 @@ SIMS.def('spalt', {
       if (N === 4) api.check(3);
     }
     return {
+      probe: { intensity, slits },
       change(k) { hud(); checks(k); },
       resize() { img = null; },
       frame(dt, t) {

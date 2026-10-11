@@ -4,6 +4,7 @@ SIMS.def('lorentz', {
   drag: false,
   text: {
     de: {
+      limits: 'Nichtrelativistisch, homogenes Feld, keine Abstrahlung, beliebige Einheiten (r im Bild ∝ mv/(qB)). Die Bahn wird Schritt für Schritt berechnet; der Betrag der Geschwindigkeit bleibt dabei exakt erhalten.',
       hint: 'Rechts ist ein homogenes Magnetfeld (⊙ zeigt aus dem Bildschirm heraus, ⊗ hinein). „Schießen“ schickt ein Teilchen hinein.',
       what: `<p>Die <b>Lorentzkraft</b> $\\vec F=q\\,\\vec v\\times\\vec B$ steht immer senkrecht zur Geschwindigkeit. Sie ändert nur die Richtung, nie den Betrag – das Teilchen läuft auf einem Kreis.</p>
 <p>Aus $qvB=\\frac{mv^2}{r}$ folgt $r=\\frac{mv}{|q|B}$ und die Umlaufzeit $T=\\frac{2\\pi m}{|q|B}$. Die Umlaufzeit hängt <b>nicht</b> von $v$ ab (Zyklotron!).</p>
@@ -16,6 +17,7 @@ SIMS.def('lorentz', {
       ],
     },
     ru: {
+      limits: 'Нерелятивистски, однородное поле, без излучения, условные единицы (r на экране ∝ mv/(qB)). Траектория считается по шагам; модуль скорости при этом сохраняется точно.',
       hint: 'Справа однородное магнитное поле (⊙ – из экрана, ⊗ – в экран). «Выстрел» запускает частицу.',
       what: `<p><b>Сила Лоренца</b> $\\vec F=q\\,\\vec v\\times\\vec B$ всегда перпендикулярна скорости. Она меняет только направление, а не модуль – частица движется по окружности.</p>
 <p>Из $qvB=\\frac{mv^2}{r}$ следует $r=\\frac{mv}{|q|B}$ и период $T=\\frac{2\\pi m}{|q|B}$. Период <b>не</b> зависит от $v$ (циклотрон!).</p>
@@ -65,6 +67,7 @@ SIMS.def('lorentz', {
       if (shots.some(s => s.dir > 0) && shots.some(s => s.dir < 0)) api.check(3);
     }
     return {
+      probe: { parts: () => parts, SPECIES, SCALE, launch, fieldX },
       change() { hud(); },
       action(k) {
         if (k === 'clear') { parts = []; return; }

@@ -3,6 +3,7 @@ SIMS.def('epizykel', {
   aspect: w => w < 520 ? 1 : .62,
   text: {
     de: {
+      limits: 'Figuren werden mit der diskreten Fourier-Transformation aus 256 Punkten zerlegt – das ist die Fourier-Reihe der abgetasteten Kurve. Die Wellen benutzen die exakten Koeffizienten.',
       hint: 'Figur: Mit dem Finger eine geschlossene Linie ins Feld zeichnen (oder eine Vorlage wählen). Welle: Rechteck, Sägezahn oder Dreieck als Summe von Sinusschwingungen.',
       what: `<p>Eine geschlossene Kurve $z(t)$, $t\\in[0,1]$, ist eine periodische komplexe Funktion. Ihre Fourier-Reihe $z(t)=\\sum_k c_k\\,e^{2\\pi i k t}$ mit $c_k=\\int_0^1 z(t)\\,e^{-2\\pi i k t}dt$ ist eine Kette von Kreisen: Kreis $k$ hat Radius $|c_k|$ und dreht sich $k$-mal pro Umlauf.</p>
 <p>Mit wenigen Kreisen bekommst du die groben Formen, Ecken brauchen viele hohe Frequenzen. Die $c_k$ sind die Koordinaten der Kurve in der Orthonormalbasis $\\{e^{2\\pi i k t}\\}$ von $L^2$.</p>
@@ -15,6 +16,7 @@ SIMS.def('epizykel', {
       ],
     },
     ru: {
+      limits: 'Фигуры раскладываются дискретным преобразованием Фурье по 256 точкам – это ряд Фурье дискретизированной кривой. Для волн используются точные коэффициенты.',
       hint: 'Фигура: нарисуй пальцем замкнутую линию (или выбери шаблон). Волна: меандр, пила или треугольник как сумма синусоид.',
       what: `<p>Замкнутая кривая $z(t)$, $t\\in[0,1]$, – это периодическая комплексная функция. Её ряд Фурье $z(t)=\\sum_k c_k\\,e^{2\\pi i k t}$ с $c_k=\\int_0^1 z(t)\\,e^{-2\\pi i k t}dt$ – это цепочка кругов: круг $k$ имеет радиус $|c_k|$ и делает $k$ оборотов за период.</p>
 <p>Несколько кругов дают общую форму, для углов нужны высокие частоты. Числа $c_k$ – координаты кривой в ортонормированном базисе $\\{e^{2\\pi i k t}\\}$ пространства $L^2$.</p>
@@ -115,6 +117,7 @@ SIMS.def('epizykel', {
     load();
     const view = () => { const s = Math.min(api.W, api.H) * .36; return { s, cx: isWave() ? api.W * .27 : api.W / 2, cy: api.H * (isWave() ? .42 : .45) }; };
     return {
+      probe: { waveTerms, waveTrue, dft, shape, coef: () => coef, lowest },
       change(k) { if (k === 'mode') { own = false; load(); } trail = k === 'K' || k === 'mode' ? [] : trail; hud(); checks(k); },
       down(px, py) { if (isWave()) return; drawing = [[px, py]]; },
       move(px, py, isDown) { if (drawing && isDown) drawing.push([px, py]); },

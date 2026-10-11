@@ -3,6 +3,7 @@ SIMS.def('faltung', {
   aspect: w => w < 520 ? 1 : .62,
   text: {
     de: {
+      limits: 'Das Integral wird numerisch (Riemann-Summe auf [−6, 6]) berechnet und die Kurve zwischen 241 Punkten interpoliert. Die δ-Folge ist eine Gauß-Glocke der Breite ε mit Fläche 1.',
       hint: 'Oben: f(t) in Gold und die gespiegelte, verschobene g(x − t) in Rosa. Ihr Produkt ist violett gefüllt – diese Fläche ist (f∗g)(x), unten als Kurve. Zieh im Bild nach links und rechts, um x zu verschieben.',
       what: `<p>$(f*g)(x)=\\int f(t)\\,g(x-t)\\,dt$: Spiegle $g$, schieb es um $x$, multipliziere mit $f$ und nimm die Fläche. Für jedes $x$ ein Wert – zusammen eine neue Funktion.</p>
 <p>Die Faltung <b>glättet</b>: Sie ist mindestens so glatt wie der glattere Faktor (Rechteck ∗ Rechteck = Dreieck, Rechteck ∗ Gauß = glatt). Sie ist kommutativ: $f*g=g*f$.</p>
@@ -15,6 +16,7 @@ SIMS.def('faltung', {
       ],
     },
     ru: {
+      limits: 'Интеграл считается численно (сумма Римана на [−6, 6]), кривая интерполируется по 241 точке. δ-последовательность – колокол Гаусса ширины ε с площадью 1.',
       hint: 'Сверху: f(t) золотом и отражённая сдвинутая g(x − t) розовым. Их произведение залито фиолетовым – эта площадь и есть (f∗g)(x), внизу кривой. Тяни по картинке влево-вправо, чтобы двигать x.',
       what: `<p>$(f*g)(x)=\\int f(t)\\,g(x-t)\\,dt$: отрази $g$, сдвинь на $x$, умножь на $f$ и возьми площадь. Для каждого $x$ – число, вместе – новая функция.</p>
 <p>Свёртка <b>сглаживает</b>: она не менее гладкая, чем более гладкий множитель (прямоугольник ∗ прямоугольник = треугольник, прямоугольник ∗ гаусс = гладко). Она коммутативна: $f*g=g*f$.</p>
@@ -74,6 +76,7 @@ SIMS.def('faltung', {
     function hud() { api.hud(`x = <span class="g">${api.v.x.toFixed(2)}</span> · (f∗g)(x) = <span class="g">${(dirty ? 0 : convAt(api.v.x)).toFixed(3)}</span>`); }
     let dragX = null;
     return {
+      probe: { convAt: x => { compute(); return convAt(x); }, F },
       change(k) {
         if (k === 'f' || k === 'g' || k === 'eps') { dirty = true; sweep = { min: 9, max: -9 }; }
         if (k === 'x') { sweep.min = Math.min(sweep.min, api.v.x); sweep.max = Math.max(sweep.max, api.v.x); }

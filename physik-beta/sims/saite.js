@@ -3,6 +3,7 @@ SIMS.def('saite', {
   aspect: w => w < 520 ? .95 : .6,
   text: {
     de: {
+      limits: 'Länge π, Wärmeleit- bzw. Wellengeschwindigkeit 1. Die Reihe wird nach 60 Moden abgebrochen, deshalb sind sehr scharfe Ecken leicht verrundet. Beim Zeichnen werden die Enden auf u = 0 gesetzt.',
       hint: 'Zeichne mit dem Finger eine Anfangsform u(x, 0) – oder nimm eine Vorlage. Die Enden sind fest (u = 0). Unten siehst du die Stärke jeder Eigenmode sin(nx).',
       what: `<p><b>Separation der Variablen:</b> Jede Anfangsform zerlegt sich in Eigenmoden $u_0(x)=\\sum_n b_n\\sin(nx)$ mit $b_n=\\frac2\\pi\\int_0^\\pi u_0(x)\\sin(nx)\\,dx$. Jede Mode entwickelt sich für sich.</p>
 <p><b>Wärmeleitung</b> $u_t=u_{xx}$: $u(x,t)=\\sum_n b_n e^{-n^2t}\\sin(nx)$. Hohe Moden (Ecken, Zacken) sterben quadratisch schneller – die Form wird sofort glatt und schrumpft am Ende zu $\\sin x$.</p>
@@ -15,6 +16,7 @@ SIMS.def('saite', {
       ],
     },
     ru: {
+      limits: 'Длина π, коэффициент теплопроводности и скорость волны равны 1. Ряд обрывается на 60 модах, поэтому очень острые углы слегка скруглены. При рисовании концы ставятся в u = 0.',
       hint: 'Нарисуй пальцем начальную форму u(x, 0) – или выбери шаблон. Концы закреплены (u = 0). Внизу – сила каждой собственной моды sin(nx).',
       what: `<p><b>Разделение переменных:</b> любая начальная форма раскладывается на моды $u_0(x)=\\sum_n b_n\\sin(nx)$, $b_n=\\frac2\\pi\\int_0^\\pi u_0(x)\\sin(nx)\\,dx$. Каждая мода живёт сама по себе.</p>
 <p><b>Теплопроводность</b> $u_t=u_{xx}$: $u(x,t)=\\sum_n b_n e^{-n^2t}\\sin(nx)$. Высокие моды (углы, зубцы) гаснут квадратично быстрее – форма сразу сглаживается и в конце становится $\\sin x$.</p>
@@ -68,6 +70,7 @@ SIMS.def('saite', {
     preset('stufe');
     let hudT = 0;
     return {
+      probe: { b: () => b, u0: () => u0, amp, setT: v => { t = v; }, preset, NM, S },
       change(k) { if (k === 'pre') preset(api.v.pre); if (k === 'eq') t = 0; hud(); },
       action(k) { if (k === 'reset') { t = 0; hud(); } },
       down(px, py) { drawing = true; last = null; u0.fill(0); this.move(px, py, true); },

@@ -168,6 +168,7 @@
     // explanation + tasks
     let tasksEl = null;
     if (T.what) host.appendChild(el('div', 'sim-what', `<h3>${ic('telescope')} ${lang === 'ru' ? 'Что тут происходит' : 'Was passiert hier?'}</h3>${T.what}`));
+    if (T.limits) host.appendChild(el('div', 'sim-limits', `<h3>${ic('info')} ${lang === 'ru' ? 'Что здесь упрощено' : 'Was hier vereinfacht ist'}</h3><p>${T.limits}</p>`));
     if (T.tasks && T.tasks.length) {
       const box = el('div', 'sim-tasks', `<h3>${ic('target')} ${lang === 'ru' ? 'Попробуй' : 'Probier mal'}</h3>`);
       tasksEl = el('ol');
@@ -238,6 +239,7 @@
         host.innerHTML = '';
       },
       api,
+      probe: () => inst.probe,   // internals for the physics test bench
     };
   }
 

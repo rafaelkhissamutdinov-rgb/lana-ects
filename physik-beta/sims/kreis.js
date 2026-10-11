@@ -4,6 +4,7 @@ SIMS.def('kreis', {
   drag: false,
   text: {
     de: {
+      limits: 'Ideale Bauteile (Spule ohne Widerstand, verlustfreier Kondensator) im eingeschwungenen Zustand; Einschaltvorgänge sind nicht gezeigt. Die Zeiger drehen sich zur Anschauung langsam statt mit ω.',
       hint: 'Reihenschaltung aus R, L und C an einer Wechselspannung U₀ = 10 V. Die Zeiger drehen sich mit ωt; ihre waagrechten Anteile sind die Momentanwerte.',
       what: `<p>Impedanzen: $Z_R=R$, $Z_L=i\\omega L$, $Z_C=\\frac{1}{i\\omega C}$. In Reihe: $Z=R+i\\left(\\omega L-\\frac1{\\omega C}\\right)$, Strom $I_0=U_0/|Z|$.</p>
 <p>Im Zeigerdiagramm liegt $U_R$ in Phase mit dem Strom, $U_L$ eilt um 90° voraus, $U_C$ hinkt 90° nach. $U_L$ und $U_C$ zeigen in entgegengesetzte Richtungen und heben sich teilweise auf.</p>
@@ -16,6 +17,7 @@ SIMS.def('kreis', {
       ],
     },
     ru: {
+      limits: 'Идеальные элементы (катушка без сопротивления, конденсатор без потерь), установившийся режим; переходные процессы не показаны. Векторы для наглядности вращаются медленно, а не с ω.',
       hint: 'Последовательно R, L и C на переменном напряжении U₀ = 10 В. Векторы вращаются с ωt; их горизонтальные проекции – мгновенные значения.',
       what: `<p>Импедансы: $Z_R=R$, $Z_L=i\\omega L$, $Z_C=\\frac{1}{i\\omega C}$. Последовательно: $Z=R+i\\left(\\omega L-\\frac1{\\omega C}\\right)$, ток $I_0=U_0/|Z|$.</p>
 <p>На диаграмме $U_R$ в фазе с током, $U_L$ опережает на 90°, $U_C$ отстаёт на 90°. $U_L$ и $U_C$ направлены противоположно и частично гасят друг друга.</p>
@@ -54,6 +56,7 @@ SIMS.def('kreis', {
     }
     hud();
     return {
+      probe: { circuit },
       change() { hud(); checks(); },
       frame(dt) {
         const W = api.W, H = api.H, c = circuit(), wide = W >= 520;

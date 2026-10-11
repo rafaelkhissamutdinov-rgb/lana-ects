@@ -3,6 +3,7 @@ SIMS.def('minkowski', {
   aspect: w => w < 520 ? 1 : .66,
   text: {
     de: {
+      limits: 'Eine Raumdimension, c = 1, Bewegung nur in x-Richtung (Standardkonfiguration, gemeinsamer Ursprung). Koordinaten, γ und s² sind exakt.',
       hint: 'Tippe ins Diagramm, um ein Ereignis zu setzen (bis zu 4), zieh es herum. Doppeltipp löscht es. Weiß: Koordinaten in S, rosa: in S′.',
       what: `<p>Senkrecht ist $ct$, waagrecht $x$. Licht läuft unter 45° (gold) – in <b>jedem</b> System. Das System $S'$ bewegt sich mit $\\beta=v/c$: Seine $ct'$-Achse ist die Weltlinie seines Ursprungs ($x=\\beta\\,ct$), seine $x'$-Achse ist die Linie $ct=\\beta x$ – beide klappen zur Lichtlinie hin.</p>
 <p>Lorentz-Transformation: $x'=\\gamma(x-\\beta\\,ct)$, $ct'=\\gamma(ct-\\beta x)$ mit $\\gamma=1/\\sqrt{1-\\beta^2}$. Linien gleicher Zeit in $S'$ sind parallel zur $x'$-Achse: Was in $S$ gleichzeitig ist, ist es in $S'$ nicht (<b>Relativität der Gleichzeitigkeit</b>).</p>
@@ -15,6 +16,7 @@ SIMS.def('minkowski', {
       ],
     },
     ru: {
+      limits: 'Одно пространственное измерение, c = 1, движение только вдоль x (стандартная конфигурация, общее начало). Координаты, γ и s² точные.',
       hint: 'Коснись диаграммы, чтобы поставить событие (до 4), тяни его. Двойное касание удаляет. Белое – координаты в S, розовое – в S′.',
       what: `<p>По вертикали $ct$, по горизонтали $x$. Свет идёт под 45° (золотой) – в <b>любой</b> системе. Система $S'$ движется со скоростью $\\beta=v/c$: её ось $ct'$ – мировая линия её начала ($x=\\beta\\,ct$), ось $x'$ – линия $ct=\\beta x$; обе наклоняются к световой линии.</p>
 <p>Преобразование Лоренца: $x'=\\gamma(x-\\beta\\,ct)$, $ct'=\\gamma(ct-\\beta x)$, где $\\gamma=1/\\sqrt{1-\\beta^2}$. Линии одного времени в $S'$ параллельны оси $x'$: одновременное в $S$ не одновременно в $S'$ (<b>относительность одновременности</b>).</p>
@@ -62,6 +64,7 @@ SIMS.def('minkowski', {
     }
     hud();
     return {
+      probe: { lor, gam },
       change(k) { hud(); checks(k); },
       action(k) { if (k === 'clear') { E = []; sel = -1; betas = []; hud(); } },
       down(px, py) {

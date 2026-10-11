@@ -3,6 +3,7 @@ SIMS.def('brechung', {
   aspect: w => w < 520 ? 1 : .62,
   text: {
     de: {
+      limits: 'Ideale glatte Grenzfläche, nicht absorbierende Medien (reelles n), eine Wellenlänge. R und T sind die exakten Fresnel-Formeln für Intensitäten. Die Wellenberge veranschaulichen nur, dass λ im Medium auf λ/n schrumpft.',
       hint: 'Zieh die Lichtquelle (oder nutze den Regler). Die Wellenberge im Strahl rücken im dichteren Medium enger zusammen.',
       what: `<p><b>Snellius:</b> $n_1\\sin\\alpha=n_2\\sin\\beta$. Ins dichtere Medium ($n_2>n_1$) wird der Strahl <b>zum Lot</b> gebrochen. Die Frequenz bleibt gleich, die Wellenlänge schrumpft auf $\\lambda/n$ – das siehst du an den Wellenbergen.</p>
 <p><b>Totalreflexion</b> gibt es nur vom dichteren ins dünnere Medium, ab dem Grenzwinkel $\\sin\\alpha_c=n_2/n_1$.</p>
@@ -15,6 +16,7 @@ SIMS.def('brechung', {
       ],
     },
     ru: {
+      limits: 'Идеальная гладкая граница, непоглощающие среды (вещественный n), одна длина волны. R и T – точные формулы Френеля для интенсивностей. Гребни волн лишь показывают, что λ в среде сжимается до λ/n.',
       hint: 'Тяни источник света (или ползунок). Гребни волн в луче сближаются в более плотной среде.',
       what: `<p><b>Снеллиус:</b> $n_1\\sin\\alpha=n_2\\sin\\beta$. В более плотную среду ($n_2>n_1$) луч преломляется <b>к нормали</b>. Частота не меняется, а длина волны сжимается до $\\lambda/n$ – это видно по гребням.</p>
 <p><b>Полное отражение</b> бывает только из более плотной среды в менее плотную, начиная с критического угла $\\sin\\alpha_c=n_2/n_1$.</p>
@@ -100,6 +102,7 @@ SIMS.def('brechung', {
       }
     }
     return {
+      probe: { optics, fresnel },
       change(k) { const o = optics(); hud(o); checks(o, k); },
       action(k) {
         if (k === 'glas') { api.set('n1', 1.5); api.set('n2', 1); }

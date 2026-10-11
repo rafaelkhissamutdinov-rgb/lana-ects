@@ -3,6 +3,7 @@ SIMS.def('feld', {
   aspect: w => w < 520 ? .95 : .62,
   text: {
     de: {
+      limits: 'Punktladungen im Raum (Feld ∝ 1/r²), gezeichnet ist ein ebener Schnitt. Wie dicht die Linien liegen, ist deshalb nur ein qualitatives Maß für |E|. Exakt sind die Richtung von E, das Potential, die Werte der Sonde und die Nullstellen des Feldes. Einheiten: 1/(4πε₀) = 1, Längen beliebig.',
       hint: 'Ladungen ziehen · leere Stelle antippen = Messsonde · Doppeltipp auf eine Ladung entfernt sie.',
       what: `<p><b>Goldene Linien</b> sind Feldlinien: Sie starten bei positiven und enden bei negativen Ladungen. Die kleinen Lichtpunkte wandern in Richtung von $\\vec E$. Wo Linien dicht liegen, ist das Feld stark.</p>
 <p><b>Farbe im Hintergrund</b> ist das Potential $\\varphi=\\sum_i \\frac{q_i}{4\\pi\\varepsilon_0 r_i}$ (rosa: positiv, blau: negativ), die feinen weißen Kurven sind Äquipotentiallinien. Feldlinien schneiden sie immer senkrecht, denn $\\vec E=-\\nabla\\varphi$.</p>
@@ -15,6 +16,7 @@ SIMS.def('feld', {
       ],
     },
     ru: {
+      limits: 'Точечные заряды в пространстве (поле ∝ 1/r²), нарисован плоский срез. Поэтому густота линий – лишь качественная мера |E|. Точны направление E, потенциал, показания зонда и нули поля. Единицы: 1/(4πε₀) = 1, длины условные.',
       hint: 'Тяни заряды · касание пустого места = зонд · двойное касание заряда убирает его.',
       what: `<p><b>Золотые линии</b> – силовые линии: начинаются на положительных зарядах и кончаются на отрицательных. Светящиеся точки бегут по направлению $\\vec E$. Где линии гуще, поле сильнее.</p>
 <p><b>Цвет фона</b> – потенциал $\\varphi=\\sum_i \\frac{q_i}{4\\pi\\varepsilon_0 r_i}$ (розовый: плюс, синий: минус), тонкие белые кривые – эквипотенциали. Силовые линии всегда пересекают их под прямым углом, ведь $\\vec E=-\\nabla\\varphi$.</p>
@@ -199,6 +201,7 @@ SIMS.def('feld', {
     }
     const pathOf = pts => { ctx.beginPath(); pts.forEach(([x, y], i) => { const [px, py] = toPx(x, y); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }); };
     return {
+      probe: { field, findNull, lines: () => lines, computeLines, set: arr => { Q = arr.map(([x, y, q]) => ({ x, y, q })); linesDirty = heatDirty = true; } },
       change(k) {
         if (k === 'preset') preset(api.v.preset);
         hud(); checks();
