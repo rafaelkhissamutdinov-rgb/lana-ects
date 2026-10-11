@@ -58,26 +58,14 @@ const videos = {
 };
 const thumbs = { ja: ['👍'], nein: ['👎'], katze: ['😄', '😁', '🥳', '🌈', '☀️', '✨', '🌻', '🎉', '💛', '🦋'] };
 
-// ---------- TP2 scene: monkeys, electricity, brains + falling charts ----------
+// ---------- TP2 scene: lightning and falling charts ----------
 const tp2Scene = document.getElementById('scene-tp2');
-const TP2_EMOJI = ['🐒', '🙈', '🙉', '🙊', '🦍', '🐵', '🧠', '⚡', '🔌', '💡', '🔋', '🧲', '⚡', '🧠'];
-TP2_EMOJI.forEach(e => {
-  const d = document.createElement('span');
-  d.className = 'deco';
-  d.textContent = e;
-  d.style.left = (Math.random() * 90) + '%';
-  d.style.top = (Math.random() * 90) + '%';
-  d.style.fontSize = (26 + Math.random() * 28) + 'px';
-  d.style.setProperty('--dur', (1.5 + Math.random() * 2) + 's');
-  d.style.setProperty('--delay', (-Math.random() * 2) + 's');
-  tp2Scene.appendChild(d);
-});
 for (let i = 0; i < 12; i++) {
   const f = document.createElement('span');
   f.className = 'tumble';
-  f.textContent = '📉';
+  f.innerHTML = ic('trending-down');
   f.style.left = (Math.random() * 92) + '%';
-  f.style.fontSize = (28 + Math.random() * 26) + 'px';
+  f.style.width = f.style.height = (26 + Math.random() * 30) + 'px';
   f.style.animationDuration = (3 + Math.random() * 4) + 's';
   f.style.animationDelay = (-Math.random() * 7) + 's';
   f.style.setProperty('--spin', ((Math.random() - .5) * 540) + 'deg');
@@ -143,30 +131,21 @@ for (let i = 0; i < 70; i++) {
   r.style.animationDelay = (-Math.random() * 2) + 's';
   gloom.appendChild(r);
 }
-['😰', '😟', '😔', '😶‍🌫️', '🥀', '🖤', '🌧️', '⛈️', '🕳️', '😞', '🌫️', '😓'].forEach(e => {
-  const d = document.createElement('span');
-  d.className = 'gloom-deco';
-  d.textContent = e;
-  d.style.left = (Math.random() * 90) + '%';
-  d.style.top = (Math.random() * 90) + '%';
-  d.style.fontSize = (26 + Math.random() * 30) + 'px';
-  d.style.animationDuration = (5 + Math.random() * 5) + 's';
-  gloom.appendChild(d);
-});
 
-// ---------- happy scene: floating happy emoji ----------
+// ---------- happy scene: sun rays and soft floating lights ----------
 const happy = document.getElementById('scene-happy');
-['😄', '😁', '🥳', '🌈', '🌻', '🌼', '🎈', '✨', '😊', '🦋', '🎉', '🌞', '🍀', '😆'].forEach(e => {
+for (let i = 0; i < 16; i++) {
   const d = document.createElement('span');
-  d.className = 'deco';
-  d.textContent = e;
-  d.style.left = (Math.random() * 90) + '%';
-  d.style.top = (10 + Math.random() * 80) + '%';
-  d.style.fontSize = (26 + Math.random() * 26) + 'px';
-  d.style.setProperty('--dur', (1.2 + Math.random() * 1.5) + 's');
-  d.style.setProperty('--delay', (-Math.random() * 2) + 's');
+  d.className = 'bokeh';
+  const r = 20 + Math.random() * 70;
+  d.style.width = d.style.height = r + 'px';
+  d.style.left = (Math.random() * 95) + '%';
+  d.style.top = (10 + Math.random() * 85) + '%';
+  d.style.background = `radial-gradient(circle, rgba(255,${200 + Math.round(Math.random() * 55)},${120 + Math.round(Math.random() * 100)},.55), rgba(255,255,255,0) 70%)`;
+  d.style.animationDuration = (3 + Math.random() * 4) + 's';
+  d.style.animationDelay = (-Math.random() * 3) + 's';
   happy.appendChild(d);
-});
+}
 
 function answer(id) {
   go({ id });
@@ -205,8 +184,8 @@ route('tp2', { scene: 'scene-tp2' });
 route('hilfe', {
   enter(state) {
     const f = FAECHER[state.fach];
-    document.getElementById('hilfe-icon').textContent = f.icon;
+    document.getElementById('hilfe-icon').innerHTML = ic(f.icon);
     document.getElementById('hilfe-title').textContent = f.title;
-    document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald ✨</p>';
+    document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald</p>';
   },
 });

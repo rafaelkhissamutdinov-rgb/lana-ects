@@ -61,7 +61,7 @@ document.getElementById('copy-prompt').addEventListener('click', async () => {
     try { ok = document.execCommand('copy'); } catch (e2) {}
     ta.remove();
   }
-  copyStatus.textContent = ok ? '✅ Kopiert! Jetzt in Claude einfügen.' : 'Kopieren hat nicht geklappt – öffne „Prompt ansehen“ und kopier den Text von Hand.';
+  copyStatus.textContent = ok ? 'Kopiert! Jetzt in Claude einfügen.' : 'Kopieren hat nicht geklappt – öffne „Prompt ansehen“ und kopier den Text von Hand.';
 });
 
 route('labor', {});

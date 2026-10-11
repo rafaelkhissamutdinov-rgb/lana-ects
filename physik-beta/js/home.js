@@ -1,92 +1,72 @@
+// Start screen (question, greeting) and the list of subjects.
+
 // ---------- subjects: content for each option goes into `html` ----------
+// tone/tint colour the icon tile; info() returns the small line under the title (and a ring when a total is known)
 const FAECHER = {
-  stern:  { icon: '🌌', title: 'Sternwarte',             screen: 'stern' },
-  e2:     { icon: '⚡', title: 'Experimentalphysik II',  screen: 'e2' },
-  tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', screen: 'tp2' },
-  ana3:   { icon: '∫',  title: 'Analysis 3',            screen: 'ana3' },
-  labor:  { icon: '🧪', title: 'Laborpraktikum',        screen: 'labor' },
-  schach: { icon: '♟️', title: 'Schach',
-            html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' +
-                  '<div class="wahl"><button type="button" class="go-schach" data-go="katze">Ich gehe zum Schach ♟️</button>' +
-                  '<button type="button" class="go-tutorium" data-go="opa">Ich gehe zum Tutorium 📚</button></div>' },
+  stern:  { icon: 'telescope', title: 'Sternwarte', screen: 'stern', tone: '#f4c86a', tint: 'rgba(244,200,106,.14)',
+            info: () => { const n = Object.keys(memLogData).filter(k => memStrength(k) >= .5).length;
+                          return { text: n ? `${n} Sterne leuchten gerade` : 'Alles Gelernte als Himmel, der langsam verblasst', done: n, total: store.get('deck-total', 0) }; } },
+  e2:     { icon: 'zap', title: 'Experimentalphysik II', screen: 'e2', tone: '#82c6ff', tint: 'rgba(130,198,255,.14)',
+            info: () => ({ text: 'Optik, Elektromagnetismus, Relativität · Karteikarten', done: Object.values(e2Box).filter(v => v > 0).length, total: store.get('e2-total', 0) }) },
+  ana3:   { icon: 'sigma', title: 'Analysis 3', screen: 'ana3', tone: '#a294ff', tint: 'rgba(162,148,255,.16)',
+            info: () => ({ text: 'Komplexe Analysis bis Hilberträume, einfach erklärt', done: anaDone.size, total: store.get('ana3-total', 0) }) },
+  labor:  { icon: 'flask-conical', title: 'Laborpraktikum', screen: 'labor', tone: '#5fd6b8', tint: 'rgba(95,214,184,.14)',
+            info: () => ({ text: 'Protokoll-Gerüst mit Claude in 10 Minuten' }) },
+  tp2:    { icon: 'atom', title: 'Theoretische Physik 2', screen: 'tp2', tone: '#ff7f9f', tint: 'rgba(255,127,159,.13)',
+            info: () => ({ text: 'Elektrodynamik · leider geschlossen' }) },
+  schach: { icon: 'chess-knight', title: 'Schach', tone: '#ffad61', tint: 'rgba(255,173,97,.13)',
+            info: () => ({ text: 'Oder doch lieber das?' }),
+            html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium?</p>' +
+                  '<div class="wahl"><button type="button" class="go-schach" data-go="katze">Ich gehe zum Schach</button>' +
+                  '<button type="button" class="go-tutorium" data-go="opa">Ich gehe zum Tutorium</button></div>' },
 };
-
-// ---------- background theme per weekday ----------
-const THEMES = {
-  tiere:   { bg: 'radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%)', base: '#ffb8d9',
-             emoji: ['🐰', '🐱', '🐇', '🐈', '🐶', '🐹', '🐼', '🐨', '🦊', '🐻', '🐥', '🦄', '🐭', '🐾'] },
-  geld:    { bg: 'linear-gradient(160deg, #e6f7ec 0%, #a9e3bf 55%, #5fbf8a 100%)', base: '#a9e3bf',
-             emoji: ['💰', '💵', '💶', '💸', '📈', '📊', '📉', '💼', '🏦', '💳', '🪙', '🖥️', '📅', '🤑'] },
-  physik:  { bg: 'radial-gradient(circle at 50% 30%, #2d3f8f 0%, #16205a 55%, #0a0f30 100%)', base: '#16205a',
-             emoji: ['🧑‍🔬', '👩‍🔬', '👨‍🔬', '👩‍🚀', '🔭', '🔬', '⚛️', '🧪', '🧲', '🪐', '🌌', '🚀', '☄️', '🌍', '🧮', '⭐'] },
-  muede:   { bg: 'linear-gradient(160deg, #f3eee7 0%, #ddd2c4 55%, #b9aa98 100%)', base: '#ddd2c4',
-             emoji: ['😩', '😫', '🥱', '😮‍💨', '😵‍💫', '🫠', '😑', '😤', '🙄', '🥴', '😵', '🫥'] },
-  traurig: { bg: 'linear-gradient(180deg, #e3ebf5 0%, #b5c6dc 55%, #8197b5 100%)', base: '#b5c6dc',
-             emoji: ['😭', '😢', '😿', '🥺', '😞', '😔', '🥲', '😥', '💧', '☔', '🌧️', '💔'] },
-  tod:     { bg: 'radial-gradient(circle at 50% 35%, #4a1f2a 0%, #2a1018 55%, #120608 100%)', base: '#2a1018',
-             emoji: ['💀', '☠️', '🦴', '🤬', '🪦', '👻', '⚰️', '😈', '💢', '🔥'] },
-  schlaf:  { bg: 'radial-gradient(circle at 50% 30%, #5a4fa8 0%, #352c78 55%, #1c1648 100%)', base: '#352c78',
-             emoji: ['😴', '💤', '🛏️', '🛌', '🌙', '🌜', '⭐', '🥱', '🧸', '😪', '🌛', '✨'] },
-  party:   { bg: 'radial-gradient(circle at 50% 35%, #ff5fae 0%, #9b2d9e 55%, #3d0d52 100%)', base: '#9b2d9e',
-             emoji: ['🍺', '🍻', '🍷', '🥂', '🍾', '🍸', '🍹', '🥃', '🎉', '🪩', '🎶', '💃', '🕺', '🎊'] },
-};
-// index = Date.getDay(): 0 Sonntag … 6 Samstag; Friday picks one of two at random
-const WEEK = [['party'], ['geld'], ['physik'], ['muede'], ['traurig'], ['tiere', 'tod'], ['schlaf']];
-const TAG_PARAM = { so: 0, mo: 1, di: 2, mi: 3, do: 4, fr: 5, sa: 6 };
-
-const now = new Date();
-const day = params.get('tag') in TAG_PARAM ? TAG_PARAM[params.get('tag')] : now.getDay();
-const options = WEEK[day];
-const themeName = THEMES[params.get('thema')] ? params.get('thema') : options[Math.floor(Math.random() * options.length)];
-const theme = THEMES[themeName];
-
-const bg = document.getElementById('bg');
-document.documentElement.style.setProperty('--bg', theme.bg);
-document.body.style.background = theme.base;
-// positions/sizes are random on every visit, so the background never looks the same twice
-const count = Math.round(Math.min(30, Math.max(14, innerWidth * innerHeight / 21000)));
-const pool = [...theme.emoji].sort(() => Math.random() - .5);
-for (let i = 0; i < count; i++) {
-  const d = document.createElement('span');
-  d.className = 'deco';
-  d.textContent = pool[i % pool.length];
-  d.style.left = (Math.random() * 94) + '%';
-  d.style.top = (Math.random() * 94) + '%';
-  d.style.fontSize = (22 + Math.random() * 28) + 'px';
-  d.style.setProperty('--dur', (2 + Math.random() * 2.5) + 's');
-  d.style.setProperty('--delay', (-Math.random() * 3) + 's');
-  bg.appendChild(d);
-}
 
 // ---------- date + greeting ----------
-const dateFmt = new Intl.DateTimeFormat('de-AT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+const dateFmt = new Intl.DateTimeFormat('de-AT', { weekday: 'long', day: 'numeric', month: 'long' });
 const timeFmt = new Intl.DateTimeFormat('de-AT', { hour: '2-digit', minute: '2-digit' });
 // the name appears once, in the greeting; the question stays as it is
 function greetingFor(h) {
   const who = NAME ? ', ' + NAME : '';
-  if (h >= 5 && h < 11) return 'Guten Morgen' + who + '! ☀️';
-  if (h >= 11 && h < 18) return 'Guten Tag' + who + '! 🌤️';
-  if (h >= 18 && h < 23) return 'Guten Abend' + who + '! 🌆';
-  return 'Gute Nacht' + who + '! 🌙';
+  if (h >= 5 && h < 11) return ['sunrise', 'Guten Morgen' + who];
+  if (h >= 11 && h < 18) return ['sun', 'Guten Tag' + who];
+  if (h >= 18 && h < 23) return ['sunset', 'Guten Abend' + who];
+  return ['moon', 'Gute Nacht' + who];
 }
 function updateClock() {
   const t = new Date();
   document.getElementById('date').textContent = dateFmt.format(t) + ' · ' + timeFmt.format(t);
-  document.getElementById('greeting').textContent = greetingFor(t.getHours());
+  const [icon, text] = greetingFor(t.getHours());
+  const g = document.getElementById('greeting');
+  g.innerHTML = ic(icon) + '<span></span>';
+  g.querySelector('span').textContent = text;
 }
 updateClock();
 setInterval(updateClock, 30000);
 
-// ---------- subject buttons ----------
-const grid = document.getElementById('grid');
-for (const [key, f] of Object.entries(FAECHER)) {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'fach';
-  b.innerHTML = `<span class="icon">${f.icon}</span><span>${f.title}</span>`;
-  b.addEventListener('click', () => go(f.screen ? { id: f.screen } : { id: 'hilfe', fach: key }));
-  grid.appendChild(b);
+// ---------- subject list ----------
+function ringSvg(done, total) {
+  const r = 17, c = 2 * Math.PI * r, f = total ? Math.min(1, done / total) : 0;
+  return `<span class="ring" title="${done} / ${total}"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="${r}" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="3"/>` +
+    `<circle cx="20" cy="20" r="${r}" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="${(c * f).toFixed(1)} ${c.toFixed(1)}"/></svg>${Math.round(f * 100)}%</span>`;
+}
+function renderFaecher() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  for (const [key, f] of Object.entries(FAECHER)) {
+    const info = f.info ? f.info() : {};
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'fach';
+    b.style.setProperty('--tone', f.tone);
+    b.style.setProperty('--tint', f.tint);
+    b.innerHTML = `<span class="icon">${ic(f.icon)}</span><span class="txt"><b></b><small></small></span>` +
+      (info.total ? `<span style="color:${f.tone}">${ringSvg(info.done || 0, info.total)}</span>` : ic('chevron-right', 'chev'));
+    b.querySelector('b').textContent = f.title;
+    b.querySelector('small').textContent = info.text || '';
+    b.addEventListener('click', () => go(f.screen ? { id: f.screen } : { id: 'hilfe', fach: key }));
+    grid.appendChild(b);
+  }
 }
 
 route('frage', {});
-route('faecher', {});
+route('faecher', { enter: renderFaecher });

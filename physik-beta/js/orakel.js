@@ -1,9 +1,9 @@
 // ---------- daily message ----------
 const OK_UI = {
   de: { title: 'Botschaft für heute', titleName: n => n + ', deine Botschaft für heute', tap: 'Tippe auf die Karte',
-        heute: 'Heute', copy: '📋 Text kopieren', copied: '✅ Kopiert', next: 'Morgen wartet eine neue Karte.' },
+        heute: 'Heute', copy: 'Text kopieren', copied: 'Kopiert', next: 'Morgen wartet eine neue Karte.' },
   ru: { title: 'Послание на сегодня', titleName: n => n + ', твоё послание на сегодня', tap: 'Коснись карты',
-        heute: 'Сегодня', copy: '📋 Скопировать', copied: '✅ Скопировано', next: 'Завтра тебя ждёт новая карта.' },
+        heute: 'Сегодня', copy: 'Скопировать', copied: 'Скопировано', next: 'Завтра тебя ждёт новая карта.' },
 };
 let okReady = null;
 (function makeStars() {
@@ -36,7 +36,7 @@ function renderOrakel() {
     <h2>${NAME ? L.titleName(NAME) : L.title}</h2>
     <div class="ok-card${opened ? ' open instant' : ''}" id="ok-card" role="button" tabindex="0" aria-label="${L.tap}">
       <div class="ok-inner">
-        <div class="ok-face ok-front"><div class="sym">✨</div><div class="tap">${L.tap}</div></div>
+        <div class="ok-face ok-front"><div class="sym">${ic('sparkles')}</div><div class="tap">${L.tap}</div></div>
         <div class="ok-face ok-back">
           <div class="ok-quote">${msg.s[anaLang]}</div>
           <div class="ok-sep"></div>
@@ -45,7 +45,7 @@ function renderOrakel() {
       </div>
     </div>
     <div class="ok-actions" id="ok-actions"${opened ? '' : ' hidden'}>
-      <button type="button" id="ok-copy">${L.copy}</button>
+      <button type="button" id="ok-copy">${ic('copy')} <span>${L.copy}</span></button>
       <p class="ok-next">${L.next}</p>
     </div>`;
   wireLang(root, renderOrakel);
@@ -59,9 +59,10 @@ function renderOrakel() {
   };
   card.addEventListener('click', open);
   card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  root.querySelector('#ok-copy').addEventListener('click', async e => {
+  const copyBtn = root.querySelector('#ok-copy');
+  copyBtn.addEventListener('click', async () => {
     const text = msg.s[anaLang] + '\n\n' + L.heute + ': ' + msg.h[anaLang];
-    try { await navigator.clipboard.writeText(text); e.target.textContent = L.copied; } catch (err) {}
+    try { await navigator.clipboard.writeText(text); copyBtn.querySelector('span').textContent = L.copied; } catch (err) {}
   });
 }
 function showOrakel() {

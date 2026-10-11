@@ -1,27 +1,27 @@
 // ---------- Analysis 3: interactive study notes (data + KaTeX loaded on demand) ----------
 const UI = {
-  de: { title: 'Analysis III – einfach erklärt', done: 'verstanden', map: '🗺️ So hängt alles zusammen',
-        next: 'Weiter →', all: 'Alles zeigen', got: '✓ Verstanden', gotDone: '✓ Verstanden!', prev: '← ', nextT: ' →',
-        kern: '💡 Kern', formel: '📐 Formel', check: '✅ Check', rezept: '🍳 Rezept', falle: '⚠️ Falle', tabelle: '📊 Überblick', text: '📝 Merke',
+  de: { title: 'Analysis III', titleSub: 'einfach erklärt', done: 'verstanden', map: 'So hängt alles zusammen',
+        next: 'Weiter', all: 'Alles zeigen', got: 'Verstanden', gotDone: 'Verstanden', prev: '', nextT: '',
+        kern: 'Kern', formel: 'Formel', check: 'Check', rezept: 'Rezept', falle: 'Falle', tabelle: 'Überblick', text: 'Merke',
         ref: 'im Skriptum', error: 'Konnte nicht laden. Bitte Seite neu laden.',
-        vorher: '🧩 Vorher wissen', einfach: '👶 Ganz einfach', beispiel: '🔢 Beispiel mit Zahlen', exakt: '📚 Kurz & exakt (fürs Wiederholen)',
-        neu: 'Jede Karte startet ganz einfach: 🧩 Vorher wissen → 👶 Ganz einfach → 🔢 Beispiel. Danach kommt 📚 Kurz & exakt zum Wiederholen.',
-        unklar: '🤖 Immer noch unklar? Prompt für Claude kopieren', copied: '✅ Kopiert! Jetzt in Claude einfügen:', open: 'claude.ai öffnen',
+        vorher: 'Vorher wissen', einfach: 'Ganz einfach', beispiel: 'Beispiel mit Zahlen', exakt: 'Kurz & exakt – fürs Wiederholen',
+        neu: 'Jedes Thema startet ganz einfach: Vorher wissen → Ganz einfach → Beispiel. Danach kommt „Kurz & exakt“ zum Wiederholen.',
+        unklar: 'Immer noch unklar? Prompt für Claude kopieren', copied: 'Kopiert! Jetzt in Claude einfügen:', open: 'claude.ai öffnen',
         copyFail: 'Kopieren ging nicht – hier ist der Text zum Markieren:' },
-  ru: { title: 'Analysis III на пальцах', done: 'понятно', map: '🗺️ Как всё связано',
-        next: 'Дальше →', all: 'Показать всё', got: '✓ Понятно', gotDone: '✓ Понятно!', prev: '← ', nextT: ' →',
-        kern: '💡 Суть', formel: '📐 Формула', check: '✅ Проверка', rezept: '🍳 Рецепт', falle: '⚠️ Ловушка', tabelle: '📊 Обзор', text: '📝 Запомни',
+  ru: { title: 'Analysis III', titleSub: 'на пальцах', done: 'понятно', map: 'Как всё связано',
+        next: 'Дальше', all: 'Показать всё', got: 'Понятно', gotDone: 'Понятно', prev: '', nextT: '',
+        kern: 'Суть', formel: 'Формула', check: 'Проверка', rezept: 'Рецепт', falle: 'Ловушка', tabelle: 'Обзор', text: 'Запомни',
         ref: 'в скрипте', error: 'Не удалось загрузить. Обнови страницу.',
-        vorher: '🧩 Что нужно знать', einfach: '👶 Совсем просто', beispiel: '🔢 Пример с числами', exakt: '📚 Коротко и точно (для повторения)',
-        neu: 'Каждая карточка начинается просто: 🧩 Что нужно знать → 👶 Совсем просто → 🔢 Пример. Потом идёт 📚 Коротко и точно — для повторения.',
-        unklar: '🤖 Всё ещё непонятно? Скопировать промпт для Claude', copied: '✅ Скопировано! Теперь вставь в Claude:', open: 'открыть claude.ai',
+        vorher: 'Что нужно знать', einfach: 'Совсем просто', beispiel: 'Пример с числами', exakt: 'Коротко и точно – для повторения',
+        neu: 'Каждая тема начинается просто: Что нужно знать → Совсем просто → Пример. Потом идёт «Коротко и точно» для повторения.',
+        unklar: 'Всё ещё непонятно? Скопировать промпт для Claude', copied: 'Скопировано! Теперь вставь в Claude:', open: 'открыть claude.ai',
         copyFail: 'Скопировать не вышло — вот текст, выдели его вручную:' },
 };
 let anaDone = new Set(store.get('ana3-done', []));
 let anaReady = null;
 function loadAna3() {
   if (!anaReady) {
-    anaReady = Promise.all([loadScript('ana3-data.js'), loadKaTeX()]);
+    anaReady = Promise.all([loadScript('ana3-data.js'), loadKaTeX()]).then(() => store.set('ana3-total', topicOrder().length));
     anaReady.catch(() => { anaReady = null; });
   }
   return anaReady;
@@ -43,11 +43,13 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
 5. В конце 2 коротких вопроса мне для проверки. Решение показывай только после моего ответа.
 Если я что-то не понимаю, объясни именно этот шаг ещё проще, а не иди дальше. Отвечай по-русски, коротко, формулы в LaTeX.`,
 };
+const STEP_ICON = { kern: 'lightbulb', formel: 'sigma', check: 'check-circle-2', rezept: 'list-checks', falle: 'triangle-alert',
+  tabelle: 'layers', text: 'scroll-text', vorher: 'puzzle', einfach: 'baby', beispiel: 'hash' };
 function topicOrder() { return ['toolkit', ...ANA3.meta.parts.flatMap(p => p.topics)]; }
 function tile(id, wide) {
   const tp = ANA3.topics[id];
   return `<button type="button" class="tile${wide ? ' wide' : ''}${anaDone.has(id) ? ' done' : ''}" data-topic="${id}">` +
-    `<span class="em">${tp.emoji}</span><span>${tp.title[anaLang]}</span></button>`;
+    `${glyph(id)}<span>${tp.title[anaLang]}</span></button>`;
 }
 
 function renderAnaList() {
@@ -55,12 +57,12 @@ function renderAnaList() {
   root.lang = anaLang;
   const m = ANA3.meta, total = topicOrder().length, n = topicOrder().filter(id => anaDone.has(id)).length;
   root.innerHTML = `
-    <div class="ana-top"><h2>∫ ${t('title')}</h2>${langSwitch()}</div>
+    <div class="ana-top"><div><p class="eyebrow">${t('titleSub')}</p><h2>${t('title')}</h2></div>${langSwitch()}</div>
     <p class="hero">${m.hero[anaLang]}</p>
     <p class="neu">${t('neu')}</p>
     <div class="progress"><div style="width:${(100 * n / total).toFixed(1)}%"></div></div>
     <span class="progress-label">${n} / ${total} ${t('done')}</span>
-    <details class="map"><summary>${t('map')}</summary><div class="map-grid">
+    <details class="map"><summary>${ic('map')} ${t('map')}</summary><div class="map-grid">
       ${m.map.map(x => `<div><b>${x.title[anaLang]}</b>${x.html[anaLang]}</div>`).join('')}
     </div></details>
     <div class="part-card"><div class="tiles">${tile('toolkit', true)}</div></div>
@@ -84,18 +86,18 @@ function renderThema(id, revealAll) {
   root.innerHTML = `
     <div class="ana-top"><span></span>${langSwitch()}</div>
     <div class="thema-head">
-      <span class="em">${tp.emoji}</span>
+      ${glyph(id)}
       <h2>${tp.title[anaLang]}</h2>
       ${tp.ref ? `<span class="ref">${tp.ref} ${t('ref')}</span>` : ''}
     </div>
     <div class="steps" id="steps"></div>
     <div class="step-nav" id="step-nav"></div>
-    <button type="button" class="verstanden" id="verstanden" aria-pressed="${anaDone.has(id)}" hidden>${anaDone.has(id) ? t('gotDone') : t('got')}</button>
-    <button type="button" class="unklar" id="unklar" hidden>${t('unklar')}</button>
+    <button type="button" class="verstanden" id="verstanden" aria-pressed="${anaDone.has(id)}" hidden>${ic('check')}<span>${anaDone.has(id) ? t('gotDone') : t('got')}</span></button>
+    <button type="button" class="unklar" id="unklar" hidden>${ic('bot')} ${t('unklar')}</button>
     <div class="unklar-out" id="unklar-out" hidden></div>
     <div class="thema-nav">
-      ${prevId ? `<button type="button" data-topic="${prevId}">${t('prev')}${ANA3.topics[prevId].emoji} ${ANA3.topics[prevId].title[anaLang]}</button>` : '<span></span>'}
-      ${nextId ? `<button type="button" data-topic="${nextId}">${ANA3.topics[nextId].emoji} ${ANA3.topics[nextId].title[anaLang]}${t('nextT')}</button>` : '<span></span>'}
+      ${prevId ? `<button type="button" data-topic="${prevId}">${ic('chevron-left')}<span>${ANA3.topics[prevId].title[anaLang]}</span></button>` : '<span></span>'}
+      ${nextId ? `<button type="button" data-topic="${nextId}"><span>${ANA3.topics[nextId].title[anaLang]}</span>${ic('chevron-right')}</button>` : '<span></span>'}
     </div>`;
   const stepsEl = root.querySelector('#steps'), nav = root.querySelector('#step-nav'), got = root.querySelector('#verstanden');
   let shown = 0;
@@ -111,7 +113,8 @@ function renderThema(id, revealAll) {
     }
     const div = document.createElement('div');
     div.className = 'step s-' + b.type;
-    const label = (b.type === 'kern' || EASY.includes(b.type)) ? t(b.type) : (t(b.type).split(' ')[0] + ' ' + (b.label[anaLang] || t(b.type).split(' ').slice(1).join(' ')));
+    const name = (b.type === 'kern' || EASY.includes(b.type)) ? t(b.type) : (b.label[anaLang] || t(b.type));
+    const label = ic(STEP_ICON[b.type] || 'info') + '<span>' + name + '</span>';
     let html = b.html[anaLang];
     // display formulas as breakable inline math so long lines wrap on phones
     if (b.type === 'formel') html = html.replace(/\$\$([\s\S]+?)\$\$/g, (m, x) =>
@@ -122,7 +125,7 @@ function renderThema(id, revealAll) {
   }
   function updateNav() {
     if (shown >= tp.blocks.length) { nav.innerHTML = ''; got.hidden = false; root.querySelector('#unklar').hidden = false; return; }
-    nav.innerHTML = `<button type="button" class="weiter">${t('next')}</button><button type="button" class="alle">${t('all')}</button>`;
+    nav.innerHTML = `<button type="button" class="weiter">${t('next')} ${ic('arrow-right')}</button><button type="button" class="alle">${t('all')}</button>`;
     nav.querySelector('.weiter').addEventListener('click', () => {
       addStep(); updateNav();
       stepsEl.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -153,7 +156,8 @@ function renderThema(id, revealAll) {
     store.set('ana3-done', [...anaDone]);
     anaDone.has(id) ? memLog('ana:' + id, true) : memForget('ana:' + id);
     got.setAttribute('aria-pressed', String(anaDone.has(id)));
-    got.textContent = anaDone.has(id) ? t('gotDone') : t('got');
+    got.querySelector('span').textContent = anaDone.has(id) ? t('gotDone') : t('got');
+    if (anaDone.has(id)) flyStar(got);
     if (anaDone.has(id) && nextId) setTimeout(() => go({ id: 'thema', topic: nextId }), 450);
   });
 }
