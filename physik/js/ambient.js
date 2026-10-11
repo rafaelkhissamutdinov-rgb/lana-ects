@@ -11,6 +11,8 @@ const THEMES = {
   geld: {
     mode: 'light', base: '#dff5e8', blobs: ['#b7ebcf', '#f1f7c9', '#c6eedc', '#a7e0c4'],
     ink: '#12402d', accent: '#1f9d66', accentD: '#14774c',
+    // primary buttons in gold so they never look like the green "Ja"
+    cta: '#f5b82e', ctaD: '#c98a0b', ctaInk: '#3a2600',
     emoji: ['💰', '💵', '💶', '💸', '📈', '📊', '📉', '💼', '🏦', '💳', '🪙', '🖥️', '📅', '🤑'], extras: ['rise'], colors: ['31,157,102', '214,170,40'],
   },
   physik: {
@@ -73,6 +75,7 @@ const ambient = (() => {
   set('--surface-3', light ? `rgba(${ink},.08)` : 'rgba(60,48,110,.62)');
   set('--gold', th.accent); set('--gold-d', th.accentD); set('--gold-hi', th.accent);
   set('--gold-ink', th.accentInk || '#fff');
+  set('--cta', th.cta || th.accent); set('--cta-d', th.ctaD || th.accentD); set('--cta-ink', th.ctaInk || th.accentInk || '#fff');
   set('--shadow', light ? '0 18px 40px -16px rgba(60,20,50,.28)' : '0 24px 60px -18px rgba(0,0,0,.7)');
   document.querySelector('meta[name="theme-color"]').setAttribute('content', th.base);
 
@@ -103,6 +106,18 @@ const ambient = (() => {
   const pool = [...th.emoji].sort(() => R() - .5);
   let pi = 0;
   const nextEmoji = () => pool[pi++ % pool.length];
+  // drawn emoji art (Microsoft Fluent Emoji 3D, MIT) instead of the system font; falls back to the glyph
+  const artName = ch => [...ch].filter(c => c !== '\ufe0f').map(c => c.codePointAt(0).toString(16)).join('-');
+  function emoArt(ch, delay) {
+    const img = new Image();
+    img.alt = ''; img.draggable = false; img.decoding = 'async';
+    img.dataset.ch = ch;
+    img.style.setProperty('--in', delay + 's');
+    img.onload = () => img.classList.add('in');
+    img.onerror = () => { const t = document.createElement('span'); t.className = 'emo-txt in'; t.textContent = ch; t.dataset.ch = ch; img.replaceWith(t); };
+    img.src = 'art/' + artName(ch) + '.webp';
+    return img;
+  }
   function placeEmoji() {
     layers.forEach(l => { l.innerHTML = ''; });
     const area = innerWidth * innerHeight;
@@ -111,12 +126,13 @@ const ambient = (() => {
       for (let i = 0; i < n; i++) {
         const e = document.createElement('span');
         e.className = 'emo';
-        e.textContent = nextEmoji();
+        e.appendChild(emoArt(nextEmoji(), .15 + R() * 1.1 + k * .15));
         // the near layer keeps to the edges, so it never sits under the text
         let x = R() * 92 + 1, y = R() * 90 + 2;
         if (k === 2) { if (R() < .5) x = R() < .5 ? 2 + R() * 8 : 80 + R() * 8; else y = R() < .5 ? 2 + R() * 6 : 82 + R() * 8; }
         e.style.left = x + '%'; e.style.top = y + '%';
-        e.style.fontSize = [16 + R() * 10, 26 + R() * 14, 44 + R() * 22][k] + 'px';
+        e.style.setProperty('--s', [20 + R() * 12, 32 + R() * 16, 54 + R() * 26][k] + 'px');
+        e.style.setProperty('--dx', ((R() - .5) * 14) + 'px');
         e.style.setProperty('--dur', (3 + R() * 3 + k) + 's');
         e.style.setProperty('--delay', (-R() * 6) + 's');
         e.style.setProperty('--rot', ((R() - .5) * 24) + 'deg');
@@ -132,7 +148,9 @@ const ambient = (() => {
     const r = t.getBoundingClientRect();
     for (let i = 0; i < 6; i++) {
       const s = document.createElement('span');
-      s.className = 'emo-spark'; s.textContent = t.textContent;
+      s.className = 'emo-spark';
+      const ch = t.firstElementChild && t.firstElementChild.dataset.ch;
+      if (t.querySelector('img')) { const im = new Image(); im.src = t.querySelector('img').src; im.alt = ''; s.appendChild(im); } else s.textContent = ch || '';
       s.style.left = r.left + r.width / 2 + 'px'; s.style.top = r.top + r.height / 2 + 'px';
       document.body.appendChild(s);
       const a = i / 6 * Math.PI * 2 + R(), d = 50 + R() * 50;
