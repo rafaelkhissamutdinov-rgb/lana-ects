@@ -136,6 +136,38 @@
   .fc-done { text-align: center; }
   .fc-done .big { font-size: 3.4rem; line-height: 1; }
 
+  /* Sternwarte: sky of everything you learned */
+  #stern { max-width: 640px; }
+  .stern { color: #f3eaff; text-align: center; }
+  .stern .lang { background: rgba(255, 255, 255, .15); }
+  .stern .lang button { color: #f3eaff; }
+  .stern h2 { margin: 6px 0 2px; color: #ffe6b0; font-size: clamp(1.4rem, 5.5vw, 1.8rem); }
+  .stern .sub { margin: 0 auto; max-width: 440px; font-size: .92rem; line-height: 1.45; opacity: .8; }
+  .stern-stats { display: flex; justify-content: center; gap: 18px; margin: 12px 0 8px; font-size: .9rem; }
+  .stern-stats b { display: block; font-size: 1.35rem; color: #ffe6b0; }
+  .stern-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 6px; }
+  .stern-btns button { font-size: .95rem; padding: 10px 16px; background: rgba(255, 255, 255, .14); color: #f3eaff; }
+  .stern-btns .fade-btn { background: linear-gradient(90deg, #6d4bd8, #b04fc4); }
+  .stern-btns button[aria-pressed="true"] { background: #ffe6b0; color: #2a1a63; }
+  .sky { display: block; width: 100%; height: auto; touch-action: manipulation; }
+  .sky .lbl { fill: #e9ddff; font: 600 28px system-ui, sans-serif; cursor: pointer; }
+  .sky .lbl-sub { fill: #b9a8e6; font: 500 20px system-ui, sans-serif; }
+  .sky .st { cursor: pointer; transition: r .4s, opacity .4s; }
+  .sky .tw { animation: twinkle ease-in-out infinite alternate; }
+  .sky .hit { fill: transparent; cursor: pointer; }
+  .stern-sheet {
+    position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 6; width: min(94vw, 520px);
+    background: rgba(255, 252, 245, .97); color: #2f2340; border-radius: 18px; padding: 16px 18px; text-align: left;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .45); animation: fade .25s ease; max-height: 60vh; overflow: auto;
+  }
+  .stern-sheet .sh-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: .85rem; font-weight: 700; color: #6d4bd8; }
+  .stern-sheet .sh-close { background: none; color: #6d4bd8; font-size: 1.3rem; padding: 0 4px; }
+  .stern-sheet .sh-q { margin: 8px 0 10px; font-weight: 700; line-height: 1.45; }
+  .stern-sheet .meter { height: 8px; border-radius: 999px; background: #eee6ff; overflow: hidden; }
+  .stern-sheet .meter div { height: 100%; background: linear-gradient(90deg, #b04fc4, #ffc23d); }
+  .stern-sheet .sh-info { font-size: .85rem; opacity: .75; margin: 6px 0 12px; }
+  .stern-sheet .sh-go { width: 100%; background: var(--want); font-size: 1rem; padding: 11px; }
+
   /* daily message ("Orakel") */
   .orakel-btn { display: block; margin: 16px auto 0; background: linear-gradient(90deg, #6d4bd8, #b04fc4); font-size: 1.05rem; padding: 12px 22px; box-shadow: 0 6px 16px rgba(80, 40, 160, .3); }
   #scene-orakel { background: radial-gradient(ellipse at 50% 30%, #3a2c6e 0%, #1a1240 55%, #07051a 100%); }
@@ -449,6 +481,12 @@
   <button class="back" type="button">zurück</button>
 </section>
 
+<section id="stern" class="screen">
+  <div class="stern" id="stern-root"><p class="loading">✨</p></div>
+  <div class="stern-sheet" id="stern-sheet" hidden></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
 <section id="orakel" class="screen">
   <div class="orakel" id="orakel-root"><p class="loading">✨</p></div>
   <button class="back" type="button">zurück</button>
@@ -677,6 +715,7 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
 <script>
   // ---------- subjects: content for each option goes into `html` ----------
   const FAECHER = {
+    stern:  { icon: '🌌', title: 'Sternwarte',             screen: 'stern' },
     e2:     { icon: '⚡', title: 'Experimentalphysik II',  screen: 'e2' },
     tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', screen: 'tp2' },
     ana3:   { icon: '∫',  title: 'Analysis 3',            screen: 'ana3' },
@@ -1021,6 +1060,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
     got.addEventListener('click', () => {
       anaDone.has(id) ? anaDone.delete(id) : anaDone.add(id);
       store.set('ana3-done', [...anaDone]);
+      anaDone.has(id) ? memLog('ana:' + id, true) : memForget('ana:' + id);
       got.setAttribute('aria-pressed', String(anaDone.has(id)));
       got.textContent = anaDone.has(id) ? t('gotDone') : t('got');
       if (anaDone.has(id) && nextId) setTimeout(() => go({ id: 'thema', topic: nextId }), 450);
@@ -1114,6 +1154,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
   }
 
   function startE2Session(topic) {
+    if (Array.isArray(topic)) { renderE2Card(topic, topic.slice(), topic.length); return; }
     const pool = topic === 'all' ? Object.keys(E2.cards) : E2.topics.find(t => t.id === topic).cards.slice();
     // least-known first, random order inside each box
     pool.sort((a, b) => (e2Box[a] || 0) - (e2Box[b] || 0) || Math.random() - .5);
@@ -1145,12 +1186,12 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
       const btns = root.querySelector('#fc-btns');
       btns.innerHTML = `<button type="button" class="fc-again">${e2t('again')}</button><button type="button" class="fc-got">${e2t('got')}</button>`;
       btns.querySelector('.fc-again').addEventListener('click', () => {
-        e2Box[cid] = 0; store.set('e2-box', e2Box);
+        e2Box[cid] = 0; store.set('e2-box', e2Box); memLog('e2:' + cid, false);
         queue.push(queue.shift());   // comes back later in this round
         renderE2Card(topic, queue, total);
       });
       btns.querySelector('.fc-got').addEventListener('click', () => {
-        e2Box[cid] = Math.min((e2Box[cid] || 0) + 1, 5); store.set('e2-box', e2Box);
+        e2Box[cid] = Math.min((e2Box[cid] || 0) + 1, 5); store.set('e2-box', e2Box); memLog('e2:' + cid, true);
         queue.shift();
         renderE2Card(topic, queue, total);
       });
@@ -1241,6 +1282,244 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
   }
   document.getElementById('orakel-btn').addEventListener('click', () => go({ id: 'orakel' }));
 
+  // ---------- memory model: when was something learned, how strong is it now ----------
+  // Every success makes the memory last ~2.2x longer (1 day, 2.2 d, 4.8 d, 10.6 d, ...);
+  // brightness = retention = e^(-days since last review / stability). A failed card restarts at half a day.
+  let memLogData = store.get('stern-log', null);
+  if (!memLogData) {   // first run: adopt what was already learned before the Sternwarte existed
+    memLogData = {};
+    const now = Date.now();
+    for (const [cid, box] of Object.entries(store.get('e2-box', {}))) if (box > 0) memLogData['e2:' + cid] = { t: now, n: box };
+    for (const tid of store.get('ana3-done', [])) memLogData['ana:' + tid] = { t: now, n: 1 };
+    store.set('stern-log', memLogData);
+  }
+  function memLog(id, ok) {
+    const prev = memLogData[id] || { n: 0 };
+    memLogData[id] = { t: Date.now(), n: ok ? Math.min(prev.n + 1, 8) : 0 };
+    store.set('stern-log', memLogData);
+  }
+  function memForget(id) { delete memLogData[id]; store.set('stern-log', memLogData); }
+  function memStrength(id) {
+    const m = memLogData[id];
+    if (!m) return null;                         // never learned
+    const stability = m.n === 0 ? 0.5 : Math.pow(2.2, m.n - 1);
+    const days = (Date.now() - m.t) / 864e5;
+    return Math.exp(-days / stability);
+  }
+
+  // ---------- Sternwarte ----------
+  const ST_UI = {
+    de: { title: 'Sternwarte', sub: 'Jeder Stern ist etwas, das du gelernt hast. Was du nicht wiederholst, verblasst – wie im echten Kopf.',
+          lit: 'leuchten', fading: 'verblassen', dark: 'noch dunkel', review: '🌠 Verblassende wiederholen', music: '🎵 Sphärenmusik',
+          strength: 'Erinnerung', never: 'Noch nicht gelernt – ein dunkler Stern.', ago: d => d < 1 ? 'zuletzt heute' : `zuletzt vor ${Math.round(d)} ${Math.round(d) === 1 ? 'Tag' : 'Tagen'}`,
+          learnCard: '🃏 Karte jetzt lernen', learnTopic: '📖 Thema öffnen', nothing: 'Gerade verblasst nichts. Schöner Himmel! ✨', e2: 'Experimentalphysik II', ana: 'Analysis 3' },
+    ru: { title: 'Обсерватория', sub: 'Каждая звезда — то, что ты выучил(а). То, что не повторяешь, гаснет — как в настоящей памяти.',
+          lit: 'горят', fading: 'гаснут', dark: 'ещё тёмные', review: '🌠 Повторить гаснущие', music: '🎵 Музыка сфер',
+          strength: 'Память', never: 'Ещё не выучено — тёмная звезда.', ago: d => d < 1 ? 'последний раз сегодня' : `последний раз ${Math.round(d)} дн. назад`,
+          learnCard: '🃏 Учить карточку', learnTopic: '📖 Открыть тему', nothing: 'Сейчас ничего не гаснет. Красивое небо! ✨', e2: 'Экспериментальная физика II', ana: 'Анализ 3' },
+  };
+  const st = k => ST_UI[anaLang][k];
+  // where each constellation sits on the 1000 x 1500 sky
+  const SKY_CENTERS = [[230, 190], [580, 150], [840, 300], [180, 520], [500, 470], [810, 610], [270, 800],
+                       [620, 790], [860, 960], [190, 1100], [500, 1090], [800, 1270], [320, 1350]];
+  // short names for the sky, so neighbouring labels do not overlap
+  const SKY_SHORT = { 'e2-strom': ['Stromkreise', 'Цепи тока'], 'e2-induktion': ['Induktion', 'Индукция'],
+    'e2-maxwell': ['EM-Wellen', 'ЭМ-волны'], 'e2-wellenoptik': ['Wellenoptik', 'Волновая оптика'],
+    'e2-rel': ['Relativität', 'Относительность'], 'e2-extra': ['Mathe-Werkzeug', 'Математика'],
+    'e2-optik': ['Optik', 'Оптика'], 'e2-magnet': ['Magnetfelder', 'Магнитные поля'],
+    'ana-0': ['Komplexe Analysis', 'Комплексный анализ'], 'ana-1': ['Fourier', 'Фурье'],
+    'ana-2': ['Lineare PDE', 'Линейные PDE'], 'ana-3': ['Hilberträume', 'Гильбертовы пр.'] };
+  const SKY_NOTES = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51];
+
+  function rng(seedStr) {   // small deterministic random generator, so the sky looks the same every time
+    let h = 1779033703;
+    for (const ch of seedStr) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = (h << 13) | (h >>> 19);
+    return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+  }
+  function buildConstellations() {
+    const list = [];
+    for (const tp of E2.topics) list.push({ id: 'e2-' + tp.id, kind: 'e2', emoji: tp.emoji, title: tp.title, topic: tp.id,
+      items: tp.cards.map(cid => ({ id: 'e2:' + cid, label: E2.cards[cid].q, go: { id: 'e2k', topic: [cid] } })) });
+    ANA3.meta.parts.forEach((part, i) => {
+      const ids = (i === 0 ? ['toolkit'] : []).concat(part.topics);
+      list.push({ id: 'ana-' + i, kind: 'ana', emoji: ['🌀', '🎚️', '🌊', '🌌'][i], title: part.title, topic: null,
+        items: ids.map(tid => ({ id: 'ana:' + tid, label: ANA3.topics[tid].title, go: { id: 'thema', topic: tid } })) });
+    });
+    list.forEach((c, ci) => {
+      const [cx, cy] = SKY_CENTERS[ci], r = rng(c.id), radius = 70 + c.items.length * 5;
+      const pts = [];
+      for (const it of c.items) {           // scatter stars, keeping a minimum distance
+        let best = null;
+        for (let k = 0; k < 30; k++) {
+          const a = r() * Math.PI * 2, d = Math.sqrt(r()) * radius;
+          const p = [cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.8];
+          const minD = Math.min(Infinity, ...pts.map(q => Math.hypot(q[0] - p[0], q[1] - p[1])));
+          if (!best || minD > best.minD) best = { p, minD };
+          if (minD > 38) break;
+        }
+        pts.push(best.p);
+        it.x = best.p[0]; it.y = best.p[1];
+      }
+      // constellation lines: minimum spanning tree (Prim)
+      const inTree = [0], edges = [];
+      while (inTree.length < pts.length) {
+        let bestE = null;
+        for (const a of inTree) for (let b = 0; b < pts.length; b++) {
+          if (inTree.includes(b)) continue;
+          const d = Math.hypot(pts[a][0] - pts[b][0], pts[a][1] - pts[b][1]);
+          if (!bestE || d < bestE.d) bestE = { a, b, d };
+        }
+        inTree.push(bestE.b); edges.push([bestE.a, bestE.b]);
+      }
+      c.edges = edges; c.cx = cx; c.cy = cy; c.radius = radius; c.note = SKY_NOTES[ci];
+    });
+    return list;
+  }
+  let skyCache = null;
+
+  function renderStern() {
+    const root = document.getElementById('stern-root');
+    root.lang = anaLang;
+    if (!skyCache) skyCache = buildConstellations();
+    let lit = 0, fading = 0, dark = 0;
+    const fadingCards = [];
+    for (const c of skyCache) {
+      let sum = 0, n = 0;
+      for (const it of c.items) {
+        it.b = memStrength(it.id);
+        if (it.b === null) dark++;
+        else { (it.b < 0.5 ? fading++ : lit++); sum += it.b; n++; if (it.b < 0.7 && it.id.startsWith('e2:')) fadingCards.push(it); }
+      }
+      c.avg = n ? sum / n : 0; c.learned = n;
+    }
+    fadingCards.sort((a, b) => a.b - b.b);
+    const colorOf = c => c.kind === 'e2' ? '#ffd88a' : '#9fd0ff';
+    let svg = `<svg class="sky" viewBox="0 0 1000 1500" role="img" aria-label="${st('title')}">
+      <defs><filter id="glow" x="-2" y="-2" width="5" height="5"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+    for (const c of skyCache) {
+      for (const [a, b] of c.edges) {
+        const A = c.items[a], B = c.items[b];
+        const o = Math.min(A.b || 0, B.b || 0);
+        svg += `<line x1="${A.x.toFixed(1)}" y1="${A.y.toFixed(1)}" x2="${B.x.toFixed(1)}" y2="${B.y.toFixed(1)}" stroke="${colorOf(c)}" stroke-width="1.6" opacity="${(0.06 + 0.5 * o).toFixed(2)}"/>`;
+      }
+      c.items.forEach((it, i) => {
+        const b = it.b, rr = b === null ? 2.2 : 3 + 6 * b, op = b === null ? 0.22 : 0.25 + 0.75 * b;
+        const fill = b === null ? '#c8c2e0' : colorOf(c);
+        const tw = b !== null && b > 0.6 ? ` tw" style="animation-duration:${(2 + (i % 5) * 0.6).toFixed(1)}s` : '';
+        svg += `<circle class="st${tw}" cx="${it.x.toFixed(1)}" cy="${it.y.toFixed(1)}" r="${rr.toFixed(1)}" fill="${fill}" opacity="${op.toFixed(2)}"${b !== null && b > 0.3 ? ' filter="url(#glow)"' : ''}/>`;
+        svg += `<circle class="hit" cx="${it.x.toFixed(1)}" cy="${it.y.toFixed(1)}" r="22" data-star="${it.id}" role="button" aria-label="${it.label[anaLang].replace(/<[^>]+>|\$/g, '').replace(/"/g, '')}"/>`;
+      });
+      const ly = c.cy + c.radius * 0.8 + 38;
+      svg += `<text class="lbl" x="${c.cx}" y="${ly}" text-anchor="middle" data-con="${c.id}">${c.emoji} ${SKY_SHORT[c.id] ? SKY_SHORT[c.id][anaLang === 'ru' ? 1 : 0] : c.title[anaLang].replace(/\$[^$]*\$/g, '').slice(0, 20)}</text>`;
+      svg += `<text class="lbl-sub" x="${c.cx}" y="${ly + 28}" text-anchor="middle">${c.learned}/${c.items.length} · ${c.kind === 'e2' ? 'E2' : 'Ana 3'}</text>`;
+    }
+    svg += '</svg>';
+    root.innerHTML = `
+      <div class="ana-top"><span></span>${langSwitch()}</div>
+      <h2>🌌 ${st('title')}</h2>
+      <p class="sub">${st('sub')}</p>
+      <div class="stern-stats"><span><b>${lit}</b>${st('lit')}</span><span><b>${fading}</b>${st('fading')}</span><span><b>${dark}</b>${st('dark')}</span></div>
+      <div class="stern-btns">
+        <button type="button" class="fade-btn" id="st-review">${st('review')}${fadingCards.length ? ' (' + Math.min(fadingCards.length, 15) + ')' : ''}</button>
+        <button type="button" id="st-music" aria-pressed="${sphaeren.on}">${st('music')}</button>
+      </div>
+      ${svg}`;
+    wireLang(root, () => { closeSheet(); renderStern(); });
+    root.querySelectorAll('[data-star]').forEach(h => h.addEventListener('click', () => openStar(h.dataset.star)));
+    root.querySelectorAll('[data-con]').forEach(l => l.addEventListener('click', () => {
+      const c = skyCache.find(x => x.id === l.dataset.con);
+      go(c.kind === 'e2' ? { id: 'e2t', topic: c.topic } : { id: 'ana3' });
+    }));
+    root.querySelector('#st-review').addEventListener('click', () => {
+      if (!fadingCards.length) { showSheet(`<p class="sh-q">${st('nothing')}</p>`); return; }
+      go({ id: 'e2k', topic: fadingCards.slice(0, 15).map(it => it.id.slice(3)) });
+    });
+    root.querySelector('#st-music').addEventListener('click', e => {
+      sphaeren.on ? stopSphaeren() : startSphaeren();
+      e.target.setAttribute('aria-pressed', String(sphaeren.on));
+    });
+  }
+
+  function showSheet(html) {
+    const sh = document.getElementById('stern-sheet');
+    sh.innerHTML = `<div class="sh-top"><span></span><button type="button" class="sh-close" aria-label="close">✕</button></div>` + html;
+    sh.hidden = false;
+    sh.querySelector('.sh-close').addEventListener('click', closeSheet);
+    tex(sh);
+    return sh;
+  }
+  function closeSheet() { document.getElementById('stern-sheet').hidden = true; }
+  function openStar(id) {
+    let item, con;
+    for (const c of skyCache) { const f = c.items.find(i => i.id === id); if (f) { item = f; con = c; } }
+    const b = memStrength(id), m = memLogData[id];
+    const sh = showSheet(`
+      <div class="sh-q">${item.label[anaLang]}</div>
+      ${b === null ? `<p class="sh-info">${st('never')}</p>` : `
+        <div class="meter"><div style="width:${Math.round(b * 100)}%"></div></div>
+        <p class="sh-info">${st('strength')} ${Math.round(b * 100)} % · ${st('ago')((Date.now() - m.t) / 864e5)}</p>`}
+      <button type="button" class="sh-go">${con.kind === 'e2' ? st('learnCard') : st('learnTopic')}</button>`);
+    sh.querySelector('.sh-top span').textContent = con.emoji + ' ' + (con.kind === 'e2' ? st('e2') : st('ana'));
+    sh.querySelector('.sh-go').addEventListener('click', () => { closeSheet(); go(item.go); });
+  }
+
+  // Sphärenmusik: every constellation is a note of a pentatonic scale. Bright constellations sound
+  // clear and loud; fading ones go quiet and slightly out of tune; never-learned ones stay silent.
+  const sphaeren = { on: false, ctx: null, timer: null, out: null };
+  function startSphaeren() {
+    if (!skyCache) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    sphaeren.ctx = sphaeren.ctx || new AC();
+    const ctx = sphaeren.ctx;
+    ctx.resume();
+    if (!sphaeren.out) {   // soft echo for a sense of space
+      const master = ctx.createGain(); master.gain.value = 0.5;
+      const delay = ctx.createDelay(); delay.delayTime.value = 0.38;
+      const fb = ctx.createGain(); fb.gain.value = 0.38;
+      delay.connect(fb); fb.connect(delay);
+      master.connect(ctx.destination); master.connect(delay); delay.connect(ctx.destination);
+      sphaeren.out = master;
+    }
+    sphaeren.on = true;
+    let step = 0;
+    const play = () => {
+      const voices = skyCache.filter(c => c.learned > 0);
+      if (!voices.length) {   // an empty sky still hums very quietly
+        tone(196, 0.04, 0);
+      } else {
+        const c = voices[step % voices.length];
+        const detune = (1 - c.avg) * 35 * (step % 2 ? 1 : -1);   // forgotten = out of tune
+        tone(c.note, 0.05 + 0.2 * c.avg, detune);
+        if (step % 4 === 0) tone(c.note / 2, 0.04 + 0.08 * c.avg, 0);
+      }
+      step++;
+    };
+    play();
+    sphaeren.timer = setInterval(play, 650);
+  }
+  function tone(freq, vol, cents) {
+    const ctx = sphaeren.ctx, t0 = ctx.currentTime;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'triangle'; o.frequency.value = freq; o.detune.value = cents;
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(vol, t0 + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0008, t0 + 2.4);
+    o.connect(g); g.connect(sphaeren.out);
+    o.start(t0); o.stop(t0 + 2.5);
+  }
+  function stopSphaeren() {
+    clearInterval(sphaeren.timer); sphaeren.timer = null; sphaeren.on = false;
+    const b = document.getElementById('st-music'); if (b) b.setAttribute('aria-pressed', 'false');
+  }
+
+  function showStern() {
+    closeSheet();
+    Promise.all([loadE2(), loadAna3()]).then(renderStern).catch(() => {
+      document.getElementById('stern-root').innerHTML = `<p class="loading">${t('error')}</p>`;
+    });
+  }
+
   // ---------- thumbs flying out of the video edges while it plays ----------
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let thumbTimer = null;
@@ -1301,7 +1580,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
     opa: document.getElementById('video-opa'),
   };
   const thumbs = { ja: ['👍'], nein: ['👎'], katze: ['😄', '😁', '🥳', '🌈', '☀️', '✨', '🌻', '🎉', '💛', '🦋'] };
-  const scenes = { katze: 'scene-happy', opa: 'scene-gloom', tp2: 'scene-tp2', orakel: 'scene-orakel' };
+  const scenes = { katze: 'scene-happy', opa: 'scene-gloom', tp2: 'scene-tp2', orakel: 'scene-orakel', stern: 'scene-orakel' };
 
   // ---------- TP2 scene: monkeys, electricity, brains + falling charts ----------
   const tp2Scene = document.getElementById('scene-tp2');
@@ -1424,6 +1703,7 @@ Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, stat
     if (id === 'ana3' || id === 'thema') showAna(state);
     if (id === 'e2' || id === 'e2t' || id === 'e2k') showE2(state);
     if (id === 'orakel') showOrakel();
+    if (id === 'stern') showStern(); else stopSphaeren();
     document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
     for (const [key, v] of Object.entries(videos)) if (key !== id) v.pause();
     document.querySelectorAll('.scene').forEach(sc => sc.classList.toggle('on', sc.id === scenes[id]));
