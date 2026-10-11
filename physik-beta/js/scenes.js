@@ -184,7 +184,7 @@ route('tp2', { scene: 'scene-tp2' });
 route('hilfe', {
   enter(state) {
     const f = FAECHER[state.fach];
-    document.getElementById('hilfe-icon').innerHTML = ic(f.icon);
+    document.getElementById('hilfe-icon').outerHTML = `<div class="hilfe-icon-wrap" id="hilfe-icon">${appIcon(state.fach)}</div>`;
     document.getElementById('hilfe-title').textContent = f.title;
     document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald</p>';
   },

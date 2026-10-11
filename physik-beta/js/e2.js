@@ -34,7 +34,7 @@ function renderE2List() {
   root.lang = anaLang;
   const ids = Object.keys(E2.cards), n = ids.filter(isKnown).length;
   root.innerHTML = `
-    <div class="ana-top"><div><p class="eyebrow">${anaLang === 'ru' ? 'карточки и теория' : 'Karteikarten & Theorie'}</p><h2>${e2t('title')}</h2></div>${langSwitch()}</div>
+    <div class="ana-top"><div class="subj-head">${appIcon('e2')}<div><p class="eyebrow">${anaLang === 'ru' ? 'карточки и теория' : 'Karteikarten & Theorie'}</p><h2>${e2t('title')}</h2></div></div>${langSwitch()}</div>
     <p class="hero">${e2t('sub')}</p>
     <div class="progress"><div style="width:${(100 * n / ids.length).toFixed(1)}%"></div></div>
     <span class="progress-label">${n} / ${ids.length} ${e2t('known')}</span>

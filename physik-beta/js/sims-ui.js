@@ -69,7 +69,7 @@ function renderSims() {
   const root = document.getElementById('sims-root');
   root.lang = anaLang;
   root.innerHTML = `
-    <div class="ana-top"><div><p class="eyebrow">${simT('eyebrow')}</p><h2>${simT('title')}</h2></div>${langSwitch()}</div>
+    <div class="ana-top"><div class="subj-head">${appIcon('sims')}<div><p class="eyebrow">${simT('eyebrow')}</p><h2>${simT('title')}</h2></div></div>${langSwitch()}</div>
     <p class="hero">${simT('sub')}</p>
     <div class="sim-grid">${simList().map(m => {
       const n = m.n;

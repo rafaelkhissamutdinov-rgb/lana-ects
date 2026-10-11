@@ -140,14 +140,14 @@ function computeSky() {
 
 // ---------- background: far stars and a milky way, painted once ----------
 function paintMilkyWay() {
-  const w = 600, h = 900, c = document.createElement('canvas');
+  const w = 1000, h = 1500, k = 1000 / 600, c = document.createElement('canvas');
   c.width = w; c.height = h;
   const x = c.getContext('2d'), r = rng('milchstrasse');
   // a soft band running diagonally through the sky
-  for (let i = 0; i < 420; i++) {
+  for (let i = 0; i < 700; i++) {
     const along = r() * 1.3 - .15;
-    const bx = w * (.05 + along * .9) + (r() - .5) * 150, by = h * (1 - along) + (r() - .5) * 170;
-    const rad = 30 + r() * 110;
+    const bx = w * (.05 + along * .9) + (r() - .5) * 150 * k, by = h * (1 - along) + (r() - .5) * 170 * k;
+    const rad = (30 + r() * 110) * k;
     const hue = [[150, 130, 255], [255, 140, 200], [120, 180, 255], [255, 220, 180]][Math.floor(r() * 4)];
     const g = x.createRadialGradient(bx, by, 0, bx, by, rad);
     g.addColorStop(0, `rgba(${hue},${.035 + r() * .04})`); g.addColorStop(1, `rgba(${hue},0)`);
@@ -155,19 +155,19 @@ function paintMilkyWay() {
   }
   // dark dust lanes
   x.globalCompositeOperation = 'destination-out';
-  for (let i = 0; i < 70; i++) {
-    const along = r() * 1.2 - .1, bx = w * (.05 + along * .9) + (r() - .5) * 60, by = h * (1 - along) + (r() - .5) * 60, rad = 15 + r() * 45;
+  for (let i = 0; i < 120; i++) {
+    const along = r() * 1.2 - .1, bx = w * (.05 + along * .9) + (r() - .5) * 60 * k, by = h * (1 - along) + (r() - .5) * 60 * k, rad = (15 + r() * 45) * k;
     const g = x.createRadialGradient(bx, by, 0, bx, by, rad);
     g.addColorStop(0, 'rgba(0,0,0,.35)'); g.addColorStop(1, 'rgba(0,0,0,0)');
     x.fillStyle = g; x.beginPath(); x.arc(bx, by, rad, 0, 6.283); x.fill();
   }
   x.globalCompositeOperation = 'source-over';
   // many tiny stars inside the band
-  for (let i = 0; i < 2600; i++) {
-    const along = r() * 1.3 - .15, spread = (r() + r() + r() - 1.5) * 120;
+  for (let i = 0; i < 7000; i++) {
+    const along = r() * 1.3 - .15, spread = (r() + r() + r() - 1.5) * 120 * k;
     const bx = w * (.05 + along * .9) + spread, by = h * (1 - along) + spread * .9;
     x.fillStyle = `rgba(255,255,255,${.12 + r() * .45})`;
-    const s = r() < .08 ? 1.6 : .9;
+    const s = r() < .06 ? 2 : r() < .3 ? 1.2 : .8;
     x.fillRect(bx, by, s, s);
   }
   // fade every edge, so the texture never shows a straight border
@@ -183,7 +183,7 @@ function paintMilkyWay() {
 }
 function makeFarStars() {
   const r = rng('ferne'), out = [];
-  for (let i = 0; i < 700; i++) out.push({ x: -600 + r() * (SKY_W + 1200), y: -600 + r() * (SKY_H + 1200), r: r() < .06 ? 1.3 : .5 + r() * .6, a: .2 + r() * .55, ph: r() * 6.3 });
+  for (let i = 0; i < 1100; i++) out.push({ x: -600 + r() * (SKY_W + 1200), y: -600 + r() * (SKY_H + 1200), r: r() < .06 ? 1.3 : .5 + r() * .6, a: .2 + r() * .55, ph: r() * 6.3 });
   return out;
 }
 

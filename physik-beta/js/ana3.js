@@ -57,7 +57,7 @@ function renderAnaList() {
   root.lang = anaLang;
   const m = ANA3.meta, total = topicOrder().length, n = topicOrder().filter(id => anaDone.has(id)).length;
   root.innerHTML = `
-    <div class="ana-top"><div><p class="eyebrow">${t('titleSub')}</p><h2>${t('title')}</h2></div>${langSwitch()}</div>
+    <div class="ana-top"><div class="subj-head">${appIcon('ana3')}<div><p class="eyebrow">${t('titleSub')}</p><h2>${t('title')}</h2></div></div>${langSwitch()}</div>
     <p class="hero">${m.hero[anaLang]}</p>
     <p class="neu">${t('neu')}</p>
     <div class="progress"><div style="width:${(100 * n / total).toFixed(1)}%"></div></div>
