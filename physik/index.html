@@ -2,13 +2,13 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Physik heute?</title>
-<meta name="theme-color" content="#ff8fc4">
+<meta name="theme-color" content="#0b0926">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Physik heute">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <script>
@@ -16,428 +16,67 @@
   document.write('<link rel="manifest" href="' +
     (new URLSearchParams(location.search).has('L') ? 'manifest-l.webmanifest' : 'manifest.webmanifest') + '">');
 </script>
-<style>
-  :root {
-    --text: #5a1a3d;
-    --accent: #e0247a;
-    --yes: #2fb67c;
-    --no: #e0475b;
-    --want: #8a5cf6;
-    --bg: radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%);
-  }
-  * { box-sizing: border-box; }
-  [hidden] { display: none !important; }
-  html, body { margin: 0; }
-  body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    overflow-x: hidden;
-    background: #ffb8d9;
-  }
-
-  /* themed background with floating emoji */
-  #bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); overflow: hidden; }
-  .deco {
-    position: absolute;
-    animation: bob var(--dur) ease-in-out var(--delay) infinite alternate;
-    opacity: .85;
-    user-select: none;
-    line-height: 1;
-  }
-  @keyframes bob {
-    from { transform: translateY(0) rotate(-8deg); }
-    to   { transform: translateY(-18px) rotate(8deg); }
-  }
-
-  .screen { display: none; position: relative; z-index: 1; width: 100%; max-width: 560px; text-align: center; }
-  .screen.active { display: block; animation: fade .4s ease; }
-  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-  .card {
-    background: rgba(255, 255, 255, .78);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-radius: 24px;
-    padding: 28px 20px 32px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
-  }
-
-  .date { font-size: .95rem; opacity: .75; margin: 0; }
-  .greeting { font-size: clamp(1.2rem, 4.5vw, 1.5rem); font-weight: 700; margin: 4px 0 18px; }
-  .heute { color: var(--accent); text-decoration: underline wavy currentColor; text-underline-offset: 6px; text-decoration-thickness: 2px; }
-  h1 { font-size: clamp(1.6rem, 6vw, 2.4rem); line-height: 1.25; margin: 0 0 28px; }
-  h2 { font-size: clamp(1.3rem, 5vw, 1.8rem); line-height: 1.3; margin: 0 0 6px; }
-  .sub { margin: 0 0 24px; opacity: .8; }
-
-  .buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  button {
-    font: inherit;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #fff;
-    border: 0;
-    border-radius: 999px;
-    padding: 14px 44px;
-    cursor: pointer;
-    transition: transform .12s ease, filter .12s ease;
-  }
-  button:hover { transform: scale(1.05); filter: brightness(1.08); }
-  button:active { transform: scale(.96); }
-  #btn-ja { background: var(--yes); }
-  #btn-nein { background: var(--no); }
-  #btn-will { background: var(--want); font-size: 1.15rem; padding: 12px 28px; flex-basis: 100%; max-width: 320px; }
-
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .fach {
-    background: #fff;
-    color: var(--text);
-    border: 2px solid rgba(138, 92, 246, .35);
-    border-radius: 18px;
-    padding: 16px 10px;
-    font-size: 1.05rem;
-    line-height: 1.25;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  .fach .icon { font-size: 2rem; line-height: 1; }
-  .fach:hover { border-color: var(--want); }
-
-  .hilfe-icon { font-size: 3rem; line-height: 1; margin-bottom: 8px; }
-  .hilfe-body { text-align: left; line-height: 1.5; margin-top: 16px; }
-  .soon { text-align: center; opacity: .7; font-style: italic; }
-  .hilfe-img { display: block; width: min(100%, 320px); margin: 0 auto; max-height: 55vh; object-fit: contain; border-radius: 16px; }
-  .frage-zurueck { text-align: center; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 700; margin: 18px 0 0; }
-  /* Experimentalphysik II: topics + flashcards */
-  .e2-big { display: block; width: 100%; margin: 16px 0 4px; background: var(--want); font-size: 1.1rem; padding: 14px 18px; }
-  .tile .cnt { font-size: .78rem; font-weight: 700; opacity: .65; }
-  .e2-list details { background: #fff; border-radius: 14px; margin-top: 10px; border: 2px solid rgba(138, 92, 246, .18); overflow: hidden; }
-  .e2-list summary { cursor: pointer; padding: 12px 14px; font-weight: 700; line-height: 1.4; }
-  .e2-list details[open] summary { border-bottom: 1px solid rgba(0, 0, 0, .06); }
-  .e2-list .inner { padding: 4px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
-  .fc { text-align: left; }
-  .fc-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-  .fc-chip { font-size: .85rem; font-weight: 700; background: #f1ebff; border-radius: 999px; padding: 4px 12px; }
-  .fc-count { font-size: .85rem; font-weight: 600; opacity: .7; }
-  .fc-q { font-size: clamp(1.15rem, 4.6vw, 1.35rem); font-weight: 700; line-height: 1.45; margin: 18px 0 6px; }
-  .fc-back { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-  .fc-btns { display: flex; gap: 10px; margin-top: 16px; }
-  .fc-btns button { flex: 1; font-size: 1.05rem; padding: 13px 10px; }
-  .fc-show { background: var(--want); }
-  .fc-again { background: #ef8a17; }
-  .fc-got { background: #2fb67c; }
-  .fc-done { text-align: center; }
-  .fc-done .big { font-size: 3.4rem; line-height: 1; }
-
-  /* Sternwarte: sky of everything you learned */
-  #stern { max-width: 640px; }
-  .stern { color: #f3eaff; text-align: center; }
-  .stern .lang { background: rgba(255, 255, 255, .15); }
-  .stern .lang button { color: #f3eaff; }
-  .stern h2 { margin: 6px 0 2px; color: #ffe6b0; font-size: clamp(1.4rem, 5.5vw, 1.8rem); }
-  .stern .sub { margin: 0 auto; max-width: 440px; font-size: .92rem; line-height: 1.45; opacity: .8; }
-  .stern-stats { display: flex; justify-content: center; gap: 18px; margin: 12px 0 8px; font-size: .9rem; }
-  .stern-stats b { display: block; font-size: 1.35rem; color: #ffe6b0; }
-  .stern-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 6px; }
-  .stern-btns button { font-size: .95rem; padding: 10px 16px; background: rgba(255, 255, 255, .14); color: #f3eaff; }
-  .stern-btns .fade-btn { background: linear-gradient(90deg, #6d4bd8, #b04fc4); }
-  .stern-btns button[aria-pressed="true"] { background: #ffe6b0; color: #2a1a63; }
-  .sky { display: block; width: 100%; height: auto; touch-action: manipulation; }
-  .sky .lbl { fill: #e9ddff; font: 600 28px system-ui, sans-serif; cursor: pointer; }
-  .sky .lbl-sub { fill: #b9a8e6; font: 500 20px system-ui, sans-serif; }
-  .sky .st { cursor: pointer; transition: r .4s, opacity .4s; }
-  .sky .tw { animation: twinkle ease-in-out infinite alternate; }
-  .sky .hit { fill: transparent; cursor: pointer; }
-  .stern-sheet {
-    position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 6; width: min(94vw, 520px);
-    background: rgba(255, 252, 245, .97); color: #2f2340; border-radius: 18px; padding: 16px 18px; text-align: left;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, .45); animation: fade .25s ease; max-height: 60vh; overflow: auto;
-  }
-  .stern-sheet .sh-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: .85rem; font-weight: 700; color: #6d4bd8; }
-  .stern-sheet .sh-close { background: none; color: #6d4bd8; font-size: 1.3rem; padding: 0 4px; }
-  .stern-sheet .sh-q { margin: 8px 0 10px; font-weight: 700; line-height: 1.45; }
-  .stern-sheet .meter { height: 8px; border-radius: 999px; background: #eee6ff; overflow: hidden; }
-  .stern-sheet .meter div { height: 100%; background: linear-gradient(90deg, #b04fc4, #ffc23d); }
-  .stern-sheet .sh-info { font-size: .85rem; opacity: .75; margin: 6px 0 12px; }
-  .stern-sheet .sh-choice { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .stern-sheet .sh-choice button { flex: 1 1 auto; white-space: nowrap; font-size: .95rem; padding: 10px 12px; background: #ece4ff; color: #2f2340; }
-  .stern-sheet .sh-choice .sh-danger { background: #e0475b; color: #fff; }
-  .stern-sheet .sh-choice .sh-undo { background: var(--want); color: #fff; }
-  .stern-foot { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 10px 0 4px; }
-  .stern-foot button { font-size: .85rem; font-weight: 600; padding: 8px 14px; background: rgba(255, 255, 255, .1); color: #d9ccff; }
-  .stern-foot .st-undo { background: rgba(255, 230, 176, .18); color: #ffe6b0; }
-  .stern-sheet .sh-go { width: 100%; background: var(--want); font-size: 1rem; padding: 11px; }
-
-  /* daily message ("Orakel") */
-  .orakel-btn { display: block; margin: 16px auto 0; background: linear-gradient(90deg, #6d4bd8, #b04fc4); font-size: 1.05rem; padding: 12px 22px; box-shadow: 0 6px 16px rgba(80, 40, 160, .3); }
-  #scene-orakel { background: radial-gradient(ellipse at 50% 30%, #3a2c6e 0%, #1a1240 55%, #07051a 100%); }
-  #scene-orakel::after {
-    content: ""; position: absolute; left: 50%; top: 42%; width: 520px; height: 520px; margin: -260px 0 0 -260px;
-    background: radial-gradient(circle, rgba(255, 214, 140, .22) 0%, rgba(255, 214, 140, 0) 60%);
-    animation: glow 6s ease-in-out infinite;
-  }
-  @keyframes glow { 50% { transform: scale(1.12); opacity: .7; } }
-  .star { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; animation: twinkle ease-in-out infinite alternate; }
-  @keyframes twinkle { from { opacity: .15; } to { opacity: 1; } }
-  .orakel { color: #f3eaff; text-align: center; }
-  .orakel .ok-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-  .orakel .ok-date { font-size: .9rem; opacity: .75; }
-  .orakel h2 { margin: 10px 0 0; font-size: clamp(1.3rem, 5vw, 1.7rem); color: #ffe6b0; }
-  .orakel .lang { background: rgba(255, 255, 255, .15); }
-  .orakel .lang button { color: #f3eaff; }
-  .ok-card { perspective: 1200px; width: min(100%, 340px); height: 440px; margin: 20px auto 0; cursor: pointer; }
-  .ok-inner { position: relative; width: 100%; height: 100%; transition: transform 1s cubic-bezier(.3, .7, .2, 1); transform-style: preserve-3d; }
-  .ok-card.open .ok-inner { transform: rotateY(180deg); }
-  .ok-card.instant .ok-inner { transition: none; }
-  .ok-face {
-    position: absolute; inset: 0; border-radius: 22px; display: flex; flex-direction: column; justify-content: center; align-items: center;
-    padding: 26px 22px; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 16px 40px rgba(0, 0, 0, .45);
-  }
-  .ok-front { background: linear-gradient(160deg, #4b2f9e, #2a1a63); border: 2px solid rgba(255, 214, 140, .7); }
-  .ok-front .sym { font-size: 4rem; line-height: 1; animation: float 3s ease-in-out infinite; }
-  .ok-front .tap { margin-top: 18px; font-size: 1.05rem; color: #ffe6b0; letter-spacing: .03em; }
-  .ok-back { transform: rotateY(180deg); background: linear-gradient(170deg, #fffaf0, #f6ecda); color: #3a2a4a; border: 2px solid #e8cf98; }
-  .ok-quote { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: clamp(1.2rem, 5vw, 1.4rem); line-height: 1.5; }
-  .ok-quote::before { content: "“"; display: block; font-size: 3rem; line-height: .6; color: #c9a24e; font-style: normal; }
-  .ok-sep { width: 60px; height: 2px; background: #e0c58a; margin: 18px auto; }
-  .ok-hint { font-size: .98rem; line-height: 1.5; }
-  .ok-hint b { color: #8a5cf6; }
-  .ok-actions { margin-top: 16px; min-height: 48px; }
-  .ok-actions button { background: rgba(255, 255, 255, .15); color: #f3eaff; font-size: .95rem; padding: 10px 18px; }
-  .ok-next { font-size: .85rem; opacity: .65; margin: 10px 0 0; }
-
-  /* TP2: electric chaos scene */
-  #scene-tp2 { background: radial-gradient(circle at 50% 30%, #3d2b7a 0%, #1d1442 55%, #090616 100%); }
-  #scene-tp2::after { /* lightning flashes */
-    content: ""; position: absolute; inset: 0; background: #e8e4ff; opacity: 0;
-    animation: flash 4.5s infinite;
-  }
-  @keyframes flash {
-    0%, 88%, 100% { opacity: 0; }
-    89% { opacity: .35; } 90% { opacity: 0; } 92% { opacity: .22; } 93% { opacity: 0; }
-  }
-  .tumble { position: absolute; top: -70px; line-height: 1; animation: tumble linear infinite; }
-  @keyframes tumble { to { transform: translateY(120vh) rotate(var(--spin)); } }
-  .tp2 .sad { font-size: 5rem; line-height: 1; margin-bottom: 10px; display: inline-block; animation: sigh 3s ease-in-out infinite; }
-  @keyframes sigh { 50% { transform: translateY(6px) rotate(-6deg); } }
-  .tp2 p { margin: 14px 0 0; font-size: clamp(1.1rem, 4.5vw, 1.3rem); line-height: 1.45; }
-  .tp2 .uebung { font-weight: 800; color: var(--accent); }
-
-  /* Analysis 3 */
-  .ana { text-align: left; }
-  .ana-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-  .ana-top h2 { margin: 0; }
-  .lang { display: inline-flex; background: #f1ebff; border-radius: 999px; padding: 3px; flex: none; }
-  .lang button { color: var(--text); background: none; font-size: .9rem; padding: 6px 12px; }
-  .lang button[aria-pressed="true"] { background: var(--want); color: #fff; }
-  .ana .hero { margin: 10px 0 0; line-height: 1.5; font-size: .95rem; }
-  .progress { margin: 16px 0 4px; height: 10px; background: #eee6ff; border-radius: 999px; overflow: hidden; }
-  .progress div { height: 100%; width: 0; background: linear-gradient(90deg, #8a5cf6, #2fb67c); transition: width .4s; }
-  .progress-label { font-size: .85rem; font-weight: 600; opacity: .75; }
-  .ana details.map { margin-top: 12px; }
-  .ana details.map summary { cursor: pointer; font-weight: 700; }
-  .map-grid { display: grid; gap: 8px; margin-top: 10px; }
-  .map-grid div { background: #fff; border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(138, 92, 246, .2); font-size: .9rem; line-height: 1.45; }
-  .map-grid b { display: block; color: var(--want); margin-bottom: 2px; }
-  .part-card { margin-top: 16px; }
-  .part-card .tag { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--want); }
-  .part-card h3 { margin: 2px 0 6px; font-size: 1.2rem; }
-  .part-card .intro { margin: 0 0 12px; font-size: .92rem; line-height: 1.45; opacity: .85; }
-  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
-  .tile {
-    position: relative; background: #fff; color: var(--text); border: 2px solid rgba(138, 92, 246, .25);
-    border-radius: 16px; padding: 12px 10px; font-size: .92rem; font-weight: 600; line-height: 1.25;
-    display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center;
-    hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere; min-width: 0;
-  }
-  .tile .em { font-size: 1.9rem; line-height: 1; }
-  .tile.done { border-color: #2fb67c; background: #effaf4; }
-  .tile.done::after { content: "✓"; position: absolute; top: 6px; right: 10px; color: #2fb67c; font-weight: 900; }
-  .tile.wide { grid-column: 1 / -1; flex-direction: row; justify-content: center; background: #fff8e1; border-color: #ffcf5c; }
-
-  .thema-head { text-align: center; }
-  .thema-head .em { font-size: 3.6rem; line-height: 1; display: inline-block; animation: wiggle 2.2s ease-in-out infinite; }
-  @keyframes wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-8deg) scale(1.05); } 75% { transform: rotate(8deg) scale(1.05); } }
-  .thema-head h2 { margin: 8px 0 4px; }
-  .ref { display: inline-block; font-size: .8rem; font-weight: 600; background: #f1ebff; border-radius: 999px; padding: 3px 10px; }
-  .steps { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
-  .step { border-radius: 16px; padding: 12px 14px; line-height: 1.55; background: #fff; border-left: 5px solid #ccc; animation: fade .35s ease; overflow-x: auto; }
-  .step-title { font-weight: 800; font-size: .95rem; margin-bottom: 6px; }
-  .step ul, .step ol { margin: 0; padding-left: 1.25em; display: flex; flex-direction: column; gap: 6px; }
-  .step table { border-collapse: collapse; font-size: .88rem; min-width: 480px; }
-  .step th, .step td { border-bottom: 1px solid rgba(0, 0, 0, .1); padding: 6px 8px; text-align: left; vertical-align: top; }
-  .step th { font-size: .8rem; }
-  .step code { background: rgba(0, 0, 0, .06); padding: 1px 5px; border-radius: 5px; font-size: .85em; }
-  .step.s-kern { border-color: #ffc23d; background: #fffaf0; font-size: 1.02rem; }
-  .step.s-formel { border-color: #3b6fe0; background: #f0f5ff; }
-  .step.s-check { border-color: #2fb67c; background: #effaf4; }
-  .step.s-rezept { border-color: #8a5cf6; background: #f6f2ff; }
-  .step.s-falle { border-color: #ef8a17; background: #fff4e8; }
-  .step.s-vorher { border-color: #14a3b8; background: #ecfafc; }
-  .step.s-einfach { border-color: #ff7eb3; background: #fff0f6; font-size: 1.02rem; }
-  .step.s-beispiel { border-color: #f59e0b; background: #fffbeb; }
-  .exakt-sep { margin: 10px 0 0; text-align: center; font-weight: 800; font-size: .95rem; color: var(--want); display: flex; align-items: center; gap: 10px; }
-  .exakt-sep::before, .exakt-sep::after { content: ""; flex: 1; height: 2px; background: rgba(138, 92, 246, .25); }
-  .ana .neu { margin: 10px 0 0; padding: 10px 12px; border-radius: 12px; background: #ecfafc; font-size: .9rem; line-height: 1.45; }
-  .unklar { display: block; margin: 12px auto 0; background: #fff; color: var(--want); border: 2px solid var(--want); font-size: .98rem; padding: 11px 18px; }
-  .unklar-out { margin-top: 10px; text-align: center; font-size: .92rem; line-height: 1.45; }
-  .unklar-out textarea { width: 100%; font: inherit; font-size: .8rem; border-radius: 10px; padding: 8px; }
-  .unklar-out a { color: var(--want); font-weight: 700; }
-  .step.s-tabelle, .step.s-text { border-color: #9aa3b2; }
-  .fm { margin: .35em 0 .6em; line-height: 2.1; font-size: 1.05em; }
-  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; margin: .5em 0; }
-  .step-nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
-  .step-nav .weiter { background: var(--want); font-size: 1.05rem; padding: 12px 26px; }
-  .step-nav .alle { background: none; color: var(--want); font-size: .95rem; padding: 12px 10px; text-decoration: underline; }
-  .verstanden { display: block; margin: 18px auto 0; background: #fff; color: #1f7a4f; border: 2px solid #2fb67c; font-size: 1.05rem; padding: 12px 24px; }
-  .verstanden[aria-pressed="true"] { background: #2fb67c; color: #fff; }
-  .thema-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; }
-  .thema-nav button { background: #fff; color: var(--text); font-size: .9rem; padding: 10px 14px; border: 2px solid rgba(138, 92, 246, .25); max-width: 48%; }
-  .loading { text-align: center; opacity: .7; }
-
-  /* Laborpraktikum: prompt builder */
-  .labor { text-align: left; }
-  .labor .hilfe-icon, .labor h2, .labor > .sub { text-align: center; }
-  .labor h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; margin: 26px 0 12px; }
-  .num {
-    flex: none; display: inline-flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px; border-radius: 50%; background: var(--want); color: #fff; font-size: .95rem;
-  }
-  fieldset.seg { border: 0; padding: 0; margin: 0 0 14px; min-width: 0; }
-  fieldset.seg legend { font-weight: 600; margin-bottom: 6px; padding: 0; }
-  .seg label {
-    display: inline-flex; align-items: center; gap: 6px; margin: 0 6px 6px 0; padding: 8px 14px;
-    border-radius: 999px; background: #fff; border: 2px solid rgba(138, 92, 246, .3); cursor: pointer; font-size: .95rem;
-  }
-  .seg label:has(input:checked) { border-color: var(--want); background: #f1ebff; }
-  .seg input, .check input { accent-color: var(--want); margin: 0; }
-  .field { display: block; font-weight: 600; margin: 0 0 14px; }
-  .field input, .field textarea {
-    display: block; width: 100%; margin-top: 6px; font: inherit; font-weight: 400; padding: 10px 12px;
-    border-radius: 12px; border: 2px solid rgba(138, 92, 246, .3); background: #fff; color: var(--text);
-  }
-  .field textarea { resize: vertical; }
-  .field input:focus, .field textarea:focus { outline: none; border-color: var(--want); }
-  .check { display: flex; gap: 8px; align-items: flex-start; font-size: .95rem; cursor: pointer; }
-  .check input { margin-top: 4px; }
-  .primary { background: var(--want); width: 100%; font-size: 1.15rem; padding: 14px 20px; }
-  .status { min-height: 1.3em; margin: 8px 0 0; text-align: center; font-weight: 600; color: #1f8a5b; }
-  .labor details { margin-top: 6px; }
-  .labor summary { cursor: pointer; font-weight: 600; }
-  #prompt-preview {
-    white-space: pre-wrap; word-break: break-word; font-size: .78rem; line-height: 1.45; max-height: 320px; overflow: auto;
-    background: #fff; padding: 12px; border-radius: 12px; border: 1px solid rgba(0, 0, 0, .08); margin: 8px 0 0;
-  }
-  .labor ol, .labor ul { padding-left: 1.3em; line-height: 1.5; margin: 0; }
-  .labor li { margin-bottom: 6px; }
-  .labor a { color: var(--want); font-weight: 700; }
-  .ph { color: #ea7a00; font-weight: 700; font-family: ui-monospace, Menlo, monospace; }
-  .tip { background: #fff4d6; border-radius: 12px; padding: 10px 12px; margin: 12px 0 0; line-height: 1.45; }
-  .zeit-btn { background: #fff; color: var(--want); border: 2px solid var(--want); font-size: 1rem; padding: 10px 18px; display: block; margin: 0 auto; }
-  .zeit { margin-top: 14px; overflow-x: auto; }
-  .zeit table { width: 100%; border-collapse: collapse; font-size: .9rem; background: #fff; border-radius: 12px; overflow: hidden; }
-  .zeit th, .zeit td { padding: 8px 10px; border-bottom: 1px solid rgba(0, 0, 0, .08); text-align: left; vertical-align: top; }
-  .zeit th { background: #f1ebff; font-size: .85rem; }
-  .zeit td:nth-child(3) { color: #1f7a4f; font-weight: 600; }
-  .zeit .sum td { font-weight: 800; border-bottom: 0; background: #faf7ff; }
-  .zeit .hint, .zeit p.hint { font-weight: 400; color: var(--text); opacity: .7; font-size: .82rem; }
-  .zeit p.hint { margin: 8px 0 0; }
-  .warnung { margin-top: 24px; border: 2px solid #d61f2c; background: #fff1f1; border-radius: 14px; padding: 14px 16px; color: #b3121d; line-height: 1.45; }
-  .warnung p { margin: 0 0 8px; }
-  .warnung .warn-titel { font-weight: 800; font-size: 1.1rem; }
-  .warnung ul { color: #b3121d; }
-  .warnung .zu-zweit { margin: 12px 0 0; padding-top: 10px; border-top: 1px dashed #e8a0a6; }
-  .warnung .min { display: inline-block; font-size: .8rem; font-weight: 700; background: #ffd9dc; border-radius: 999px; padding: 1px 8px; margin-left: 2px; white-space: nowrap; }
-  .zeit .kontrolle td { background: #fff1f1; }
-  .note { font-size: .88rem; opacity: .8; margin: 14px 0 0; line-height: 1.45; }
-  .wahl { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; align-items: center; }
-  .wahl button { width: 100%; max-width: 320px; font-size: 1.1rem; padding: 13px 20px; }
-  .wahl .go-schach { background: linear-gradient(90deg, #ffb703, #fb8500); }
-  .wahl .go-tutorium { background: linear-gradient(90deg, #5b6170, #2f333d); }
-
-  /* full-screen scenes behind the chess / tutorium videos */
-  .scene { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; display: none; }
-  .scene.on { display: block; }
-  #scene-happy { background: radial-gradient(circle at 50% 20%, #fff7b0 0%, #ffd84d 30%, #7fd3ff 75%, #52b6f5 100%); }
-  #scene-happy .sun {
-    position: absolute; top: -90px; left: 50%; width: 260px; height: 260px; margin-left: -130px;
-    border-radius: 50%; background: radial-gradient(circle, #fff6a8 0%, #ffd23f 55%, rgba(255, 210, 63, 0) 72%);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  #scene-happy .rainbow {
-    position: absolute; bottom: -220px; left: 50%; width: 640px; height: 640px; margin-left: -320px; border-radius: 50%;
-    background: radial-gradient(circle, transparent 52%, #8b5cf6 52%, #8b5cf6 56%, #3b82f6 56%, #3b82f6 60%, #22c55e 60%, #22c55e 64%,
-                #facc15 64%, #facc15 68%, #fb923c 68%, #fb923c 72%, #ef4444 72%, #ef4444 76%, transparent 76%);
-    opacity: .55;
-  }
-  @keyframes pulse { 50% { transform: scale(1.12); } }
-  #scene-gloom { background: radial-gradient(ellipse at 50% 40%, #3a3f4a 0%, #1c1f26 55%, #07080b 100%); }
-  #scene-gloom::after { /* heavy vignette that slowly breathes */
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 45%, transparent 35%, rgba(0, 0, 0, .85) 100%);
-    animation: breathe 6s ease-in-out infinite;
-  }
-  @keyframes breathe { 50% { opacity: .55; } }
-  .drop {
-    position: absolute; top: -60px; width: 1px; height: 60px;
-    background: linear-gradient(transparent, rgba(180, 195, 220, .5));
-    animation: fall linear infinite;
-  }
-  @keyframes fall { to { transform: translateY(115vh); } }
-  .gloom-deco {
-    position: absolute; opacity: .28; filter: grayscale(1);
-    animation: drift ease-in-out infinite alternate;
-  }
-  @keyframes drift { from { transform: translate(0, 0); } to { transform: translate(14px, 26px); } }
-
-  #katze canvas {
-    display: block; margin: 0 auto; height: min(62vh, 520px); max-width: 100%;
-    animation: hop 1.1s ease-in-out infinite;
-    cursor: pointer;
-  }
-  @keyframes hop { 50% { transform: translateY(-14px) rotate(-2deg); } }
-  /* the cat video only feeds the canvas; it stays in the DOM so phones keep decoding it */
-  #video-katze { position: fixed; left: 0; top: 0; width: 2px; height: 2px; opacity: .01; pointer-events: none; }
-  #video-katze.fallback { position: static; width: 100%; height: auto; opacity: 1; pointer-events: auto; }
-  #opa video { filter: saturate(.55) contrast(1.05); }
-
-  video { display: block; width: 100%; max-height: 75vh; border-radius: 16px; background: #000; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
-
-  .back {
-    margin-top: 18px;
-    background: rgba(255, 255, 255, .85);
-    color: var(--text);
-    font-size: .95rem;
-    font-weight: 600;
-    padding: 8px 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
-  }
-
-  .install-btn { margin-top: 16px; background: rgba(255, 255, 255, .85); color: var(--text); font-size: .95rem; font-weight: 600; padding: 9px 18px; box-shadow: 0 4px 12px rgba(0, 0, 0, .12); }
-  .install-help { margin: 10px auto 0; max-width: 420px; background: rgba(255, 255, 255, .92); border-radius: 16px; padding: 12px 16px; text-align: left; font-size: .92rem; line-height: 1.5; box-shadow: 0 4px 12px rgba(0, 0, 0, .12); }
-  .install-help ol { margin: 6px 0 0; padding-left: 1.2em; }
-
-  /* flying thumbs */
-  .thumb {
-    position: fixed;
-    z-index: 5;
-    pointer-events: none;
-    line-height: 1;
-    will-change: transform, opacity;
-  }
-</style>
+<link rel="preload" href="fonts/literata-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<!-- icons: Lucide (ISC license, lucide.dev) -->
+<symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></symbol>
+<symbol id="i-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m10.065 12.493-6.18 1.318a.934.934 0 0 1-1.108-.702l-.537-2.15a1.07 1.07 0 0 1 .691-1.265l13.504-4.44" /> <path d="m13.56 11.747 4.332-.924" /> <path d="m16 21-3.105-6.21" /> <path d="M16.485 5.94a2 2 0 0 1 1.455-2.425l1.09-.272a1 1 0 0 1 1.212.727l1.515 6.06a1 1 0 0 1-.727 1.213l-1.09.272a2 2 0 0 1-2.425-1.455z" /> <path d="m6.158 8.633 1.114 4.456" /> <path d="m8 21 3.105-6.21" /> <circle cx="12" cy="13" r="2" /></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /></symbol>
+<symbol id="i-atom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /> <path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z" /> <path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z" /></symbol>
+<symbol id="i-sigma" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7V5a1 1 0 0 0-1-1H6.5a.5.5 0 0 0-.4.8l4.5 6a2 2 0 0 1 0 2.4l-4.5 6a.5.5 0 0 0 .4.8H17a1 1 0 0 0 1-1v-2" /></symbol>
+<symbol id="i-flask-conical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /> <path d="M6.453 15h11.094" /> <path d="M8.5 2h7" /></symbol>
+<symbol id="i-chess-knight" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" /> <path d="M16.5 18c1-2 2.5-5 2.5-9a7 7 0 0 0-7-7H6.635a1 1 0 0 0-.768 1.64L7 5l-2.32 5.802a2 2 0 0 0 .95 2.526l2.87 1.456" /> <path d="m15 5 1.425-1.425" /> <path d="m17 8 1.53-1.53" /> <path d="M9.713 12.185 7 18" /></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" /></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /> <path d="M12 2v2" /> <path d="M12 20v2" /> <path d="m4.93 4.93 1.41 1.41" /> <path d="m17.66 17.66 1.41 1.41" /> <path d="M2 12h2" /> <path d="M20 12h2" /> <path d="m6.34 17.66-1.41 1.41" /> <path d="m19.07 4.93-1.41 1.41" /></symbol>
+<symbol id="i-sunrise" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8" /> <path d="m4.93 10.93 1.41 1.41" /> <path d="M2 18h2" /> <path d="M20 18h2" /> <path d="m19.07 10.93-1.41 1.41" /> <path d="M22 22H2" /> <path d="m8 6 4-4 4 4" /> <path d="M16 18a4 4 0 0 0-8 0" /></symbol>
+<symbol id="i-sunset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10V2" /> <path d="m4.93 10.93 1.41 1.41" /> <path d="M2 18h2" /> <path d="M20 18h2" /> <path d="m19.07 10.93-1.41 1.41" /> <path d="M22 22H2" /> <path d="m16 6-4 4-4-4" /> <path d="M16 18a4 4 0 0 0-8 0" /></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /> <path d="M20 2v4" /> <path d="M22 4h-4" /> <circle cx="4" cy="20" r="2" /></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" /></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" /></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol>
+<symbol id="i-repeat-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 3-3 3 3" /> <path d="M13 18H7a2 2 0 0 1-2-2V6" /> <path d="m22 15-3 3-3-3" /> <path d="M11 6h6a2 2 0 0 1 2 2v10" /></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></symbol>
+<symbol id="i-check-circle-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="m16 9-5.5 5.5L8 12" /></symbol>
+<symbol id="i-rotate-ccw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /> <path d="M3 3v5h5" /></symbol>
+<symbol id="i-undo-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5" /> <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11" /></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /> <path d="m6 6 12 12" /></symbol>
+<symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13" /> <circle cx="6" cy="18" r="3" /> <circle cx="18" cy="16" r="3" /></symbol>
+<symbol id="i-smartphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /> <path d="M12 18h.01" /></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /> <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol>
+<symbol id="i-triangle-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /> <path d="M12 9v4" /> <path d="M12 17h.01" /></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 16v-4" /> <path d="M12 8h.01" /></symbol>
+<symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /> <path d="M9 18h6" /> <path d="M10 22h4" /></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" /> <path d="M15 5.764v15" /> <path d="M9 3.236v15" /></symbol>
+<symbol id="i-book-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16" /> <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" /></symbol>
+<symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /></symbol>
+<symbol id="i-waves" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12q2.5 2 5 0t5 0 5 0 5 0" /> <path d="M2 19q2.5 2 5 0t5 0 5 0 5 0" /> <path d="M2 5q2.5 2 5 0t5 0 5 0 5 0" /></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></symbol>
+<symbol id="i-orbit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.341 6.484A10 10 0 0 1 10.266 21.85" /> <path d="M3.659 17.516A10 10 0 0 1 13.74 2.152" /> <circle cx="12" cy="12" r="3" /> <circle cx="19" cy="5" r="2" /> <circle cx="5" cy="19" r="2" /></symbol>
+<symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V5" /> <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" /> <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" /> <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" /> <path d="M18 18a4 4 0 0 0 2-7.464" /> <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" /> <path d="M6 18a4 4 0 0 1-2-7.464" /> <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" /></symbol>
+<symbol id="i-trending-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17h6v-6" /> <path d="m22 17-8.5-8.5-5 5L2 7" /></symbol>
+<symbol id="i-zap-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.768 5.111 13.44 2.44a1.5 1.5 0 012.474 1.561l-1.633 4.625" /> <path d="m18.889 13.232.672-.672A1.5 1.5 0 0018.5 10h-2.844" /> <path d="m2 2 20 20" /> <path d="m7.94 7.94-3.5 3.499A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l5.5-5.5" /></symbol>
+<symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" /></symbol>
+<symbol id="i-scroll-text" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 12h-5" /> <path d="M15 8h-5" /> <path d="M19 17V5a2 2 0 0 0-2-2H4" /> <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" /></symbol>
+<symbol id="i-puzzle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" /></symbol>
+<symbol id="i-baby" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5" /> <path d="M15 12h.01" /> <path d="M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1" /> <path d="M9 12h.01" /></symbol>
+<symbol id="i-list-checks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /> <rect width="16" height="12" x="4" y="8" rx="2" /> <path d="M2 14h2" /> <path d="M20 14h2" /> <path d="M15 13v2" /> <path d="M9 13v2" /></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" /></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14" /> <path d="M5 2h14" /> <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" /> <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" /></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></symbol>
+</svg>
 
 <div id="bg" aria-hidden="true"></div>
-<div id="scene-happy" class="scene" aria-hidden="true"><div class="rainbow"></div><div class="sun"></div></div>
+<div id="scene-happy" class="scene" aria-hidden="true"><div class="rays"></div><div class="sun"></div></div>
 <div id="scene-gloom" class="scene" aria-hidden="true"></div>
 <div id="scene-tp2" class="scene" aria-hidden="true"></div>
 <div id="scene-orakel" class="scene" aria-hidden="true"></div>
@@ -453,93 +92,106 @@
       <button id="btn-will" type="button">Nein, aber ich will</button>
     </div>
   </div>
-  <button type="button" id="orakel-btn" class="orakel-btn">🔮 Deine Botschaft für heute</button>
-  <button type="button" id="install-btn" class="install-btn" hidden>📲 Als App auf den Startbildschirm</button>
-  <div id="install-help" class="install-help" hidden></div>
+  <div class="frage-links">
+    <button type="button" id="orakel-btn" class="orakel-btn"><span class="orb"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg></span><span class="txt"><b>Deine Botschaft für heute</b><small>Eine Karte pro Tag – tippen zum Aufdecken</small></span><svg class="ic chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+    <button type="button" id="install-btn" class="install-btn" hidden><svg class="ic" aria-hidden="true"><use href="#i-smartphone"/></svg> Als App auf den Startbildschirm</button>
+    <div id="install-help" class="install-help" hidden></div>
+  </div>
 </section>
 
 <section id="ja" class="screen">
   <video id="video-ja" src="ja.mp4" playsinline loop controls preload="none"></video>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="nein" class="screen">
   <video id="video-nein" src="nein.mp4" playsinline loop controls preload="none"></video>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="faecher" class="screen">
   <div class="card">
+    <p class="eyebrow">Physik heute</p>
     <h2>Kein Zugang zu Astronomie – also nur Physik</h2>
     <p class="sub">Womit fangen wir an?</p>
     <div class="grid" id="grid"></div>
   </div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="katze" class="screen">
   <canvas id="canvas-katze" width="252" height="512" aria-label="Glückliche Katze"></canvas>
   <video id="video-katze" src="katze.mp4" playsinline loop preload="none"></video>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="opa" class="screen">
   <video id="video-opa" src="opa.mp4" playsinline loop controls preload="none"></video>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="stern" class="screen">
-  <div class="stern" id="stern-root"><p class="loading">✨</p></div>
-  <div class="stern-sheet" id="stern-sheet" hidden></div>
-  <button class="back" type="button">zurück</button>
+  <div class="stern" id="stern-root"><p class="loading">…</p></div>
+  <div class="sheet" id="stern-sheet" hidden></div>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
+</section>
+
+<section id="sims" class="screen">
+  <div class="card ana" id="sims-root"><p class="loading">…</p></div>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
+</section>
+
+<section id="sim" class="screen">
+  <div class="card ana sim-page" id="sim-root"><p class="loading">…</p></div>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="orakel" class="screen">
-  <div class="orakel" id="orakel-root"><p class="loading">✨</p></div>
-  <button class="back" type="button">zurück</button>
+  <div class="orakel" id="orakel-root"><p class="loading">…</p></div>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="e2" class="screen">
   <div class="card ana" id="e2-list"><p class="loading">Lädt … ⏳</p></div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="e2t" class="screen">
   <div class="card ana" id="e2-topic"></div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="e2k" class="screen">
   <div class="card ana fc" id="e2-cards"></div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="tp2" class="screen">
   <div class="card tp2">
-    <div class="sad">😔</div>
+    <div class="sad"><span class="app-ic ic-tp2" aria-hidden="true">😔</span></div>
     <h2>Theoretische Physik 2</h2>
     <p>Ich bin leider zu dumm für Elektrodynamik – deshalb kann ich dir hier nicht helfen.</p>
     <p class="uebung">Hättest du mal die Übungen besucht.</p>
   </div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="ana3" class="screen">
   <div class="card ana" id="ana3-list"><p class="loading">Lädt … ⏳</p></div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="thema" class="screen">
   <div class="card ana" id="ana3-thema"></div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <section id="labor" class="screen">
   <div class="card labor">
-    <div class="hilfe-icon">🧪</div>
+    <div class="hilfe-icon-wrap"><span class="app-ic ic-labor" aria-hidden="true">🧪</span></div>
     <h2>Laborpraktikum</h2>
     <p class="sub">Claude baut das Protokoll-Gerüst in 5–10 Minuten, du trägst nur noch deine Daten ein. Insgesamt ca. 2–3,5 statt 3,5–6 Stunden pro PW – inklusive gründlicher Endkontrolle.</p>
-    <button type="button" id="zeit-btn" class="zeit-btn" aria-expanded="false" aria-controls="zeit">⏱️ Lohnt sich das? Zeitvergleich</button>
+    <button type="button" id="zeit-btn" class="zeit-btn" aria-expanded="false" aria-controls="zeit"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> Lohnt sich das? Zeitvergleich</button>
     <div id="zeit" class="zeit" hidden>
       <table>
         <tr><th>Schritt</th><th>Von Hand</th><th>Mit Prompt</th></tr>
@@ -584,7 +236,7 @@
     </form>
 
     <h3><span class="num">2</span> Prompt kopieren</h3>
-    <button type="button" id="copy-prompt" class="primary">📋 Prompt kopieren</button>
+    <button type="button" id="copy-prompt" class="primary"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg> Prompt kopieren</button>
     <p id="copy-status" class="status" role="status"></p>
     <details><summary>Prompt ansehen</summary><pre id="prompt-preview"></pre></details>
 
@@ -596,7 +248,7 @@
       <li>Prompt einfügen und abschicken.</li>
       <li>Die .pptx herunterladen, in PowerPoint, Keynote oder Google Präsentationen öffnen und nur noch die orangen <span class="ph">[__]</span> ausfüllen.</li>
     </ol>
-    <p class="tip">💡 Vor dem Termin vorbereiten lassen – Claude sagt dir dann genau, was du im Labor notieren musst. Danach im <b>selben Chat</b> einfach die Messdaten schicken, und das Protokoll wird ausgefüllt.</p>
+    <p class="tip"><svg class="ic" aria-hidden="true"><use href="#i-lightbulb"/></svg><span>Vor dem Termin vorbereiten lassen – Claude sagt dir dann genau, was du im Labor notieren musst. Danach im <b>selben Chat</b> einfach die Messdaten schicken, und das Protokoll wird ausgefüllt.</span></p>
 
     <h3><span class="num">4</span> Das bleibt bei dir</h3>
     <ul>
@@ -608,7 +260,7 @@
     </ul>
 
     <div class="warnung" role="note">
-      <p class="warn-titel">⚠️ Wichtig: Die Endkontrolle machst du komplett selbst</p>
+      <p class="warn-titel"><svg class="ic" aria-hidden="true"><use href="#i-triangle-alert"/></svg> Wichtig: Die Endkontrolle machst du komplett selbst</p>
       <p>Claude macht Fehler. In der Praxis haben wir das Protokoll am Termin noch mit dem Partner korrigiert – erst damit gab es die volle Punktzahl. Ohne diese Korrekturen wäre es nicht gegangen, und dafür braucht man eigenes Wissen, wie euer Praktikum Protokolle haben will.</p>
       <p><b>Selbst prüfen und korrigieren – plan dafür ca. 50–90 Minuten pro PW ein:</b></p>
       <ul>
@@ -622,10 +274,10 @@
         <li>Form: was euer Betreuer verlangt (Folien, Beschriftung, Abgabeformat). <span class="min">5 min</span></li>
         <li>Diskussion in eigenen Worten, mit euren Beobachtungen. <span class="min">steht schon in der Zeittabelle</span></li>
       </ul>
-      <p class="zu-zweit"><b>👯 Zu zweit geht's schneller:</b> Teilt die Liste auf – eine Person prüft Zahlen, Einheiten und Fehlerrechnung, die andere Diagramm, Literaturwerte, Aufbau und Form. Dann sind es pro Person nur ca. 25–45 min. Danach 5–10 min gegenseitig querlesen: Vier Augen finden mehr als zwei.</p>
+      <p class="zu-zweit"><b>Zu zweit geht's schneller:</b> Teilt die Liste auf – eine Person prüft Zahlen, Einheiten und Fehlerrechnung, die andere Diagramm, Literaturwerte, Aufbau und Form. Dann sind es pro Person nur ca. 25–45 min. Danach 5–10 min gegenseitig querlesen: Vier Augen finden mehr als zwei.</p>
     </div>
   </div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
 <script type="text/plain" id="prompt-tpl">
@@ -716,1126 +368,20 @@ Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbei
     <h2 id="hilfe-title"></h2>
     <div class="hilfe-body" id="hilfe-body"></div>
   </div>
-  <button class="back" type="button">zurück</button>
+  <button class="back" type="button"><svg class="ic" aria-hidden="true"><use href="#i-chevron-left"/></svg><span>zurück</span></button>
 </section>
 
-<script>
-  // ---------- subjects: content for each option goes into `html` ----------
-  const FAECHER = {
-    stern:  { icon: '🌌', title: 'Sternwarte',             screen: 'stern' },
-    e2:     { icon: '⚡', title: 'Experimentalphysik II',  screen: 'e2' },
-    tp2:    { icon: '⚛️', title: 'Theoretische Physik 2', screen: 'tp2' },
-    ana3:   { icon: '∫',  title: 'Analysis 3',            screen: 'ana3' },
-    labor:  { icon: '🧪', title: 'Laborpraktikum',        screen: 'labor' },
-    schach: { icon: '♟️', title: 'Schach',
-              html: '<img class="hilfe-img" src="schach.png" alt=""><p class="frage-zurueck">Und was ist mit dem Analysis-3-Tutorium? 🤨</p>' +
-                    '<div class="wahl"><button type="button" class="go-schach" data-go="katze">Ich gehe zum Schach ♟️</button>' +
-                    '<button type="button" class="go-tutorium" data-go="opa">Ich gehe zum Tutorium 📚</button></div>' },
-  };
-
-  // ---------- background theme per weekday ----------
-  const THEMES = {
-    tiere:   { bg: 'radial-gradient(circle at 50% 35%, #ffe1ef 0%, #ffb8d9 60%, #ff8fc4 100%)', base: '#ffb8d9',
-               emoji: ['🐰', '🐱', '🐇', '🐈', '🐶', '🐹', '🐼', '🐨', '🦊', '🐻', '🐥', '🦄', '🐭', '🐾'] },
-    geld:    { bg: 'linear-gradient(160deg, #e6f7ec 0%, #a9e3bf 55%, #5fbf8a 100%)', base: '#a9e3bf',
-               emoji: ['💰', '💵', '💶', '💸', '📈', '📊', '📉', '💼', '🏦', '💳', '🪙', '🖥️', '📅', '🤑'] },
-    physik:  { bg: 'radial-gradient(circle at 50% 30%, #2d3f8f 0%, #16205a 55%, #0a0f30 100%)', base: '#16205a',
-               emoji: ['🧑‍🔬', '👩‍🔬', '👨‍🔬', '👩‍🚀', '🔭', '🔬', '⚛️', '🧪', '🧲', '🪐', '🌌', '🚀', '☄️', '🌍', '🧮', '⭐'] },
-    muede:   { bg: 'linear-gradient(160deg, #f3eee7 0%, #ddd2c4 55%, #b9aa98 100%)', base: '#ddd2c4',
-               emoji: ['😩', '😫', '🥱', '😮‍💨', '😵‍💫', '🫠', '😑', '😤', '🙄', '🥴', '😵', '🫥'] },
-    traurig: { bg: 'linear-gradient(180deg, #e3ebf5 0%, #b5c6dc 55%, #8197b5 100%)', base: '#b5c6dc',
-               emoji: ['😭', '😢', '😿', '🥺', '😞', '😔', '🥲', '😥', '💧', '☔', '🌧️', '💔'] },
-    tod:     { bg: 'radial-gradient(circle at 50% 35%, #4a1f2a 0%, #2a1018 55%, #120608 100%)', base: '#2a1018',
-               emoji: ['💀', '☠️', '🦴', '🤬', '🪦', '👻', '⚰️', '😈', '💢', '🔥'] },
-    schlaf:  { bg: 'radial-gradient(circle at 50% 30%, #5a4fa8 0%, #352c78 55%, #1c1648 100%)', base: '#352c78',
-               emoji: ['😴', '💤', '🛏️', '🛌', '🌙', '🌜', '⭐', '🥱', '🧸', '😪', '🌛', '✨'] },
-    party:   { bg: 'radial-gradient(circle at 50% 35%, #ff5fae 0%, #9b2d9e 55%, #3d0d52 100%)', base: '#9b2d9e',
-               emoji: ['🍺', '🍻', '🍷', '🥂', '🍾', '🍸', '🍹', '🥃', '🎉', '🪩', '🎶', '💃', '🕺', '🎊'] },
-  };
-  // index = Date.getDay(): 0 Sonntag … 6 Samstag; Friday picks one of two at random
-  const WEEK = [['party'], ['geld'], ['physik'], ['muede'], ['traurig'], ['tiere', 'tod'], ['schlaf']];
-  const TAG_PARAM = { so: 0, mo: 1, di: 2, mi: 3, do: 4, fr: 5, sa: 6 };
-
-  const now = new Date();
-  const params = new URLSearchParams(location.search);
-  const day = params.get('tag') in TAG_PARAM ? TAG_PARAM[params.get('tag')] : now.getDay();
-  const options = WEEK[day];
-  const themeName = THEMES[params.get('thema')] ? params.get('thema') : options[Math.floor(Math.random() * options.length)];
-  const theme = THEMES[themeName];
-
-  const bg = document.getElementById('bg');
-  document.documentElement.style.setProperty('--bg', theme.bg);
-  document.body.style.background = theme.base;
-  // positions/sizes are random on every visit, so the background never looks the same twice
-  const count = Math.round(Math.min(30, Math.max(14, innerWidth * innerHeight / 21000)));
-  const pool = [...theme.emoji].sort(() => Math.random() - .5);
-  for (let i = 0; i < count; i++) {
-    const d = document.createElement('span');
-    d.className = 'deco';
-    d.textContent = pool[i % pool.length];
-    d.style.left = (Math.random() * 94) + '%';
-    d.style.top = (Math.random() * 94) + '%';
-    d.style.fontSize = (22 + Math.random() * 28) + 'px';
-    d.style.setProperty('--dur', (2 + Math.random() * 2.5) + 's');
-    d.style.setProperty('--delay', (-Math.random() * 3) + 's');
-    bg.appendChild(d);
-  }
-
-  // ---------- date + greeting ----------
-  const dateFmt = new Intl.DateTimeFormat('de-AT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const timeFmt = new Intl.DateTimeFormat('de-AT', { hour: '2-digit', minute: '2-digit' });
-  // optional personal link: ?name=Lana → "Lana, hast du …" and "Guten Morgen, Lana!"
-  // short codes keep the name out of the link: ?L → Lana
-  const SHORT_NAMES = { L: 'Lana' };
-  const short = Object.keys(SHORT_NAMES).find(k => params.has(k));
-  const NAME = short ? SHORT_NAMES[short] : (params.get('name') || '').trim().slice(0, 30);
-  // the name appears once, in the greeting; the question stays as it is
-  function greetingFor(h) {
-    const who = NAME ? ', ' + NAME : '';
-    if (h >= 5 && h < 11) return 'Guten Morgen' + who + '! ☀️';
-    if (h >= 11 && h < 18) return 'Guten Tag' + who + '! 🌤️';
-    if (h >= 18 && h < 23) return 'Guten Abend' + who + '! 🌆';
-    return 'Gute Nacht' + who + '! 🌙';
-  }
-  function updateClock() {
-    const t = new Date();
-    document.getElementById('date').textContent = dateFmt.format(t) + ' · ' + timeFmt.format(t);
-    document.getElementById('greeting').textContent = greetingFor(t.getHours());
-  }
-  updateClock();
-  setInterval(updateClock, 30000);
-
-  // ---------- subject buttons ----------
-  const grid = document.getElementById('grid');
-  for (const [key, f] of Object.entries(FAECHER)) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'fach';
-    b.innerHTML = `<span class="icon">${f.icon}</span><span>${f.title}</span>`;
-    b.addEventListener('click', () => go(f.screen ? { id: f.screen } : { id: 'hilfe', fach: key }));
-    grid.appendChild(b);
-  }
-
-  // ---------- Laborpraktikum: build the protocol prompt ----------
-  const laborForm = document.getElementById('labor-form');
-  const promptTpl = document.getElementById('prompt-tpl').textContent.trim();
-  const preview = document.getElementById('prompt-preview');
-  const copyStatus = document.getElementById('copy-status');
-
-  function fill(tpl, vars) {
-    for (const [k, v] of Object.entries(vars)) tpl = tpl.split('{{' + k + '}}').join(v);
-    return tpl;
-  }
-  function buildPrompt() {
-    const fd = new FormData(laborForm);
-    const modus = fd.get('modus');
-    const datum = fd.get('datum') ? fd.get('datum').split('-').reverse().join('.') : '[__]';
-    const rohdaten = (fd.get('daten') || '').trim();
-    let daten;
-    if (modus === 'VORBEREITUNG') daten = '— (Vorbereitung, noch keine Daten)';
-    else if (rohdaten) daten = '\n```\n' + rohdaten + '\n```';
-    else daten = 'siehe Anhänge im Chat';
-    return fill(promptTpl, {
-      MODUS: modus,
-      NAMEN: (fd.get('namen') || '').trim() || '[__]',
-      DATUM: datum,
-      BERECHNUNG: fd.get('berechnung'),
-      SPRACHE: fd.get('sprache'),
-      DATEN: daten,
-      KI_REGEL: fd.get('ki')
-        ? 'Setz auf die Titelfolie den Vermerk „KI-gestützt erstellt“.'
-        : 'Keine Erwähnung von KI auf den Folien, außer ich bitte um den Vermerk „KI-gestützt erstellt“.',
-    });
-  }
-  function updateLabor() {
-    const auswertung = new FormData(laborForm).get('modus') === 'AUSWERTUNG';
-    document.getElementById('daten-field').style.display = auswertung ? '' : 'none';
-    preview.textContent = buildPrompt();
-    copyStatus.textContent = '';
-    try { localStorage.setItem('labor-namen', laborForm.namen.value); } catch (e) {}
-  }
-  try { laborForm.namen.value = localStorage.getItem('labor-namen') || ''; } catch (e) {}
-  laborForm.addEventListener('input', updateLabor);
-  laborForm.addEventListener('change', updateLabor);
-  updateLabor();
-
-  const zeitBtn = document.getElementById('zeit-btn');
-  zeitBtn.addEventListener('click', () => {
-    const z = document.getElementById('zeit');
-    z.hidden = !z.hidden;
-    zeitBtn.setAttribute('aria-expanded', String(!z.hidden));
-  });
-
-  document.getElementById('copy-prompt').addEventListener('click', async () => {
-    const text = buildPrompt();
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { ok = document.execCommand('copy'); } catch (e2) {}
-      ta.remove();
-    }
-    copyStatus.textContent = ok ? '✅ Kopiert! Jetzt in Claude einfügen.' : 'Kopieren hat nicht geklappt – öffne „Prompt ansehen“ und kopier den Text von Hand.';
-  });
-
-  // ---------- Analysis 3: interactive study notes (data + KaTeX loaded on demand) ----------
-  const UI = {
-    de: { title: 'Analysis III – einfach erklärt', done: 'verstanden', map: '🗺️ So hängt alles zusammen',
-          next: 'Weiter →', all: 'Alles zeigen', got: '✓ Verstanden', gotDone: '✓ Verstanden!', prev: '← ', nextT: ' →',
-          kern: '💡 Kern', formel: '📐 Formel', check: '✅ Check', rezept: '🍳 Rezept', falle: '⚠️ Falle', tabelle: '📊 Überblick', text: '📝 Merke',
-          ref: 'im Skriptum', error: 'Konnte nicht laden. Bitte Seite neu laden.',
-          vorher: '🧩 Vorher wissen', einfach: '👶 Ganz einfach', beispiel: '🔢 Beispiel mit Zahlen', exakt: '📚 Kurz & exakt (fürs Wiederholen)',
-          neu: 'Jede Karte startet ganz einfach: 🧩 Vorher wissen → 👶 Ganz einfach → 🔢 Beispiel. Danach kommt 📚 Kurz & exakt zum Wiederholen.',
-          unklar: '🤖 Immer noch unklar? Prompt für Claude kopieren', copied: '✅ Kopiert! Jetzt in Claude einfügen:', open: 'claude.ai öffnen',
-          copyFail: 'Kopieren ging nicht – hier ist der Text zum Markieren:' },
-    ru: { title: 'Analysis III на пальцах', done: 'понятно', map: '🗺️ Как всё связано',
-          next: 'Дальше →', all: 'Показать всё', got: '✓ Понятно', gotDone: '✓ Понятно!', prev: '← ', nextT: ' →',
-          kern: '💡 Суть', formel: '📐 Формула', check: '✅ Проверка', rezept: '🍳 Рецепт', falle: '⚠️ Ловушка', tabelle: '📊 Обзор', text: '📝 Запомни',
-          ref: 'в скрипте', error: 'Не удалось загрузить. Обнови страницу.',
-          vorher: '🧩 Что нужно знать', einfach: '👶 Совсем просто', beispiel: '🔢 Пример с числами', exakt: '📚 Коротко и точно (для повторения)',
-          neu: 'Каждая карточка начинается просто: 🧩 Что нужно знать → 👶 Совсем просто → 🔢 Пример. Потом идёт 📚 Коротко и точно — для повторения.',
-          unklar: '🤖 Всё ещё непонятно? Скопировать промпт для Claude', copied: '✅ Скопировано! Теперь вставь в Claude:', open: 'открыть claude.ai',
-          copyFail: 'Скопировать не вышло — вот текст, выдели его вручную:' },
-  };
-  const store = {
-    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
-    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
-  };
-  let anaLang = store.get('ana3-lang', 'de');
-  let anaDone = new Set(store.get('ana3-done', []));
-  let anaReady = null;
-
-  function loadScript(src) {
-    return new Promise((res, rej) => {
-      const s = document.createElement('script');
-      s.src = src; s.onload = res; s.onerror = rej;
-      document.head.appendChild(s);
-    });
-  }
-  function loadAna3() {
-    if (!anaReady) {
-      const css = document.createElement('link');
-      css.rel = 'stylesheet'; css.href = 'katex/katex.min.css';
-      document.head.appendChild(css);
-      anaReady = Promise.all([loadScript('ana3-data.js'), loadScript('katex/katex.min.js')])
-        .then(() => loadScript('katex/auto-render.min.js'));
-      anaReady.catch(() => { anaReady = null; });
-    }
-    return anaReady;
-  }
-  function tex(el) {
-    if (window.renderMathInElement) renderMathInElement(el, {
-      delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }],
-      throwOnError: false,
-    });
-  }
-  const t = k => UI[anaLang][k];
-  const TUTOR = {
-    de: (title, ref) => `Ich lerne für Analysis III (Physik, Uni Wien, Skriptum von Hörmann). Das Thema „${title}“${ref ? ' (' + ref + ')' : ''} verstehe ich noch nicht. Erklär es mir so, als hätte ich die Fachbegriffe noch nie gehört:
-1. Frag mich zuerst mit einer kurzen Frage, was ich schon weiß.
-2. Dann ein Bild aus dem Alltag und die Idee in höchstens 3 Sätzen.
-3. Ein Beispiel mit konkreten Zahlen, Schritt für Schritt.
-4. Erst danach die Formel – und erklär jedes Symbol darin.
-5. Zum Schluss 2 kurze Kontrollfragen an mich. Die Lösung zeigst du erst, wenn ich geantwortet habe.
-Wenn ich etwas nicht verstehe, erklär genau diesen Schritt noch einfacher, statt weiterzumachen. Antworte auf Deutsch, kurz, Formeln in LaTeX.`,
-    ru: (title, ref) => `Я учу Analysis III (физика, Венский университет, скрипт Hörmann). Тему «${title}»${ref ? ' (' + ref + ')' : ''} я пока не понимаю. Объясни так, будто я никогда не слышал этих терминов:
-1. Сначала задай мне один короткий вопрос: что я уже знаю.
-2. Потом образ из жизни и идея максимум в 3 предложениях.
-3. Пример с конкретными числами, шаг за шагом.
-4. Только после этого формула — и объясни каждый символ в ней.
-5. В конце 2 коротких вопроса мне для проверки. Решение показывай только после моего ответа.
-Если я что-то не понимаю, объясни именно этот шаг ещё проще, а не иди дальше. Отвечай по-русски, коротко, формулы в LaTeX.`,
-  };
-  function topicOrder() { return ['toolkit', ...ANA3.meta.parts.flatMap(p => p.topics)]; }
-  function setLang(l) { anaLang = l; store.set('ana3-lang', l); }
-
-  function langSwitch() {
-    return `<div class="lang" role="group" aria-label="Sprache / Язык">` +
-      ['de', 'ru'].map(l => `<button type="button" data-lang="${l}" aria-pressed="${anaLang === l}">${l.toUpperCase()}</button>`).join('') + `</div>`;
-  }
-  function wireLang(root, rerender) {
-    root.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => { setLang(b.dataset.lang); rerender(); }));
-  }
-
-  function tile(id, wide) {
-    const tp = ANA3.topics[id];
-    return `<button type="button" class="tile${wide ? ' wide' : ''}${anaDone.has(id) ? ' done' : ''}" data-topic="${id}">` +
-      `<span class="em">${tp.emoji}</span><span>${tp.title[anaLang]}</span></button>`;
-  }
-
-  function renderAnaList() {
-    const root = document.getElementById('ana3-list');
-    root.lang = anaLang;
-    const m = ANA3.meta, total = topicOrder().length, n = topicOrder().filter(id => anaDone.has(id)).length;
-    root.innerHTML = `
-      <div class="ana-top"><h2>∫ ${t('title')}</h2>${langSwitch()}</div>
-      <p class="hero">${m.hero[anaLang]}</p>
-      <p class="neu">${t('neu')}</p>
-      <div class="progress"><div style="width:${(100 * n / total).toFixed(1)}%"></div></div>
-      <span class="progress-label">${n} / ${total} ${t('done')}</span>
-      <details class="map"><summary>${t('map')}</summary><div class="map-grid">
-        ${m.map.map(x => `<div><b>${x.title[anaLang]}</b>${x.html[anaLang]}</div>`).join('')}
-      </div></details>
-      <div class="part-card"><div class="tiles">${tile('toolkit', true)}</div></div>
-      ${m.parts.map(p => `
-        <div class="part-card">
-          <span class="tag">${p.tag}</span><h3>${p.title[anaLang]}</h3>
-          <p class="intro">${p.intro[anaLang]}</p>
-          <div class="tiles">${p.topics.map(id => tile(id)).join('')}</div>
-        </div>`).join('')}`;
-    wireLang(root, renderAnaList);
-    root.querySelectorAll('[data-topic]').forEach(b => b.addEventListener('click', () => go({ id: 'thema', topic: b.dataset.topic })));
-    tex(root);
-  }
-
-  function renderThema(id, revealAll) {
-    const root = document.getElementById('ana3-thema');
-    root.lang = anaLang;
-    const tp = ANA3.topics[id];
-    const order = topicOrder(), i = order.indexOf(id);
-    const prevId = order[i - 1], nextId = order[i + 1];
-    root.innerHTML = `
-      <div class="ana-top"><span></span>${langSwitch()}</div>
-      <div class="thema-head">
-        <span class="em">${tp.emoji}</span>
-        <h2>${tp.title[anaLang]}</h2>
-        ${tp.ref ? `<span class="ref">${tp.ref} ${t('ref')}</span>` : ''}
-      </div>
-      <div class="steps" id="steps"></div>
-      <div class="step-nav" id="step-nav"></div>
-      <button type="button" class="verstanden" id="verstanden" aria-pressed="${anaDone.has(id)}" hidden>${anaDone.has(id) ? t('gotDone') : t('got')}</button>
-      <button type="button" class="unklar" id="unklar" hidden>${t('unklar')}</button>
-      <div class="unklar-out" id="unklar-out" hidden></div>
-      <div class="thema-nav">
-        ${prevId ? `<button type="button" data-topic="${prevId}">${t('prev')}${ANA3.topics[prevId].emoji} ${ANA3.topics[prevId].title[anaLang]}</button>` : '<span></span>'}
-        ${nextId ? `<button type="button" data-topic="${nextId}">${ANA3.topics[nextId].emoji} ${ANA3.topics[nextId].title[anaLang]}${t('nextT')}</button>` : '<span></span>'}
-      </div>`;
-    const stepsEl = root.querySelector('#steps'), nav = root.querySelector('#step-nav'), got = root.querySelector('#verstanden');
-    let shown = 0;
-    const EASY = ['vorher', 'einfach', 'beispiel'];
-    function addStep() {
-      const b = tp.blocks[shown++];
-      const prev = tp.blocks[shown - 2];
-      if (prev && EASY.includes(prev.type) && !EASY.includes(b.type)) {
-        const sep = document.createElement('div');
-        sep.className = 'exakt-sep';
-        sep.textContent = t('exakt');
-        stepsEl.appendChild(sep);
-      }
-      const div = document.createElement('div');
-      div.className = 'step s-' + b.type;
-      const label = (b.type === 'kern' || EASY.includes(b.type)) ? t(b.type) : (t(b.type).split(' ')[0] + ' ' + (b.label[anaLang] || t(b.type).split(' ').slice(1).join(' ')));
-      let html = b.html[anaLang];
-      // display formulas as breakable inline math so long lines wrap on phones
-      if (b.type === 'formel') html = html.replace(/\$\$([\s\S]+?)\$\$/g, (m, x) =>
-        '<div class="fm">$\\displaystyle ' + x.replace(/\\qquad/g, '\\qquad\\allowbreak').replace(/\\quad/g, '\\quad\\allowbreak') + '$</div>');
-      div.innerHTML = `<div class="step-title">${label}</div>${html}`;
-      stepsEl.appendChild(div);
-      tex(div);
-    }
-    function updateNav() {
-      if (shown >= tp.blocks.length) { nav.innerHTML = ''; got.hidden = false; root.querySelector('#unklar').hidden = false; return; }
-      nav.innerHTML = `<button type="button" class="weiter">${t('next')}</button><button type="button" class="alle">${t('all')}</button>`;
-      nav.querySelector('.weiter').addEventListener('click', () => {
-        addStep(); updateNav();
-        stepsEl.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-      nav.querySelector('.alle').addEventListener('click', () => { while (shown < tp.blocks.length) addStep(); updateNav(); });
-    }
-    addStep();
-    if (revealAll) while (shown < tp.blocks.length) addStep();
-    updateNav();
-    tex(root.querySelector('.thema-head'));
-    tex(root.querySelector('.thema-nav'));
-    root.querySelectorAll('.thema-nav [data-topic]').forEach(b => b.addEventListener('click', () => go({ id: 'thema', topic: b.dataset.topic })));
-    wireLang(root, () => renderThema(id, true));
-    root.querySelector('#unklar').addEventListener('click', async () => {
-      const text = TUTOR[anaLang](tp.title[anaLang], tp.ref);
-      const out = root.querySelector('#unklar-out');
-      let ok = false;
-      try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {}
-      out.hidden = false;
-      out.innerHTML = ok
-        ? `<p>${t('copied')} <a href="https://claude.ai/new" target="_blank" rel="noopener">${t('open')}</a></p>`
-        : `<p>${t('copyFail')}</p><textarea readonly rows="8"></textarea><p><a href="https://claude.ai/new" target="_blank" rel="noopener">${t('open')}</a></p>`;
-      if (!ok) out.querySelector('textarea').value = text;
-    });
-    got.addEventListener('click', () => {
-      saveUndo(anaDone.has(id) ? 'anaOff' : 'anaOn');
-      anaDone.has(id) ? anaDone.delete(id) : anaDone.add(id);
-      store.set('ana3-done', [...anaDone]);
-      anaDone.has(id) ? memLog('ana:' + id, true) : memForget('ana:' + id);
-      got.setAttribute('aria-pressed', String(anaDone.has(id)));
-      got.textContent = anaDone.has(id) ? t('gotDone') : t('got');
-      if (anaDone.has(id) && nextId) setTimeout(() => go({ id: 'thema', topic: nextId }), 450);
-    });
-  }
-
-  function showAna(state) {
-    loadAna3().then(() => {
-      if (state.id === 'ana3') renderAnaList(); else renderThema(state.topic);
-    }).catch(() => {
-      document.getElementById(state.id === 'ana3' ? 'ana3-list' : 'ana3-thema').innerHTML = `<p class="loading">${t('error')}</p>`;
-    });
-  }
-
-  // ---------- Experimentalphysik II: theory + flashcards (data loaded on demand) ----------
-  const E2UI = {
-    de: { title: 'Experimentalphysik II', sub: 'Optik, Elektromagnetismus, Relativität – Theorie einfach erklärt und Karteikarten für die Altfragen.',
-          all: '🃏 Alle Karten lernen', known: 'Karten gewusst', learn: '🃏 Diese Karten lernen', show: 'Antwort zeigen',
-          again: '🔁 Nochmal', got: '✅ Gewusst', answer: '📐 Antwort', einfach: '👶 Einfach erklärt', bild: '💡 Bild dazu',
-          left: 'noch', doneT: 'Runde geschafft!', doneS: 'Alle Karten dieser Runde sitzen.', restart: '🔁 Neue Runde',
-          cards: 'Karten', overview: '📚 Alle Karten zum Nachlesen' },
-    ru: { title: 'Экспериментальная физика II', sub: 'Оптика, электромагнетизм, теория относительности — простая теория и карточки для Altfragen.',
-          all: '🃏 Учить все карточки', known: 'карточек выучено', learn: '🃏 Учить эти карточки', show: 'Показать ответ',
-          again: '🔁 Ещё раз', got: '✅ Знаю', answer: '📐 Ответ', einfach: '👶 Просто', bild: '💡 Образ',
-          left: 'осталось', doneT: 'Раунд пройден!', doneS: 'Все карточки этого раунда выучены.', restart: '🔁 Новый раунд',
-          cards: 'карточек', overview: '📚 Все карточки для чтения' },
-  };
-  const e2t = k => E2UI[anaLang][k];
-  let e2Ready = null;
-  let e2Box = store.get('e2-box', {});
-  function loadE2() {
-    if (!e2Ready) {
-      e2Ready = loadAna3KaTeX().then(() => loadScript('e2-data.js'));
-      e2Ready.catch(() => { e2Ready = null; });
-    }
-    return e2Ready;
-  }
-  function loadAna3KaTeX() {
-    if (window.renderMathInElement) return Promise.resolve();
-    if (!document.querySelector('link[href="katex/katex.min.css"]')) {
-      const css = document.createElement('link');
-      css.rel = 'stylesheet'; css.href = 'katex/katex.min.css';
-      document.head.appendChild(css);
-    }
-    return loadScript('katex/katex.min.js').then(() => loadScript('katex/auto-render.min.js'));
-  }
-  const isKnown = id => (e2Box[id] || 0) > 0;
-  function cardBack(c) {
-    return `<div class="step s-formel"><div class="step-title">${e2t('answer')}</div>${c.a[anaLang]}</div>` +
-      `<div class="step s-einfach"><div class="step-title">${e2t('einfach')}</div>${c.e[anaLang]}</div>` +
-      `<div class="step s-beispiel"><div class="step-title">${e2t('bild')}</div>${c.b[anaLang]}</div>`;
-  }
-
-  function renderE2List() {
-    const root = document.getElementById('e2-list');
-    root.lang = anaLang;
-    const ids = Object.keys(E2.cards), n = ids.filter(isKnown).length;
-    root.innerHTML = `
-      <div class="ana-top"><h2>⚡ ${e2t('title')}</h2>${langSwitch()}</div>
-      <p class="hero">${e2t('sub')}</p>
-      <div class="progress"><div style="width:${(100 * n / ids.length).toFixed(1)}%"></div></div>
-      <span class="progress-label">${n} / ${ids.length} ${e2t('known')}</span>
-      <button type="button" class="e2-big" data-learn="all">${e2t('all')}</button>
-      <div class="part-card"><div class="tiles">${E2.topics.map(tp => {
-        const k = tp.cards.filter(isKnown).length;
-        return `<button type="button" class="tile${k === tp.cards.length ? ' done' : ''}" data-e2topic="${tp.id}">` +
-          `<span class="em">${tp.emoji}</span><span>${tp.title[anaLang]}</span><span class="cnt">${k}/${tp.cards.length}</span></button>`;
-      }).join('')}</div></div>`;
-    wireLang(root, renderE2List);
-    root.querySelectorAll('[data-e2topic]').forEach(b => b.addEventListener('click', () => go({ id: 'e2t', topic: b.dataset.e2topic })));
-    root.querySelector('[data-learn]').addEventListener('click', () => go({ id: 'e2k', topic: 'all' }));
-  }
-
-  function renderE2Topic(tid) {
-    const root = document.getElementById('e2-topic');
-    root.lang = anaLang;
-    const tp = E2.topics.find(t => t.id === tid);
-    root.innerHTML = `
-      <div class="ana-top"><span></span>${langSwitch()}</div>
-      <div class="thema-head"><span class="em">${tp.emoji}</span><h2>${tp.title[anaLang]}</h2><span class="ref">${tp.cards.length} ${e2t('cards')}</span></div>
-      <div class="steps"><div class="step s-einfach">${tp.intro[anaLang]}</div></div>
-      <button type="button" class="e2-big" data-learn="${tid}">${e2t('learn')}</button>
-      <h3>${e2t('overview')}</h3>
-      <div class="e2-list">${tp.cards.map(cid => {
-        const c = E2.cards[cid];
-        return `<details><summary>${isKnown(cid) ? '✅ ' : ''}${c.q[anaLang]}</summary><div class="inner">${cardBack(c)}</div></details>`;
-      }).join('')}</div>`;
-    wireLang(root, () => renderE2Topic(tid));
-    root.querySelector('[data-learn]').addEventListener('click', () => go({ id: 'e2k', topic: tid }));
-    tex(root);
-  }
-
-  function startE2Session(topic) {
-    if (Array.isArray(topic)) { renderE2Card(topic, topic.slice(), topic.length); return; }
-    const pool = topic === 'all' ? Object.keys(E2.cards) : E2.topics.find(t => t.id === topic).cards.slice();
-    // least-known first, random order inside each box
-    pool.sort((a, b) => (e2Box[a] || 0) - (e2Box[b] || 0) || Math.random() - .5);
-    const queue = pool.slice(0, topic === 'all' ? 20 : pool.length);
-    renderE2Card(topic, queue, queue.length);
-  }
-
-  function renderE2Card(topic, queue, total) {
-    const root = document.getElementById('e2-cards');
-    root.lang = anaLang;
-    if (!queue.length) {
-      root.innerHTML = `<div class="fc-done"><div class="big">🎉</div><h2>${e2t('doneT')}</h2><p>${e2t('doneS')}</p>
-        <button type="button" class="e2-big" id="fc-restart">${e2t('restart')}</button></div>`;
-      root.querySelector('#fc-restart').addEventListener('click', () => startE2Session(topic));
-      return;
-    }
-    const cid = queue[0], c = E2.cards[cid], tp = E2.topics.find(t => t.id === c.topic);
-    root.innerHTML = `
-      <div class="fc-top"><span class="fc-chip">${tp.emoji} ${tp.title[anaLang]}</span>${langSwitch()}</div>
-      <div class="progress"><div style="width:${(100 * (total - queue.length) / total).toFixed(1)}%"></div></div>
-      <span class="fc-count">${e2t('left')} ${queue.length} / ${total}</span>
-      <div class="fc-q">${c.q[anaLang]}</div>
-      <div class="fc-back" id="fc-back" hidden>${cardBack(c)}</div>
-      <div class="fc-btns" id="fc-btns"><button type="button" class="fc-show">${e2t('show')}</button></div>`;
-    wireLang(root, () => renderE2Card(topic, queue, total));
-    tex(root);
-    root.querySelector('.fc-show').addEventListener('click', () => {
-      root.querySelector('#fc-back').hidden = false;
-      const btns = root.querySelector('#fc-btns');
-      btns.innerHTML = `<button type="button" class="fc-again">${e2t('again')}</button><button type="button" class="fc-got">${e2t('got')}</button>`;
-      btns.querySelector('.fc-again').addEventListener('click', () => {
-        saveUndo('again');
-        e2Box[cid] = 0; store.set('e2-box', e2Box); memLog('e2:' + cid, false);
-        queue.push(queue.shift());   // comes back later in this round
-        renderE2Card(topic, queue, total);
-      });
-      btns.querySelector('.fc-got').addEventListener('click', () => {
-        saveUndo('got');
-        e2Box[cid] = Math.min((e2Box[cid] || 0) + 1, 5); store.set('e2-box', e2Box); memLog('e2:' + cid, true);
-        queue.shift();
-        renderE2Card(topic, queue, total);
-      });
-    });
-  }
-
-  function showE2(state) {
-    loadE2().then(() => {
-      if (state.id === 'e2') renderE2List();
-      else if (state.id === 'e2t') renderE2Topic(state.topic);
-      else startE2Session(state.topic);
-    }).catch(() => {
-      document.getElementById({ e2: 'e2-list', e2t: 'e2-topic', e2k: 'e2-cards' }[state.id]).innerHTML = `<p class="loading">${t('error')}</p>`;
-    });
-  }
-
-  // ---------- daily message ----------
-  const OK_UI = {
-    de: { title: 'Botschaft für heute', titleName: n => n + ', deine Botschaft für heute', tap: 'Tippe auf die Karte',
-          heute: 'Heute', copy: '📋 Text kopieren', copied: '✅ Kopiert', next: 'Morgen wartet eine neue Karte.' },
-    ru: { title: 'Послание на сегодня', titleName: n => n + ', твоё послание на сегодня', tap: 'Коснись карты',
-          heute: 'Сегодня', copy: '📋 Скопировать', copied: '✅ Скопировано', next: 'Завтра тебя ждёт новая карта.' },
-  };
-  let okReady = null;
-  (function makeStars() {
-    const sc = document.getElementById('scene-orakel');
-    for (let i = 0; i < 90; i++) {
-      const st = document.createElement('span');
-      st.className = 'star';
-      st.style.left = (Math.random() * 100) + '%';
-      st.style.top = (Math.random() * 100) + '%';
-      const sz = Math.random() < .15 ? 3 : 2;
-      st.style.width = st.style.height = sz + 'px';
-      st.style.animationDuration = (1.5 + Math.random() * 3) + 's';
-      st.style.animationDelay = (-Math.random() * 3) + 's';
-      sc.appendChild(st);
-    }
-  })();
-  function todayKey() {
-    const d = new Date();
-    return { key: d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
-             days: Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5) };
-  }
-  function renderOrakel() {
-    const root = document.getElementById('orakel-root');
-    const L = OK_UI[anaLang], { key, days } = todayKey();
-    const msg = ORAKEL[(days * 37) % ORAKEL.length];   // 37 is coprime to 60: every message once before repeating
-    const opened = store.get('orakel-open', '') === key;
-    root.lang = anaLang;
-    root.innerHTML = `
-      <div class="ok-top"><span class="ok-date">${new Intl.DateTimeFormat(anaLang === 'ru' ? 'ru-RU' : 'de-AT', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}</span>${langSwitch()}</div>
-      <h2>${NAME ? L.titleName(NAME) : L.title}</h2>
-      <div class="ok-card${opened ? ' open instant' : ''}" id="ok-card" role="button" tabindex="0" aria-label="${L.tap}">
-        <div class="ok-inner">
-          <div class="ok-face ok-front"><div class="sym">✨</div><div class="tap">${L.tap}</div></div>
-          <div class="ok-face ok-back">
-            <div class="ok-quote">${msg.s[anaLang]}</div>
-            <div class="ok-sep"></div>
-            <div class="ok-hint"><b>${L.heute}:</b> ${msg.h[anaLang]}</div>
-          </div>
-        </div>
-      </div>
-      <div class="ok-actions" id="ok-actions"${opened ? '' : ' hidden'}>
-        <button type="button" id="ok-copy">${L.copy}</button>
-        <p class="ok-next">${L.next}</p>
-      </div>`;
-    wireLang(root, renderOrakel);
-    const card = root.querySelector('#ok-card');
-    const open = () => {
-      if (card.classList.contains('open')) return;
-      card.classList.remove('instant');
-      card.classList.add('open');
-      store.set('orakel-open', key);
-      setTimeout(() => { root.querySelector('#ok-actions').hidden = false; }, 700);
-    };
-    card.addEventListener('click', open);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-    root.querySelector('#ok-copy').addEventListener('click', async e => {
-      const text = msg.s[anaLang] + '\n\n' + L.heute + ': ' + msg.h[anaLang];
-      try { await navigator.clipboard.writeText(text); e.target.textContent = L.copied; } catch (err) {}
-    });
-  }
-  function showOrakel() {
-    if (!okReady) { okReady = loadScript('orakel-data.js'); okReady.catch(() => { okReady = null; }); }
-    okReady.then(renderOrakel).catch(() => {
-      document.getElementById('orakel-root').innerHTML = `<p class="loading">${t('error')}</p>`;
-    });
-  }
-  document.getElementById('orakel-btn').addEventListener('click', () => go({ id: 'orakel' }));
-
-  // ---------- memory model: when was something learned, how strong is it now ----------
-  // Every success makes the memory last ~2.2x longer (1 day, 2.2 d, 4.8 d, 10.6 d, ...);
-  // brightness = retention = e^(-days since last review / stability). A failed card restarts at half a day.
-  let memLogData = store.get('stern-log', null);
-  if (!memLogData) {   // first run: adopt what was already learned before the Sternwarte existed
-    memLogData = {};
-    const now = Date.now();
-    for (const [cid, box] of Object.entries(store.get('e2-box', {}))) if (box > 0) memLogData['e2:' + cid] = { t: now, n: box };
-    for (const tid of store.get('ana3-done', [])) memLogData['ana:' + tid] = { t: now, n: 1 };
-    store.set('stern-log', memLogData);
-  }
-  function memLog(id, ok) {
-    const prev = memLogData[id] || { n: 0 };
-    memLogData[id] = { t: Date.now(), n: ok ? Math.min(prev.n + 1, 8) : 0 };
-    store.set('stern-log', memLogData);
-  }
-  function memForget(id) { delete memLogData[id]; store.set('stern-log', memLogData); }
-  function memStrength(id) {
-    const m = memLogData[id];
-    if (!m) return null;                         // never learned
-    const stability = m.n === 0 ? 0.5 : Math.pow(2.2, m.n - 1);
-    const days = (Date.now() - m.t) / 864e5;
-    return Math.exp(-days / stability);
-  }
-
-  // ---------- one-step undo and reset ----------
-  // Before every change of progress we keep a copy of the state before it, so the last step can be undone.
-  function saveUndo(what) {
-    store.set('progress-undo', { what, box: e2Box, done: [...anaDone], log: memLogData });
-  }
-  function undoLast() {
-    const u = store.get('progress-undo', null);
-    if (!u) return;
-    e2Box = u.box; anaDone = new Set(u.done); memLogData = u.log;
-    store.set('e2-box', e2Box); store.set('ana3-done', [...anaDone]); store.set('stern-log', memLogData);
-    try { localStorage.removeItem('progress-undo'); } catch (e) {}
-  }
-  function resetProgress(scope) {   // scope: 'all' | 'e2' | 'ana'
-    saveUndo('reset-' + scope);
-    if (scope !== 'ana') { e2Box = {}; store.set('e2-box', e2Box); }
-    if (scope !== 'e2') { anaDone = new Set(); store.set('ana3-done', []); }
-    for (const k of Object.keys(memLogData))
-      if (scope === 'all' || k.startsWith(scope + ':')) delete memLogData[k];
-    store.set('stern-log', memLogData);   // stays {} (not null), so nothing is re-adopted on reload
-  }
-
-  // ---------- Sternwarte ----------
-  const ST_UI = {
-    de: { title: 'Sternwarte', sub: 'Jeder Stern ist etwas, das du gelernt hast. Was du nicht wiederholst, verblasst – wie im echten Kopf.',
-          lit: 'leuchten', fading: 'verblassen', dark: 'noch dunkel', review: '🌠 Verblassende wiederholen', music: '🎵 Sphärenmusik',
-          strength: 'Erinnerung', never: 'Noch nicht gelernt – ein dunkler Stern.', ago: d => d < 1 ? 'zuletzt heute' : `zuletzt vor ${Math.round(d)} ${Math.round(d) === 1 ? 'Tag' : 'Tagen'}`,
-          learnCard: '🃏 Karte jetzt lernen', learnTopic: '📖 Thema öffnen', nothing: 'Gerade verblasst nichts. Schöner Himmel! ✨', e2: 'Experimentalphysik II', ana: 'Analysis 3',
-          reset: '↺ Fortschritt zurücksetzen', resetQ: 'Was willst du zurücksetzen?', all: 'Alles', onlyE2: 'Nur E2-Karten', onlyAna: 'Nur Analysis 3',
-          sure: 'Bist du sicher?', sureTxt: n => `${n} ${n === 1 ? 'Stern wird' : 'Sterne werden'} dunkel. Einmal rückgängig machen geht danach noch.`,
-          empty: 'Hier leuchtet noch nichts – es gibt nichts zurückzusetzen.', yes: 'Ja, zurücksetzen', cancel: 'Abbrechen', done: 'Zurückgesetzt.', undo: '↶ Rückgängig',
-          undoWhat: { got: 'letzte Karte „Gewusst“', again: 'letzte Karte „Nochmal“', anaOn: 'letztes „verstanden“', anaOff: 'letztes „nicht mehr verstanden“',
-                      'reset-all': 'Zurücksetzen', 'reset-e2': 'Zurücksetzen (E2)', 'reset-ana': 'Zurücksetzen (Ana 3)' } },
-    ru: { title: 'Обсерватория', sub: 'Каждая звезда — то, что ты выучил(а). То, что не повторяешь, гаснет — как в настоящей памяти.',
-          lit: 'горят', fading: 'гаснут', dark: 'ещё тёмные', review: '🌠 Повторить гаснущие', music: '🎵 Музыка сфер',
-          strength: 'Память', never: 'Ещё не выучено — тёмная звезда.', ago: d => d < 1 ? 'последний раз сегодня' : `последний раз ${Math.round(d)} дн. назад`,
-          learnCard: '🃏 Учить карточку', learnTopic: '📖 Открыть тему', nothing: 'Сейчас ничего не гаснет. Красивое небо! ✨', e2: 'Экспериментальная физика II', ana: 'Анализ 3',
-          reset: '↺ Сбросить прогресс', resetQ: 'Что сбросить?', all: 'Всё', onlyE2: 'Только карточки E2', onlyAna: 'Только Анализ 3',
-          sure: 'Точно?', sureTxt: n => `Погаснет звёзд: ${n}. Потом это ещё можно один раз отменить.`,
-          empty: 'Здесь ещё ничего не горит — сбрасывать нечего.', yes: 'Да, сбросить', cancel: 'Отмена', done: 'Сброшено.', undo: '↶ Отменить',
-          undoWhat: { got: 'последняя карточка «Знаю»', again: 'последняя карточка «Ещё раз»', anaOn: 'последнее «понятно»', anaOff: 'последнее снятие «понятно»',
-                      'reset-all': 'сброс', 'reset-e2': 'сброс (E2)', 'reset-ana': 'сброс (Ана 3)' } },
-  };
-  const st = k => ST_UI[anaLang][k];
-  // where each constellation sits on the 1000 x 1500 sky
-  const SKY_CENTERS = [[230, 190], [580, 150], [840, 300], [180, 520], [500, 470], [810, 610], [270, 800],
-                       [620, 790], [820, 960], [190, 1100], [500, 1090], [800, 1270], [320, 1350]];
-  // short names for the sky, so neighbouring labels do not overlap
-  const SKY_SHORT = { 'e2-strom': ['Stromkreise', 'Цепи тока'], 'e2-induktion': ['Induktion', 'Индукция'],
-    'e2-maxwell': ['EM-Wellen', 'ЭМ-волны'], 'e2-wellenoptik': ['Wellenoptik', 'Волновая оптика'],
-    'e2-rel': ['Relativität', 'Относительность'], 'e2-extra': ['Mathe-Werkzeug', 'Математика'],
-    'e2-optik': ['Optik', 'Оптика'], 'e2-magnet': ['Magnetfelder', 'Магнитные поля'],
-    'ana-0': ['Komplexe Analysis', 'Комплексный анализ'], 'ana-1': ['Fourier', 'Фурье'],
-    'ana-2': ['Lineare PDE', 'Линейные PDE'], 'ana-3': ['Hilberträume', 'Гильбертовы пр.'] };
-  const SKY_NOTES = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51];
-
-  function rng(seedStr) {   // small deterministic random generator, so the sky looks the same every time
-    let h = 1779033703;
-    for (const ch of seedStr) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = (h << 13) | (h >>> 19);
-    return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
-  }
-  function buildConstellations() {
-    const list = [];
-    for (const tp of E2.topics) list.push({ id: 'e2-' + tp.id, kind: 'e2', emoji: tp.emoji, title: tp.title, topic: tp.id,
-      items: tp.cards.map(cid => ({ id: 'e2:' + cid, label: E2.cards[cid].q, go: { id: 'e2k', topic: [cid] } })) });
-    ANA3.meta.parts.forEach((part, i) => {
-      const ids = (i === 0 ? ['toolkit'] : []).concat(part.topics);
-      list.push({ id: 'ana-' + i, kind: 'ana', emoji: ['🌀', '🎚️', '🌊', '🌌'][i], title: part.title, topic: null,
-        items: ids.map(tid => ({ id: 'ana:' + tid, label: ANA3.topics[tid].title, go: { id: 'thema', topic: tid } })) });
-    });
-    list.forEach((c, ci) => {
-      const [cx, cy] = SKY_CENTERS[ci], r = rng(c.id), radius = 70 + c.items.length * 5;
-      const pts = [];
-      for (const it of c.items) {           // scatter stars, keeping a minimum distance
-        let best = null;
-        for (let k = 0; k < 30; k++) {
-          const a = r() * Math.PI * 2, d = Math.sqrt(r()) * radius;
-          const p = [cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.8];
-          const minD = Math.min(Infinity, ...pts.map(q => Math.hypot(q[0] - p[0], q[1] - p[1])));
-          if (!best || minD > best.minD) best = { p, minD };
-          if (minD > 38) break;
-        }
-        pts.push(best.p);
-        it.x = best.p[0]; it.y = best.p[1];
-      }
-      // constellation lines: minimum spanning tree (Prim)
-      const inTree = [0], edges = [];
-      while (inTree.length < pts.length) {
-        let bestE = null;
-        for (const a of inTree) for (let b = 0; b < pts.length; b++) {
-          if (inTree.includes(b)) continue;
-          const d = Math.hypot(pts[a][0] - pts[b][0], pts[a][1] - pts[b][1]);
-          if (!bestE || d < bestE.d) bestE = { a, b, d };
-        }
-        inTree.push(bestE.b); edges.push([bestE.a, bestE.b]);
-      }
-      c.edges = edges; c.cx = cx; c.cy = cy; c.radius = radius; c.note = SKY_NOTES[ci];
-    });
-    return list;
-  }
-  let skyCache = null;
-
-  function renderStern() {
-    const root = document.getElementById('stern-root');
-    root.lang = anaLang;
-    if (!skyCache) skyCache = buildConstellations();
-    let lit = 0, fading = 0, dark = 0;
-    const fadingCards = [];
-    for (const c of skyCache) {
-      let sum = 0, n = 0;
-      for (const it of c.items) {
-        it.b = memStrength(it.id);
-        if (it.b === null) dark++;
-        else { (it.b < 0.5 ? fading++ : lit++); sum += it.b; n++; if (it.b < 0.7 && it.id.startsWith('e2:')) fadingCards.push(it); }
-      }
-      c.avg = n ? sum / n : 0; c.learned = n;
-    }
-    fadingCards.sort((a, b) => a.b - b.b);
-    const colorOf = c => c.kind === 'e2' ? '#ffd88a' : '#9fd0ff';
-    let svg = `<svg class="sky" viewBox="0 0 1000 1500" role="img" aria-label="${st('title')}">
-      <defs><filter id="glow" x="-2" y="-2" width="5" height="5"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
-    for (const c of skyCache) {
-      for (const [a, b] of c.edges) {
-        const A = c.items[a], B = c.items[b];
-        const o = Math.min(A.b || 0, B.b || 0);
-        svg += `<line x1="${A.x.toFixed(1)}" y1="${A.y.toFixed(1)}" x2="${B.x.toFixed(1)}" y2="${B.y.toFixed(1)}" stroke="${colorOf(c)}" stroke-width="1.6" opacity="${(0.06 + 0.5 * o).toFixed(2)}"/>`;
-      }
-      c.items.forEach((it, i) => {
-        const b = it.b, rr = b === null ? 2.2 : 3 + 6 * b, op = b === null ? 0.22 : 0.25 + 0.75 * b;
-        const fill = b === null ? '#c8c2e0' : colorOf(c);
-        const tw = b !== null && b > 0.6 ? ` tw" style="animation-duration:${(2 + (i % 5) * 0.6).toFixed(1)}s` : '';
-        svg += `<circle class="st${tw}" cx="${it.x.toFixed(1)}" cy="${it.y.toFixed(1)}" r="${rr.toFixed(1)}" fill="${fill}" opacity="${op.toFixed(2)}"${b !== null && b > 0.3 ? ' filter="url(#glow)"' : ''}/>`;
-        svg += `<circle class="hit" cx="${it.x.toFixed(1)}" cy="${it.y.toFixed(1)}" r="22" data-star="${it.id}" role="button" aria-label="${it.label[anaLang].replace(/<[^>]+>|\$/g, '').replace(/"/g, '')}"/>`;
-      });
-      const ly = c.cy + c.radius * 0.8 + 38;
-      svg += `<text class="lbl" x="${c.cx}" y="${ly}" text-anchor="middle" data-con="${c.id}">${c.emoji} ${SKY_SHORT[c.id] ? SKY_SHORT[c.id][anaLang === 'ru' ? 1 : 0] : c.title[anaLang].replace(/\$[^$]*\$/g, '').slice(0, 20)}</text>`;
-      svg += `<text class="lbl-sub" x="${c.cx}" y="${ly + 28}" text-anchor="middle">${c.learned}/${c.items.length} · ${c.kind === 'e2' ? 'E2' : 'Ana 3'}</text>`;
-    }
-    svg += '</svg>';
-    const undoInfo = store.get('progress-undo', null);
-    root.innerHTML = `
-      <div class="ana-top"><span></span>${langSwitch()}</div>
-      <h2>🌌 ${st('title')}</h2>
-      <p class="sub">${st('sub')}</p>
-      <div class="stern-stats"><span><b>${lit}</b>${st('lit')}</span><span><b>${fading}</b>${st('fading')}</span><span><b>${dark}</b>${st('dark')}</span></div>
-      <div class="stern-btns">
-        <button type="button" class="fade-btn" id="st-review">${st('review')}${fadingCards.length ? ' (' + Math.min(fadingCards.length, 15) + ')' : ''}</button>
-        <button type="button" id="st-music" aria-pressed="${sphaeren.on}">${st('music')}</button>
-      </div>
-      ${svg}
-      <div class="stern-foot">
-        ${undoInfo ? `<button type="button" id="st-undo" class="st-undo">${st('undo')}: ${st('undoWhat')[undoInfo.what] || ''}</button>` : ''}
-        <button type="button" id="st-reset" class="st-reset">${st('reset')}</button>
-      </div>`;
-    wireLang(root, () => { closeSheet(); renderStern(); });
-    root.querySelector('#st-reset').addEventListener('click', askReset);
-    const ub = root.querySelector('#st-undo');
-    if (ub) ub.addEventListener('click', () => { undoLast(); closeSheet(); renderStern(); });
-    root.querySelectorAll('[data-star]').forEach(h => h.addEventListener('click', () => openStar(h.dataset.star)));
-    root.querySelectorAll('[data-con]').forEach(l => l.addEventListener('click', () => {
-      const c = skyCache.find(x => x.id === l.dataset.con);
-      go(c.kind === 'e2' ? { id: 'e2t', topic: c.topic } : { id: 'ana3' });
-    }));
-    root.querySelector('#st-review').addEventListener('click', () => {
-      if (!fadingCards.length) { showSheet(`<p class="sh-q">${st('nothing')}</p>`); return; }
-      go({ id: 'e2k', topic: fadingCards.slice(0, 15).map(it => it.id.slice(3)) });
-    });
-    root.querySelector('#st-music').addEventListener('click', e => {
-      sphaeren.on ? stopSphaeren() : startSphaeren();
-      e.target.setAttribute('aria-pressed', String(sphaeren.on));
-    });
-  }
-
-  function showSheet(html) {
-    const sh = document.getElementById('stern-sheet');
-    sh.innerHTML = `<div class="sh-top"><span></span><button type="button" class="sh-close" aria-label="close">✕</button></div>` + html;
-    sh.hidden = false;
-    sh.querySelector('.sh-close').addEventListener('click', closeSheet);
-    tex(sh);
-    return sh;
-  }
-  function closeSheet() { document.getElementById('stern-sheet').hidden = true; }
-  function askReset() {
-    const sh = showSheet(`<p class="sh-q">${st('resetQ')}</p>
-      <div class="sh-choice"><button type="button" data-scope="all">${st('all')}</button>
-      <button type="button" data-scope="e2">${st('onlyE2')}</button><button type="button" data-scope="ana">${st('onlyAna')}</button></div>`);
-    sh.querySelectorAll('[data-scope]').forEach(b => b.addEventListener('click', () => confirmReset(b.dataset.scope)));
-  }
-  function confirmReset(scope) {
-    const n = Object.keys(memLogData).filter(k => scope === 'all' || k.startsWith(scope + ':')).length;
-    if (!n) { showSheet(`<p class="sh-q">${st('empty')}</p>`); return; }
-    const sh = showSheet(`<p class="sh-q">⚠️ ${st('sure')}</p><p class="sh-info">${st('sureTxt')(n)}</p>
-      <div class="sh-choice"><button type="button" class="sh-danger">${st('yes')}</button><button type="button" class="sh-cancel">${st('cancel')}</button></div>`);
-    sh.querySelector('.sh-cancel').addEventListener('click', closeSheet);
-    sh.querySelector('.sh-danger').addEventListener('click', () => {
-      resetProgress(scope);
-      renderStern();
-      const done = showSheet(`<p class="sh-q">${st('done')}</p><div class="sh-choice"><button type="button" class="sh-undo">${st('undo')}</button></div>`);
-      done.querySelector('.sh-undo').addEventListener('click', () => { undoLast(); closeSheet(); renderStern(); });
-    });
-  }
-  function openStar(id) {
-    let item, con;
-    for (const c of skyCache) { const f = c.items.find(i => i.id === id); if (f) { item = f; con = c; } }
-    const b = memStrength(id), m = memLogData[id];
-    const sh = showSheet(`
-      <div class="sh-q">${item.label[anaLang]}</div>
-      ${b === null ? `<p class="sh-info">${st('never')}</p>` : `
-        <div class="meter"><div style="width:${Math.round(b * 100)}%"></div></div>
-        <p class="sh-info">${st('strength')} ${Math.round(b * 100)} % · ${st('ago')((Date.now() - m.t) / 864e5)}</p>`}
-      <button type="button" class="sh-go">${con.kind === 'e2' ? st('learnCard') : st('learnTopic')}</button>`);
-    sh.querySelector('.sh-top span').textContent = con.emoji + ' ' + (con.kind === 'e2' ? st('e2') : st('ana'));
-    sh.querySelector('.sh-go').addEventListener('click', () => { closeSheet(); go(item.go); });
-  }
-
-  // Sphärenmusik: every constellation is a note of a pentatonic scale. Bright constellations sound
-  // clear and loud; fading ones go quiet and slightly out of tune; never-learned ones stay silent.
-  const sphaeren = { on: false, ctx: null, timer: null, out: null };
-  function startSphaeren() {
-    if (!skyCache) return;
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-    sphaeren.ctx = sphaeren.ctx || new AC();
-    const ctx = sphaeren.ctx;
-    ctx.resume();
-    if (!sphaeren.out) {   // soft echo for a sense of space
-      const master = ctx.createGain(); master.gain.value = 0.5;
-      const delay = ctx.createDelay(); delay.delayTime.value = 0.38;
-      const fb = ctx.createGain(); fb.gain.value = 0.38;
-      delay.connect(fb); fb.connect(delay);
-      master.connect(ctx.destination); master.connect(delay); delay.connect(ctx.destination);
-      sphaeren.out = master;
-    }
-    sphaeren.on = true;
-    let step = 0;
-    const play = () => {
-      const voices = skyCache.filter(c => c.learned > 0);
-      if (!voices.length) {   // an empty sky still hums very quietly
-        tone(196, 0.04, 0);
-      } else {
-        const c = voices[step % voices.length];
-        const detune = (1 - c.avg) * 35 * (step % 2 ? 1 : -1);   // forgotten = out of tune
-        tone(c.note, 0.05 + 0.2 * c.avg, detune);
-        if (step % 4 === 0) tone(c.note / 2, 0.04 + 0.08 * c.avg, 0);
-      }
-      step++;
-    };
-    play();
-    sphaeren.timer = setInterval(play, 650);
-  }
-  function tone(freq, vol, cents) {
-    const ctx = sphaeren.ctx, t0 = ctx.currentTime;
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'triangle'; o.frequency.value = freq; o.detune.value = cents;
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(vol, t0 + 0.03);
-    g.gain.exponentialRampToValueAtTime(0.0008, t0 + 2.4);
-    o.connect(g); g.connect(sphaeren.out);
-    o.start(t0); o.stop(t0 + 2.5);
-  }
-  function stopSphaeren() {
-    clearInterval(sphaeren.timer); sphaeren.timer = null; sphaeren.on = false;
-    const b = document.getElementById('st-music'); if (b) b.setAttribute('aria-pressed', 'false');
-  }
-
-  function showStern() {
-    closeSheet();
-    Promise.all([loadE2(), loadAna3()]).then(renderStern).catch(() => {
-      document.getElementById('stern-root').innerHTML = `<p class="loading">${t('error')}</p>`;
-    });
-  }
-
-  // ---------- thumbs flying out of the video edges while it plays ----------
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let thumbTimer = null;
-
-  function spawnThumb(video, emojis) {
-    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-    const r = video.getBoundingClientRect();
-    if (!r.width) return;
-    // random point on the video's border
-    const side = Math.floor(Math.random() * 4);
-    let x, y;
-    if (side === 0)      { x = r.left + Math.random() * r.width; y = r.top; }
-    else if (side === 1) { x = r.right; y = r.top + Math.random() * r.height; }
-    else if (side === 2) { x = r.left + Math.random() * r.width; y = r.bottom; }
-    else                 { x = r.left; y = r.top + Math.random() * r.height; }
-    // fly away from the video's center
-    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    let dx = x - cx, dy = y - cy;
-    const len = Math.hypot(dx, dy) || 1;
-    const dist = 120 + Math.random() * 180;
-    dx = dx / len * dist; dy = dy / len * dist;
-
-    const t = document.createElement('span');
-    t.className = 'thumb';
-    t.textContent = emoji;
-    const size = 34 + Math.random() * 28;
-    t.style.fontSize = size + 'px';
-    t.style.left = (x - size / 2) + 'px';
-    t.style.top = (y - size / 2) + 'px';
-    document.body.appendChild(t);
-
-    const spin = (Math.random() - .5) * 120;
-    t.animate([
-      { transform: 'translate(0,0) scale(.4) rotate(0deg)', opacity: 0 },
-      { opacity: 1, offset: .15 },
-      { transform: `translate(${dx}px, ${dy}px) scale(1.2) rotate(${spin}deg)`, opacity: 0 }
-    ], { duration: 1400 + Math.random() * 800, easing: 'cubic-bezier(.2,.7,.3,1)' })
-      .onfinish = () => t.remove();
-  }
-
-  function startThumbs(video, emojis, from = video) {
-    stopThumbs();
-    if (reduceMotion) return;
-    thumbTimer = setInterval(() => {
-      if (!video.paused) for (let i = 0; i < 3; i++) spawnThumb(from, emojis);
-    }, 220);
-  }
-  function stopThumbs() {
-    clearInterval(thumbTimer);
-    thumbTimer = null;
-  }
-
-  // ---------- navigation ----------
-  const videos = {
-    ja: document.getElementById('video-ja'),
-    nein: document.getElementById('video-nein'),
-    katze: document.getElementById('video-katze'),
-    opa: document.getElementById('video-opa'),
-  };
-  const thumbs = { ja: ['👍'], nein: ['👎'], katze: ['😄', '😁', '🥳', '🌈', '☀️', '✨', '🌻', '🎉', '💛', '🦋'] };
-  const scenes = { katze: 'scene-happy', opa: 'scene-gloom', tp2: 'scene-tp2', orakel: 'scene-orakel', stern: 'scene-orakel' };
-
-  // ---------- TP2 scene: monkeys, electricity, brains + falling charts ----------
-  const tp2Scene = document.getElementById('scene-tp2');
-  const TP2_EMOJI = ['🐒', '🙈', '🙉', '🙊', '🦍', '🐵', '🧠', '⚡', '🔌', '💡', '🔋', '🧲', '⚡', '🧠'];
-  TP2_EMOJI.forEach(e => {
-    const d = document.createElement('span');
-    d.className = 'deco';
-    d.textContent = e;
-    d.style.left = (Math.random() * 90) + '%';
-    d.style.top = (Math.random() * 90) + '%';
-    d.style.fontSize = (26 + Math.random() * 28) + 'px';
-    d.style.setProperty('--dur', (1.5 + Math.random() * 2) + 's');
-    d.style.setProperty('--delay', (-Math.random() * 2) + 's');
-    tp2Scene.appendChild(d);
-  });
-  for (let i = 0; i < 12; i++) {
-    const f = document.createElement('span');
-    f.className = 'tumble';
-    f.textContent = '📉';
-    f.style.left = (Math.random() * 92) + '%';
-    f.style.fontSize = (28 + Math.random() * 26) + 'px';
-    f.style.animationDuration = (3 + Math.random() * 4) + 's';
-    f.style.animationDelay = (-Math.random() * 7) + 's';
-    f.style.setProperty('--spin', ((Math.random() - .5) * 540) + 'deg');
-    tp2Scene.appendChild(f);
-  }
-
-  // ---------- happy cat: remove the green screen on a canvas ----------
-  const katzeVideo = videos.katze;
-  const canvas = document.getElementById('canvas-katze');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  let katzeFrames = 0, katzeLoop = false;
-  function kickKatze() {
-    if (!katzeLoop) { katzeLoop = true; requestAnimationFrame(drawKatze); }
-  }
-  function drawKatze() {
-    if (katzeVideo.paused || katzeVideo.ended || !document.getElementById('katze').classList.contains('active')) {
-      katzeLoop = false;
-      return;
-    }
-    try {
-      // crop the empty green margins so the cat appears bigger
-      const vw = katzeVideo.videoWidth, vh = katzeVideo.videoHeight;
-      ctx.drawImage(katzeVideo, vw * .15, vh * .1, vw * .7, vh * .8, 0, 0, canvas.width, canvas.height);
-      const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const d = img.data;
-      for (let i = 0; i < d.length; i += 4) {
-        const r = d[i], g = d[i + 1], b = d[i + 2];
-        const m = r > b ? r : b;
-        const green = g - m;
-        if (green > 90) d[i + 3] = 0;
-        else if (green > 25) {
-          d[i + 3] = 255 * (1 - (green - 25) / 65);
-          d[i + 1] = m; // remove green spill on the fur edges
-        } else if (green > 0) d[i + 1] = m;
-      }
-      ctx.putImageData(img, 0, 0);
-      katzeFrames++;
-    } catch (e) {
-      useKatzeFallback();
-      katzeLoop = false;
-      return;
-    }
-    requestAnimationFrame(drawKatze);
-  }
-  function useKatzeFallback() {
-    canvas.style.display = 'none';
-    katzeVideo.classList.add('fallback');
-  }
-  katzeVideo.addEventListener('play', kickKatze);
-  // if the phone refuses to hand frames to the canvas, just show the video itself
-  katzeVideo.addEventListener('timeupdate', () => {
-    if (katzeVideo.currentTime > 1 && katzeFrames === 0) useKatzeFallback();
-  });
-  canvas.addEventListener('click', () => katzeVideo.paused ? katzeVideo.play() : katzeVideo.pause());
-
-  // ---------- gloomy scene: rain + faded anxious emoji ----------
-  const gloom = document.getElementById('scene-gloom');
-  for (let i = 0; i < 70; i++) {
-    const r = document.createElement('div');
-    r.className = 'drop';
-    r.style.left = (Math.random() * 100) + '%';
-    r.style.animationDuration = (0.7 + Math.random() * 0.8) + 's';
-    r.style.animationDelay = (-Math.random() * 2) + 's';
-    gloom.appendChild(r);
-  }
-  ['😰', '😟', '😔', '😶‍🌫️', '🥀', '🖤', '🌧️', '⛈️', '🕳️', '😞', '🌫️', '😓'].forEach(e => {
-    const d = document.createElement('span');
-    d.className = 'gloom-deco';
-    d.textContent = e;
-    d.style.left = (Math.random() * 90) + '%';
-    d.style.top = (Math.random() * 90) + '%';
-    d.style.fontSize = (26 + Math.random() * 30) + 'px';
-    d.style.animationDuration = (5 + Math.random() * 5) + 's';
-    gloom.appendChild(d);
-  });
-
-  // ---------- happy scene: floating happy emoji ----------
-  const happy = document.getElementById('scene-happy');
-  ['😄', '😁', '🥳', '🌈', '🌻', '🌼', '🎈', '✨', '😊', '🦋', '🎉', '🌞', '🍀', '😆'].forEach(e => {
-    const d = document.createElement('span');
-    d.className = 'deco';
-    d.textContent = e;
-    d.style.left = (Math.random() * 90) + '%';
-    d.style.top = (10 + Math.random() * 80) + '%';
-    d.style.fontSize = (26 + Math.random() * 26) + 'px';
-    d.style.setProperty('--dur', (1.2 + Math.random() * 1.5) + 's');
-    d.style.setProperty('--delay', (-Math.random() * 2) + 's');
-    happy.appendChild(d);
-  });
-
-  function show(state) {
-    const id = state.id;
-    if (id === 'hilfe') {
-      const f = FAECHER[state.fach];
-      document.getElementById('hilfe-icon').textContent = f.icon;
-      document.getElementById('hilfe-title').textContent = f.title;
-      document.getElementById('hilfe-body').innerHTML = f.html || '<p class="soon">Hilfen kommen bald ✨</p>';
-    }
-    if (id === 'ana3' || id === 'thema') showAna(state);
-    if (id === 'e2' || id === 'e2t' || id === 'e2k') showE2(state);
-    if (id === 'orakel') showOrakel();
-    if (id === 'stern') showStern(); else stopSphaeren();
-    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
-    for (const [key, v] of Object.entries(videos)) if (key !== id) v.pause();
-    document.querySelectorAll('.scene').forEach(sc => sc.classList.toggle('on', sc.id === scenes[id]));
-    if (thumbs[id]) startThumbs(videos[id], thumbs[id], id === 'katze' && !katzeVideo.classList.contains('fallback') ? canvas : videos[id]);
-    else stopThumbs();
-    if (id === 'katze' && !katzeVideo.paused) kickKatze();
-    scrollTo(0, 0);
-  }
-
-  function go(state) {
-    show(state);
-    history.pushState(state, '', '#' + (state.topic || state.fach || state.id));
-  }
-
-  function answer(id) {
-    go({ id });
-    const v = videos[id];
-    v.currentTime = 0;
-    // play() inside the click handler so the browser allows sound
-    v.play().catch(() => {});
-  }
-
-  document.getElementById('btn-ja').addEventListener('click', () => answer('ja'));
-  document.getElementById('btn-nein').addEventListener('click', () => answer('nein'));
-  document.getElementById('btn-will').addEventListener('click', () => go({ id: 'faecher' }));
-  document.getElementById('hilfe-body').addEventListener('click', e => {
-    const b = e.target.closest('[data-go]');
-    if (b) answer(b.dataset.go);
-  });
-  document.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => history.back()));
-
-  // ---------- app install (PWA) ----------
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => r.update()).catch(() => {});
-    // when a new version replaces an old one, reload once so the fresh page is shown
-    // (not on the very first visit, when there was no old version yet)
-    const hadController = !!navigator.serviceWorker.controller;
-    let reloaded = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (hadController && !reloaded) { reloaded = true; location.reload(); }
-    });
-  }
-  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-  const installBtn = document.getElementById('install-btn');
-  const installHelp = document.getElementById('install-help');
-  let installPrompt = null;
-  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; });
-  if (!standalone) installBtn.hidden = false;
-  installBtn.addEventListener('click', async () => {
-    if (installPrompt) {
-      installPrompt.prompt();
-      await installPrompt.userChoice.catch(() => {});
-      installPrompt = null;
-      return;
-    }
-    const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    installHelp.innerHTML = ios
-      ? '<b>Auf dem iPhone (Safari):</b><ol><li>Unten auf <b>Teilen</b> tippen (Quadrat mit Pfeil nach oben).</li><li><b>„Zum Home-Bildschirm“</b> wählen.</li><li>Oben rechts <b>Hinzufügen</b>.</li></ol>'
-      : '<b>Auf Android (Chrome):</b><ol><li>Oben rechts auf <b>⋮</b> tippen.</li><li><b>„App installieren“</b> oder <b>„Zum Startbildschirm hinzufügen“</b> wählen.</li></ol>';
-    installHelp.hidden = !installHelp.hidden;
-  });
-
-  window.addEventListener('popstate', e => show(e.state || { id: 'frage' }));
-  history.replaceState({ id: 'frage' }, '', location.pathname + location.search);
-</script>
+<script src="js/core.js"></script>
+<script src="js/ambient.js"></script>
+<script src="js/home.js"></script>
+<script src="js/labor.js"></script>
+<script src="js/ana3.js"></script>
+<script src="js/e2.js"></script>
+<script src="js/orakel.js"></script>
+<script src="js/memory.js"></script>
+<script src="js/stern.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/sims-ui.js"></script>
+<script src="js/boot.js"></script>
 </body>
 </html>

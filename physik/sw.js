@@ -2,11 +2,16 @@
 // Online: always the fresh version from the network (and the cache gets updated).
 // Offline: the cached copy. Icons and fonts come straight from the cache.
 // Videos are left to the network: phones fetch them in byte ranges, which a simple cache can't answer.
-const CACHE = 'physik-heute-v4';
+const CACHE = 'physik-heute-v5';
 const CORE = [
   './', './index.html', './manifest.webmanifest', './manifest-l.webmanifest',
   './icon-192.png', './icon-512.png', './apple-touch-icon.png', './schach.png',
   './ana3-data.js', './e2-data.js', './orakel-data.js', './katex/katex.min.css', './katex/katex.min.js', './katex/auto-render.min.js',
+  './css/app.css', './js/core.js', './js/ambient.js', './js/home.js', './js/labor.js', './js/ana3.js', './js/e2.js', './js/orakel.js',
+  './js/memory.js', './js/stern.js', './js/scenes.js', './js/sims-ui.js', './js/boot.js', './sims.js',
+  './sims/feld.js', './sims/brechung.js', './sims/spalt.js', './sims/lorentz.js', './sims/domain.js', './sims/epizykel.js',
+  './sims/minkowski.js', './sims/linse.js', './sims/saite.js', './sims/kreis.js', './sims/faltung.js',
+  './fonts/nunito-latin-wght-normal.woff2', './fonts/literata-latin-opsz-normal.woff2',
 ];
 
 self.addEventListener('install', e => {
