@@ -829,3 +829,4 @@ body[data-screen="labor"] { --gold: #10b07a; --gold-hi: #10b07a; --gold-d: #0a8a
 .sim-limits { margin-top: 12px; padding: 14px 18px; border-radius: var(--r-m); border: 1px dashed var(--line-2); color: var(--text-2); font-size: .88rem; line-height: 1.55; }
 .sim-limits h3 { display: flex; align-items: center; gap: 8px; font-size: .95rem; margin: 0 0 6px; color: var(--text); }
 .sim-limits p { margin: 0; }
+body[data-screen="stern"] .beta-tag { display: none; }

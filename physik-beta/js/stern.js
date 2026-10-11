@@ -162,14 +162,6 @@ function paintMilkyWay() {
     x.fillStyle = g; x.beginPath(); x.arc(bx, by, rad, 0, 6.283); x.fill();
   }
   x.globalCompositeOperation = 'source-over';
-  // many tiny stars inside the band
-  for (let i = 0; i < 7000; i++) {
-    const along = r() * 1.3 - .15, spread = (r() + r() + r() - 1.5) * 120 * k;
-    const bx = w * (.05 + along * .9) + spread, by = h * (1 - along) + spread * .9;
-    x.fillStyle = `rgba(255,255,255,${.12 + r() * .45})`;
-    const s = r() < .06 ? 2 : r() < .3 ? 1.2 : .8;
-    x.fillRect(bx, by, s, s);
-  }
   // fade every edge, so the texture never shows a straight border
   x.globalCompositeOperation = 'destination-in';
   const fx = x.createLinearGradient(0, 0, w, 0);
@@ -180,6 +172,15 @@ function paintMilkyWay() {
   x.fillStyle = fy; x.fillRect(0, 0, w, h);
   x.globalCompositeOperation = 'source-over';
   return c;
+}
+function makeBandStars() {   // the milky way's own stars, in world coordinates, so they stay sharp when zoomed
+  const r = rng('band'), out = [];
+  for (let i = 0; i < 2600; i++) {
+    const along = r() * 1.3 - .15, spread = (r() + r() + r() - 1.5) * 200;
+    out.push({ x: -450 + (SKY_W + 900) * (.05 + along * .9) + spread, y: -500 + (SKY_H + 1000) * (1 - along) + spread * .9,
+               r: r() < .05 ? 1.6 : r() < .3 ? 1.1 : .7, a: .15 + r() * .5 });
+  }
+  return out;
 }
 function makeFarStars() {
   const r = rng('ferne'), out = [];
@@ -238,6 +239,12 @@ function drawSky() {
   if (sky.milky) {
     const [x0, y0] = toScreen(-450, -500, .7), [x1, y1] = toScreen(SKY_W + 450, SKY_H + 500, .7);
     ctx.drawImage(sky.milky, x0, y0, x1 - x0, y1 - y0);
+  }
+  // star dust of the band (same parallax as the clouds)
+  for (const s of sky.band) {
+    const [x, y] = toScreen(s.x, s.y, .7);
+    if (x < -2 || y < -2 || x > W + 2 || y > H + 2) continue;
+    ctx.fillStyle = `rgba(255,255,255,${s.a})`; ctx.fillRect(x, y, s.r, s.r);
   }
   // far stars (slowest parallax)
   for (const s of sky.far) {
@@ -510,7 +517,7 @@ function renderStern() {
   const root = document.getElementById('stern-root');
   root.lang = anaLang;
   if (!skyCache) skyCache = buildConstellations();
-  if (!sky.milky) { sky.milky = paintMilkyWay(); sky.far = makeFarStars(); }
+  if (!sky.milky) { sky.milky = paintMilkyWay(); sky.far = makeFarStars(); sky.band = makeBandStars(); }
   skyStats = computeSky();
   const undoInfo = store.get('progress-undo', null);
   const nRev = skyStats.fadingCards.length;
