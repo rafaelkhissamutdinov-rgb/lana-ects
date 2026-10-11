@@ -113,7 +113,7 @@
         done[i] = true; taskStore.set(id, done);
         if (li) li.classList.add('done', 'just');
         chime();
-        api.toast('✨ ' + (lang === 'ru' ? 'Задание выполнено!' : 'Aufgabe gelöst!'));
+        api.toast(ic('check') + ' ' + (lang === 'ru' ? 'Задание выполнено!' : 'Aufgabe gelöst!'));
         if (hooks.onTask) hooks.onTask(id, i);
       },
       set(k, val) { api.v[k] = val; const c = controls[k]; if (c) c.sync(); },
@@ -167,9 +167,9 @@
 
     // explanation + tasks
     let tasksEl = null;
-    if (T.what) host.appendChild(el('div', 'sim-what', `<h3>${lang === 'ru' ? '🔭 Что тут происходит' : '🔭 Was passiert hier?'}</h3>${T.what}`));
+    if (T.what) host.appendChild(el('div', 'sim-what', `<h3>${ic('telescope')} ${lang === 'ru' ? 'Что тут происходит' : 'Was passiert hier?'}</h3>${T.what}`));
     if (T.tasks && T.tasks.length) {
-      const box = el('div', 'sim-tasks', `<h3>${lang === 'ru' ? '🎯 Попробуй' : '🎯 Probier mal'}</h3>`);
+      const box = el('div', 'sim-tasks', `<h3>${ic('target')} ${lang === 'ru' ? 'Попробуй' : 'Probier mal'}</h3>`);
       tasksEl = el('ol');
       const done = taskStore.get(id);
       T.tasks.forEach((t, i) => { const li = el('li', done[i] ? 'done' : '', t); tasksEl.appendChild(li); });

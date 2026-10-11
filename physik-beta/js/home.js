@@ -10,6 +10,8 @@ const FAECHER = {
             info: () => ({ text: 'Optik, Elektromagnetismus, Relativität · Karteikarten', done: Object.values(e2Box).filter(v => v > 0).length, total: store.get('e2-total', 0) }) },
   ana3:   { icon: 'sigma', title: 'Analysis 3', screen: 'ana3', tone: '#a294ff', tint: 'rgba(162,148,255,.16)',
             info: () => ({ text: 'Komplexe Analysis bis Hilberträume, einfach erklärt', done: anaDone.size, total: store.get('ana3-total', 0) }) },
+  sims:   { icon: 'orbit', title: 'Experimente', screen: 'sims', tone: '#ff7f9f', tint: 'rgba(255,127,159,.14)',
+            info: () => ({ text: 'Physik zum Anfassen: Felder, Licht, Wellen, komplexe Funktionen' }) },
   labor:  { icon: 'flask-conical', title: 'Laborpraktikum', screen: 'labor', tone: '#5fd6b8', tint: 'rgba(95,214,184,.14)',
             info: () => ({ text: 'Protokoll-Gerüst mit Claude in 10 Minuten' }) },
   tp2:    { icon: 'atom', title: 'Theoretische Physik 2', screen: 'tp2', tone: '#ff7f9f', tint: 'rgba(255,127,159,.13)',

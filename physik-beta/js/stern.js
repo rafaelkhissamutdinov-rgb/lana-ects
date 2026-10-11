@@ -647,7 +647,8 @@ function openStar(id) {
     ${b === null ? `<p class="sh-info">${st('never')}</p>` : `
       <div class="meter"><div style="width:${Math.round(b * 100)}%"></div></div>
       <p class="sh-info">${st('strength')} ${Math.round(b * 100)} % · ${st('ago')((Date.now() - m.t) / 864e5)}</p>`}
-    <button type="button" class="sh-go">${con.kind === 'e2' ? ic('layers') + ' ' + st('learnCard') : ic('book-open') + ' ' + st('learnTopic')}</button>`);
+    <button type="button" class="sh-go">${con.kind === 'e2' ? ic('layers') + ' ' + st('learnCard') : ic('book-open') + ' ' + st('learnTopic')}</button>
+    ${simLinks(con.kind === 'e2' ? 'card' : 'topic', id.slice(id.indexOf(':') + 1))}`);
   sky.sel = id;
   sh.querySelector('.sh-top span').innerHTML = `${glyph(con.id, 'sm')} ${conName(con)}`;
   sh.querySelector('.sh-go').addEventListener('click', () => { closeSheet(); go(item.go); });

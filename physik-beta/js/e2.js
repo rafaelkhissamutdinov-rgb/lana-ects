@@ -22,10 +22,11 @@ function loadE2() {
   return e2Ready;
 }
 const isKnown = id => (e2Box[id] || 0) > 0;
-function cardBack(c) {
+function cardBack(c, cid) {
   return `<div class="step s-formel"><div class="step-title">${ic('sigma')}<span>${e2t('answer')}</span></div>${c.a[anaLang]}</div>` +
     `<div class="step s-einfach"><div class="step-title">${ic('baby')}<span>${e2t('einfach')}</span></div>${c.e[anaLang]}</div>` +
-    `<div class="step s-beispiel"><div class="step-title">${ic('lightbulb')}<span>${e2t('bild')}</span></div>${c.b[anaLang]}</div>`;
+    `<div class="step s-beispiel"><div class="step-title">${ic('lightbulb')}<span>${e2t('bild')}</span></div>${c.b[anaLang]}</div>` +
+    (cid ? simLinks('card', cid) : '');
 }
 
 function renderE2List() {
@@ -60,7 +61,7 @@ function renderE2Topic(tid) {
     <h3>${e2t('overview')}</h3>
     <div class="e2-list">${tp.cards.map(cid => {
       const c = E2.cards[cid];
-      return `<details><summary>${isKnown(cid) ? ic('check-circle-2') : ''}${c.q[anaLang]}</summary><div class="inner">${cardBack(c)}</div></details>`;
+      return `<details><summary>${isKnown(cid) ? ic('check-circle-2') : ''}${c.q[anaLang]}</summary><div class="inner">${cardBack(c, cid)}</div></details>`;
     }).join('')}</div>`;
   wireLang(root, () => renderE2Topic(tid));
   root.querySelector('[data-learn]').addEventListener('click', () => go({ id: 'e2k', topic: tid }));
@@ -91,7 +92,7 @@ function renderE2Card(topic, queue, total) {
     <div class="progress"><div style="width:${(100 * (total - queue.length) / total).toFixed(1)}%"></div></div>
     <span class="fc-count">${e2t('left')} ${queue.length} / ${total}</span>
     <div class="fc-q">${c.q[anaLang]}</div>
-    <div class="fc-back" id="fc-back" hidden>${cardBack(c)}</div>
+    <div class="fc-back" id="fc-back" hidden>${cardBack(c, cid)}</div>
     <div class="fc-btns" id="fc-btns"><button type="button" class="fc-show">${e2t('show')}</button></div>`;
   wireLang(root, () => renderE2Card(topic, queue, total));
   tex(root);

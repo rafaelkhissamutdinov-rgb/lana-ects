@@ -90,6 +90,7 @@ function renderThema(id, revealAll) {
       <h2>${tp.title[anaLang]}</h2>
       ${tp.ref ? `<span class="ref">${tp.ref} ${t('ref')}</span>` : ''}
     </div>
+    ${simLinks('topic', id)}
     <div class="steps" id="steps"></div>
     <div class="step-nav" id="step-nav"></div>
     <button type="button" class="verstanden" id="verstanden" aria-pressed="${anaDone.has(id)}" hidden>${ic('check')}<span>${anaDone.has(id) ? t('gotDone') : t('got')}</span></button>
