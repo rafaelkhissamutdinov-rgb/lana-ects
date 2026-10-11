@@ -507,7 +507,7 @@ fieldset.seg legend { font-weight: 600; margin-bottom: 8px; padding: 0; font-siz
 video { display: block; width: 100%; max-height: 75vh; border-radius: var(--r-m); background: #000; box-shadow: var(--shadow); border: 1px solid var(--line); }
 
 .thumb { position: fixed; z-index: 5; pointer-events: none; line-height: 1; will-change: transform, opacity; }
-.beta-tag { position: fixed; bottom: 10px; left: 10px; z-index: 50; font: 750 .6rem var(--sans); letter-spacing: .16em; color: var(--gold-ink); background: var(--gold); padding: 3px 7px; border-radius: 6px; opacity: .8; pointer-events: none; }
+.beta-tag { position: fixed; top: calc(max(14px, env(safe-area-inset-top)) + 50px); left: 17px; z-index: 50; font: 750 .6rem var(--sans); letter-spacing: .16em; color: var(--gold-ink); background: var(--gold); padding: 3px 7px; border-radius: 6px; opacity: .8; pointer-events: none; }
 
 /* ---------- bottom sheet ---------- */
 .sheet {
@@ -532,3 +532,54 @@ video { display: block; width: 100%; max-height: 75vh; border-radius: var(--r-m)
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ---------- Sternwarte: the sky fills the whole screen ---------- */
+body[data-screen="stern"] { padding: 0; overflow: hidden; }
+#stern { max-width: none; position: fixed; inset: 0; animation: fade .6s ease; }
+#stern .stern, #stern-root { position: absolute; inset: 0; }
+.sky-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+.sky-cv:active { cursor: grabbing; }
+.sky-head { position: absolute; top: max(12px, env(safe-area-inset-top)); left: 64px; right: 64px; text-align: center; pointer-events: none; }
+.sky-head h2 { margin: 4px 0 6px; font-size: clamp(1.35rem, 5.5vw, 1.8rem); color: var(--gold-hi); text-shadow: 0 2px 20px rgba(0, 0, 0, .8); }
+.sky-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 14px; font-size: .78rem; color: var(--text-2); }
+.sx { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.sx b { color: var(--text); font-weight: 700; }
+.sx i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.sx-lit i { background: #fff6dc; box-shadow: 0 0 8px 2px rgba(255, 214, 140, .8); }
+.sx-fade i { background: rgba(255, 240, 210, .5); box-shadow: 0 0 0 2px rgba(255, 173, 97, .8); width: 7px; height: 7px; }
+.sx-dark i { border: 1px solid rgba(200, 195, 240, .6); }
+.sky-hint { margin: 8px auto 0; font-size: .76rem; color: var(--text-3); max-width: 300px; }
+.sky-lang { position: absolute; top: max(16px, env(safe-area-inset-top)); right: 12px; }
+.sky-lang .lang { background: rgba(20, 17, 52, .7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.sky-ignite { position: absolute; left: 50%; top: 128px; transform: translateX(-50%); width: max-content; max-width: 88vw; padding: 8px 16px; border-radius: 999px;
+  background: rgba(30, 24, 70, .78); border: 1px solid rgba(244, 200, 106, .4); color: var(--gold-hi); font: 600 .84rem/1.35 var(--sans); text-align: center;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: rise .5s var(--ease); pointer-events: none; }
+.sky-bar { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 12px max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+.sky-bar > * { pointer-events: auto; }
+.sky-ov { background: rgba(20, 17, 52, .78); border: 1px solid var(--line-2); font-size: .85rem; padding: 8px 16px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.sky-panel { width: min(100%, 520px); background: rgba(16, 13, 44, .78); border: 1px solid var(--line-2); border-radius: 22px; padding: 10px 12px 12px;
+  backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: 0 20px 50px -10px rgba(0, 0, 0, .8); }
+.sky-time { display: flex; align-items: center; gap: 10px; padding: 0 4px 8px; }
+.sky-time label { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--text-2); white-space: nowrap; min-width: 150px; }
+.sky-time input { flex: 1; accent-color: var(--gold); min-width: 0; }
+.sky-actions { display: flex; gap: 8px; }
+.sky-main { flex: 1; min-width: 0; font-size: .92rem; padding: 11px 14px; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); }
+.sky-main span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sky-main b { background: rgba(43, 31, 6, .16); border-radius: 999px; padding: 0 7px; font-size: .78rem; }
+.sky-main b:empty { display: none; }
+.sky-ic { width: 44px; height: 44px; padding: 0; flex: none; background: rgba(255, 255, 255, .06); border: 1px solid var(--line); }
+.sky-ic[aria-pressed="true"] { background: rgba(244, 200, 106, .2); color: var(--gold-hi); border-color: rgba(244, 200, 106, .5); }
+#stern .back { z-index: 35; }
+.sheet .glyph.sm { font-size: .8rem; min-width: 24px; height: 24px; border-radius: 8px; padding: 0 5px; vertical-align: middle; margin-right: 4px; }
+.sheet .sh-top span { display: inline-flex; align-items: center; gap: 4px; }
+.sh-col { flex-direction: column; }
+.sh-col button { justify-content: flex-start; }
+.sh-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: .9rem; color: var(--text-2); }
+.sh-legend li { display: flex; align-items: center; gap: 14px; }
+.lg { width: 22px; height: 22px; flex: none; border-radius: 50%; position: relative; }
+.lg-lit { background: radial-gradient(circle, #fffaf0 0 3px, rgba(255, 214, 140, .55) 4px, rgba(255, 214, 140, 0) 11px); }
+.lg-fade { background: radial-gradient(circle, rgba(255, 245, 225, .7) 0 2.5px, transparent 3px); box-shadow: inset 0 0 0 1.5px rgba(255, 173, 97, .85); }
+.lg-dark::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 1px solid rgba(200, 195, 240, .7); }
+.sky-shade { position: absolute; left: 0; right: 0; pointer-events: none; }
+.sky-shade.top { top: 0; height: 190px; background: linear-gradient(180deg, rgba(5, 4, 22, .92) 0%, rgba(5, 4, 22, .6) 55%, rgba(5, 4, 22, 0)); }
+.sky-shade.bottom { bottom: 0; height: 200px; background: linear-gradient(0deg, rgba(5, 4, 22, .85), rgba(5, 4, 22, 0)); }

@@ -15,11 +15,11 @@ function memLog(id, ok) {
   store.set('stern-log', memLogData);
 }
 function memForget(id) { delete memLogData[id]; store.set('stern-log', memLogData); }
-function memStrength(id) {
+function memStrength(id, at = Date.now()) {   // at: the moment we ask about (the time slider looks into the future)
   const m = memLogData[id];
   if (!m) return null;                         // never learned
   const stability = m.n === 0 ? 0.5 : Math.pow(2.2, m.n - 1);
-  const days = (Date.now() - m.t) / 864e5;
+  const days = Math.max(0, at - m.t) / 864e5;
   return Math.exp(-days / stability);
 }
 
