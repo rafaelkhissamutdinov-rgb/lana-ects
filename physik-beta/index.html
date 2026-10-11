@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Physik heute?</title>
+<meta name="theme-color" content="#ff8fc4">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Physik heute">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<script>
+  // the ?L link installs an app that opens with the name already set
+  document.write('<link rel="manifest" href="' +
+    (new URLSearchParams(location.search).has('L') ? 'manifest-l.webmanifest' : 'manifest.webmanifest') + '">');
+</script>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div id="bg" aria-hidden="true"></div>
+<div id="scene-happy" class="scene" aria-hidden="true"><div class="rainbow"></div><div class="sun"></div></div>
+<div id="scene-gloom" class="scene" aria-hidden="true"></div>
+<div id="scene-tp2" class="scene" aria-hidden="true"></div>
+<div id="scene-orakel" class="scene" aria-hidden="true"></div>
+
+<section id="frage" class="screen active">
+  <div class="card">
+    <p class="date" id="date"></p>
+    <p class="greeting" id="greeting"></p>
+    <h1 id="frage-text"><span id="frage-name"></span>Hast du <span class="heute">heute</span> Physik/Astronomie geschafft?</h1>
+    <div class="buttons">
+      <button id="btn-ja" type="button">Ja</button>
+      <button id="btn-nein" type="button">Nein</button>
+      <button id="btn-will" type="button">Nein, aber ich will</button>
+    </div>
+  </div>
+  <button type="button" id="orakel-btn" class="orakel-btn">🔮 Deine Botschaft für heute</button>
+  <button type="button" id="install-btn" class="install-btn" hidden>📲 Als App auf den Startbildschirm</button>
+  <div id="install-help" class="install-help" hidden></div>
+</section>
+
+<section id="ja" class="screen">
+  <video id="video-ja" src="../physik/ja.mp4" playsinline loop controls preload="none"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="nein" class="screen">
+  <video id="video-nein" src="../physik/nein.mp4" playsinline loop controls preload="none"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="faecher" class="screen">
+  <div class="card">
+    <h2>Kein Zugang zu Astronomie – also nur Physik</h2>
+    <p class="sub">Womit fangen wir an?</p>
+    <div class="grid" id="grid"></div>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="katze" class="screen">
+  <canvas id="canvas-katze" width="252" height="512" aria-label="Glückliche Katze"></canvas>
+  <video id="video-katze" src="../physik/katze.mp4" playsinline loop preload="none"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="opa" class="screen">
+  <video id="video-opa" src="../physik/opa.mp4" playsinline loop controls preload="none"></video>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="stern" class="screen">
+  <div class="stern" id="stern-root"><p class="loading">✨</p></div>
+  <div class="stern-sheet" id="stern-sheet" hidden></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="orakel" class="screen">
+  <div class="orakel" id="orakel-root"><p class="loading">✨</p></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="e2" class="screen">
+  <div class="card ana" id="e2-list"><p class="loading">Lädt … ⏳</p></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="e2t" class="screen">
+  <div class="card ana" id="e2-topic"></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="e2k" class="screen">
+  <div class="card ana fc" id="e2-cards"></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="tp2" class="screen">
+  <div class="card tp2">
+    <div class="sad">😔</div>
+    <h2>Theoretische Physik 2</h2>
+    <p>Ich bin leider zu dumm für Elektrodynamik – deshalb kann ich dir hier nicht helfen.</p>
+    <p class="uebung">Hättest du mal die Übungen besucht.</p>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="ana3" class="screen">
+  <div class="card ana" id="ana3-list"><p class="loading">Lädt … ⏳</p></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="thema" class="screen">
+  <div class="card ana" id="ana3-thema"></div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<section id="labor" class="screen">
+  <div class="card labor">
+    <div class="hilfe-icon">🧪</div>
+    <h2>Laborpraktikum</h2>
+    <p class="sub">Claude baut das Protokoll-Gerüst in 5–10 Minuten, du trägst nur noch deine Daten ein. Insgesamt ca. 2–3,5 statt 3,5–6 Stunden pro PW – inklusive gründlicher Endkontrolle.</p>
+    <button type="button" id="zeit-btn" class="zeit-btn" aria-expanded="false" aria-controls="zeit">⏱️ Lohnt sich das? Zeitvergleich</button>
+    <div id="zeit" class="zeit" hidden>
+      <table>
+        <tr><th>Schritt</th><th>Von Hand</th><th>Mit Prompt</th></tr>
+        <tr><td>Gerüst: Theorie, Aufbau, Tabellen, Layout</td><td>1,5–2,5 h</td><td>0 <span class="hint">(5–10 min warten)</span></td></tr>
+        <tr><td>Selbstkontrolle</td><td>—</td><td>0 <span class="hint">(macht Claude im zweiten Durchgang)</span></td></tr>
+        <tr><td>Liste der Annahmen durchgehen</td><td>—</td><td>10 min</td></tr>
+        <tr><td>Theorie fürs Kolloquium lesen</td><td>30 min</td><td>20–30 min <span class="hint">(Antworten stehen schon in den Notizen)</span></td></tr>
+        <tr><td>Daten nach dem Termin eintragen</td><td>30–60 min</td><td>5–10 min</td></tr>
+        <tr><td>Fehlerrechnung (selbst gerechnet)</td><td>30–45 min</td><td>30–45 min</td></tr>
+        <tr><td>Diskussion</td><td>20–30 min</td><td>15–20 min <span class="hint">(Vorlagen)</span></td></tr>
+        <tr class="kontrolle"><td>Endkontrolle <span class="hint">(Liste unten in Rot)</span></td><td>15–30 min <span class="hint">(eigenen Text Korrektur lesen)</span></td><td>50–90 min <span class="hint">(fremden Text gründlich prüfen)</span></td></tr>
+        <tr class="sum"><td>Gesamt</td><td>≈ 3,5–6 h</td><td>≈ 2–3,5 h</td></tr>
+      </table>
+      <p class="hint">Grobe Schätzung der aktiven Zeit pro PW mit 1–3 Versuchen. Die Endkontrolle mit Claude dauert länger als bei einem selbst geschriebenen Protokoll – trotzdem sparst du unterm Strich etwa 1,5–2,5 Stunden.</p>
+    </div>
+
+    <h3><span class="num">1</span> Angaben</h3>
+    <form id="labor-form" autocomplete="on">
+      <fieldset class="seg"><legend>Wann?</legend>
+        <label><input type="radio" name="modus" value="VORBEREITUNG" checked> Vor dem Termin</label>
+        <label><input type="radio" name="modus" value="AUSWERTUNG"> Nach dem Termin</label>
+      </fieldset>
+      <label class="field">Namen
+        <input name="namen" placeholder="Vorname Nachname, Vorname Nachname">
+      </label>
+      <label class="field">Datum des Versuchs
+        <input type="date" name="datum">
+      </label>
+      <fieldset class="seg"><legend>Fehlerrechnung</legend>
+        <label><input type="radio" name="berechnung" value="SELBST" checked> Mach ich selbst</label>
+        <label><input type="radio" name="berechnung" value="CLAUDE"> Claude rechnet</label>
+      </fieldset>
+      <fieldset class="seg"><legend>Claude antwortet mir</legend>
+        <label><input type="radio" name="sprache" value="auf Deutsch" checked> Deutsch</label>
+        <label><input type="radio" name="sprache" value="auf Russisch"> Русский</label>
+        <label><input type="radio" name="sprache" value="auf Englisch"> English</label>
+      </fieldset>
+      <label class="field" id="daten-field">Messdaten
+        <textarea name="daten" rows="5" placeholder="Tabelle hier einfügen – oder Fotos/Screenshots später direkt im Chat anhängen"></textarea>
+      </label>
+      <label class="check"><input type="checkbox" name="ki"> Vermerk „KI-gestützt erstellt“ auf die Titelfolie</label>
+    </form>
+
+    <h3><span class="num">2</span> Prompt kopieren</h3>
+    <button type="button" id="copy-prompt" class="primary">📋 Prompt kopieren</button>
+    <p id="copy-status" class="status" role="status"></p>
+    <details><summary>Prompt ansehen</summary><pre id="prompt-preview"></pre></details>
+
+    <h3><span class="num">3</span> In Claude</h3>
+    <ol>
+      <li><a href="https://claude.ai/new" target="_blank" rel="noopener">claude.ai</a> öffnen. Ein kostenloser Account reicht zum Ausprobieren; bei langen Anleitungen kann das Gratis-Limit knapp werden.</li>
+      <li>Einmalig in den Einstellungen unter <b>Funktionen</b> die <b>Code-Ausführung / Dateierstellung</b> einschalten – sonst kann Claude keine .pptx liefern.</li>
+      <li>Neuen Chat starten und anhängen: die <b>Anleitung als PDF</b> (Pflicht), die Beispielauswertung, falls vorhanden, und nach dem Termin Fotos oder Tabellen der Messdaten.</li>
+      <li>Prompt einfügen und abschicken.</li>
+      <li>Die .pptx herunterladen, in PowerPoint, Keynote oder Google Präsentationen öffnen und nur noch die orangen <span class="ph">[__]</span> ausfüllen.</li>
+    </ol>
+    <p class="tip">💡 Vor dem Termin vorbereiten lassen – Claude sagt dir dann genau, was du im Labor notieren musst. Danach im <b>selben Chat</b> einfach die Messdaten schicken, und das Protokoll wird ausgefüllt.</p>
+
+    <h3><span class="num">4</span> Das bleibt bei dir</h3>
+    <ul>
+      <li>Messen – und dabei <b>jede Geräteauflösung</b>, Gerätekonstanten und die Temperatur notieren. Was im Labor fehlt, lässt sich später nicht rekonstruieren.</li>
+      <li>Die Diskussion in eigenen Worten.</li>
+      <li>Die Fehlerrechnung, wenn du „Mach ich selbst“ gewählt hast.</li>
+      <li>Alle Annahmen prüfen, die Claude als „prüfen“ markiert.</li>
+      <li>Quellen für Literaturwerte selbst angeben.</li>
+    </ul>
+
+    <div class="warnung" role="note">
+      <p class="warn-titel">⚠️ Wichtig: Die Endkontrolle machst du komplett selbst</p>
+      <p>Claude macht Fehler. In der Praxis haben wir das Protokoll am Termin noch mit dem Partner korrigiert – erst damit gab es die volle Punktzahl. Ohne diese Korrekturen wäre es nicht gegangen, und dafür braucht man eigenes Wissen, wie euer Praktikum Protokolle haben will.</p>
+      <p><b>Selbst prüfen und korrigieren – plan dafür ca. 50–90 Minuten pro PW ein:</b></p>
+      <ul>
+        <li>Jede Zahl gegen deine Rohdaten: Abschreibfehler, Rundung, signifikante Stellen. <span class="min">10–15 min</span></li>
+        <li>Einheiten und Größenordnungen (mm ↔ m, mN ↔ N, g/cm³ ↔ kg/m³). <span class="min">5–10 min</span></li>
+        <li>Geräteauflösungen und Unsicherheiten: Passen sie zu den Geräten, die ihr wirklich benutzt habt? <span class="min">5–10 min</span></li>
+        <li>Formeln und partielle Ableitungen der Fehlerfortpflanzung. Hat Claude gerechnet, jeden Schritt selbst nachvollziehen. <span class="min">10–20 min</span></li>
+        <li>Fit und Diagramm: Achsen, Einheiten, Fehlerbalken – passt die Kurve zu den Daten? <span class="min">5–10 min</span></li>
+        <li>Literaturwerte: echte Quelle suchen und angeben. <span class="min">5–10 min</span></li>
+        <li>Aufbau und Durchführung so, wie ihr es wirklich gemacht habt – nicht wie in der Anleitung. <span class="min">5–10 min</span></li>
+        <li>Form: was euer Betreuer verlangt (Folien, Beschriftung, Abgabeformat). <span class="min">5 min</span></li>
+        <li>Diskussion in eigenen Worten, mit euren Beobachtungen. <span class="min">steht schon in der Zeittabelle</span></li>
+      </ul>
+      <p class="zu-zweit"><b>👯 Zu zweit geht's schneller:</b> Teilt die Liste auf – eine Person prüft Zahlen, Einheiten und Fehlerrechnung, die andere Diagramm, Literaturwerte, Aufbau und Form. Dann sind es pro Person nur ca. 25–45 min. Danach 5–10 min gegenseitig querlesen: Vier Augen finden mehr als zwei.</p>
+    </div>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<script type="text/plain" id="prompt-tpl">
+# Laborprotokoll (Physik-Praktikum, Uni Wien)
+
+Du hilfst mir, das Protokoll einer Laborübung (Physik-Praktikum, Universität Wien) zu erstellen.
+Das Protokoll wird auf **Deutsch** als Foliensatz abgegeben, wie in der Beispielauswertung des Kurses.
+Mit mir sprichst du {{SPRACHE}}: kurz, direkt, ohne Füllwörter.
+
+## Eingaben
+- **Anleitung** dieser Laborübung (PDF) – Pflicht. Lies sie vollständig, inklusive aller „Warum?“-Fragen, Gerätetabellen und des Abschnitts mit dem Auswertungsbeispiel.
+- **Beispielauswertung** (falls angehängt) – Vorlage für Struktur und Detailgrad.
+- Modus: {{MODUS}} · Autor:innen: {{NAMEN}} · Datum: {{DATUM}} · Fehlerrechnung: {{BERECHNUNG}}
+- Messdaten: {{DATEN}}
+
+Wenn keine Anleitung angehängt ist, halte an und bitte darum. Sonst frag nichts weiter: Fehlendes markierst du als Platzhalter und machst weiter.
+
+## Arbeitsteilung
+| Du machst | Ich mache |
+|---|---|
+| Struktur, Titelfolie, Fußzeilen | Messungen im Labor |
+| Grundlagen, Aufbau, Durchführung (laut Anleitung) | Diskussion: Interpretation in eigenen Worten |
+| Geräte- und Messwerttabellen | Fehlerrechnung, wenn Fehlerrechnung = SELBST |
+| Diagramme und Fits | Prüfen der Annahmen, die du markierst |
+| Fehlerformeln (mit partiellen Ableitungen) | |
+| Antworten auf die „Warum?“-Fragen in den Sprechernotizen | |
+
+Bei Fehlerrechnung = SELBST: Schreib Formeln und Ableitungen aus und lass die Endwerte der Unsicherheiten als Platzhalter. Biete danach an, meine Rechnung mit deiner abzugleichen.
+
+## Ausgabe
+
+### 1. Protokoll (Folien, Deutsch)
+Wenn ein Folien-Artefakt verfügbar ist, nutze es. Sonst erstelle eine bearbeitbare .pptx (python-pptx).
+
+Struktur **für jeden Versuch** aus der Anleitung:
+1. **Grundlagen & Durchführung**: zentrale Formel groß, kurze Theorie, Aufbau und Durchführung in Stichpunkten.
+2. **Unsicherheiten**: Tabelle „Messgröße | Messgerät (Auflösung) | Unsicherheit | Begründung“ und Gauß'sche Fehlerfortpflanzung mit partiellen Ableitungen. Unter der Formel die Ableitungen selbst ausschreiben.
+3. **Messwerte & Ergebnis**: Rohdatentabelle, Mittelwerte, s/√n, Endergebnis hervorgehoben als „Größe = (Wert ± u) Einheit“.
+4. **Diskussion**: Vergleich mit dem Literaturwert (Abweichung in % und in Vielfachen von u), Zeile „Mögliche Ursachen: [__]“.
+5. Diagramm, falls die Anleitung eines verlangt: Fehlerbalken, Achsenbeschriftungen mit Einheiten, Literaturkurve gestrichelt, falls vorhanden.
+
+Dazu eine **Titelfolie** (Uni Wien · Physikpraktikum · PW-Nummer, Titel, {{NAMEN}}, {{DATUM}}) und **Quellen** (Anleitung und Quellen der Literaturwerte).
+Fußzeile auf jeder Folie: Datum · Nummer · „Nachnamen mit Initialen“.
+
+**Stil.** Heller Hintergrund, dunkler Text, ein blauer Akzent. Kein überflüssiges Design: streng akademisch wie in der Beispielauswertung.
+
+**Platzhalter.** Alles, was ich ausfülle oder was aus den Daten kommt, als `[__]` in **Orange**. Sobald ein Wert eingetragen ist, Klammern und Orange entfernen.
+
+### 2. Sprechernotizen
+Zu jeder Folie:
+- Antworten auf alle „Warum?“-Fragen der Anleitung, die zu dieser Folie gehören;
+- Literaturwerte mit dem Vermerk „Richtwert, Quelle selbst angeben“;
+- Annahmen, die du getroffen hast.
+
+### 3. Checkliste für mich (im Chat, {{SPRACHE}})
+**Im Modus VORBEREITUNG:**
+- **„Im Labor notieren“**: vollständige Liste der Messgrößen mit Anzahl der Wiederholungen, **Auflösung/Skalenteilung jedes Geräts**, Gerätekonstanten, Temperatur. Nichts darf fehlen: Eine fehlende Geräteauflösung lässt sich später nicht rekonstruieren.
+- **„Vor dem Termin lesen“**: 3–5 Theoriepunkte, ohne die man den Versuch nicht versteht.
+- **„Mögliche Kolloquiumsfragen“**: 5–8 Fragen mit kurzen Antworten.
+
+**Im Modus AUSWERTUNG:**
+- was ausgefüllt ist und was noch fehlt (pro Folie);
+- **alle Annahmen**, markiert mit „prüfen“ (z. B. „Skalenteilung der Waage = 1 mN angenommen“);
+- Auffälligkeiten in den Daten (Ausreißer > 2σ, Abweichung vom Literaturwert außerhalb von u) und 2–3 mögliche physikalische Ursachen als Hinweis für die Diskussion, nicht als fertiger Text;
+- falls du gerechnet hast: ein eigener Block „Erklärung der Rechnung“ Schritt für Schritt (Formel → Einsetzen → Ergebnis), damit ich sie mündlich verteidigen kann.
+
+## Qualitätsregeln (verbindlich)
+1. **Einheiten.** Vor jedem Ergebnis eine Dimensionsprüfung. Typische Fallen: Pa·s ↔ mPa·s, g/cm³ ↔ kg/m³, mm ↔ m, mN ↔ N. Wenn ich einen Wert mit falscher Größenordnung schicke, korrigiere ihn und sag es ausdrücklich.
+2. **Abgleich mit Rohdaten.** Wenn eine Zahl in meinen Daten von der auf der Folie abweicht, weise darauf hin.
+3. **Einheitliche Fehlermethode** im ganzen Protokoll: Typ A (s/√n) und Typ B quadratisch kombiniert. Wenn die Anleitung eine andere Methode erlaubt, wähle eine und wende sie überall an.
+4. **Zahlen aus dem Auswertungsbeispiel der Anleitung** nicht ins Protokoll übernehmen. Nur zur Kontrolle deiner Formeln verwenden.
+5. **Dezimalkomma** nur im sichtbaren Folientext. Punkte in Code, Koordinaten, CSS und Attributen nie ersetzen.
+6. **Literaturwerte** nicht erfinden. Wenn du unsicher bist: `[__]` und ein Punkt in der Checkliste.
+7. **Fit**: gewichtete kleinste Quadrate mit dy (wie SciDAVis/Jupyter). Parameter ± u und χ²/dof angeben. Bei χ²/dof ≫ 1 oder ≪ 1 in der Checkliste vermerken.
+8. Vor der Abgabe alle Fragen und Aufgaben der Anleitung („Bestimmen Sie…“, „Vergleichen Sie…“, „Wie könnten Sie…“) durchgehen und sicherstellen, dass jede im Protokoll Platz hat.
+9. {{KI_REGEL}}
+
+## Zweiter Durchgang (vor dem Antworten)
+Geh das fertige Protokoll noch einmal komplett durch und prüf jede Qualitätsregel oben: Einheiten, Abgleich mit den Rohdaten, einheitliche Fehlermethode, keine erfundenen Literaturwerte, jede Aufgabe der Anleitung hat ihren Platz. Korrigier, was du findest, und nenn die Korrekturen kurz in der Checkliste.
+
+## Antwort im Chat
+Kurz: Link oder Datei des Protokolls, dann die Checkliste aus Punkt 3. Den Arbeitsablauf nicht nacherzählen.
+</script>
+
+<section id="hilfe" class="screen">
+  <div class="card">
+    <div class="hilfe-icon" id="hilfe-icon"></div>
+    <h2 id="hilfe-title"></h2>
+    <div class="hilfe-body" id="hilfe-body"></div>
+  </div>
+  <button class="back" type="button">zurück</button>
+</section>
+
+<script src="js/core.js"></script>
+<script src="js/home.js"></script>
+<script src="js/labor.js"></script>
+<script src="js/ana3.js"></script>
+<script src="js/e2.js"></script>
+<script src="js/orakel.js"></script>
+<script src="js/memory.js"></script>
+<script src="js/stern.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/boot.js"></script>
+</body>
+</html>
