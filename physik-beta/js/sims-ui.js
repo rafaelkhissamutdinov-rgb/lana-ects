@@ -9,7 +9,7 @@ const SIM_META = [
     cards: ['snellius', 'total', 'reflexion', 'brewster'], topics: [], n: 4 },
   { id: 'spalt', glyph: 'λ', t: { de: 'Spalt & Doppelspalt', ru: 'Щель и две щели' },
     sub: { de: 'Wellen überlagern sich – das Muster auf dem Schirm live', ru: 'Волны складываются – картина на экране вживую' },
-    cards: ['spalt', 'phasendiff', 'michelson'], topics: [] },
+    cards: ['spalt', 'phasendiff', 'michelson'], topics: [], n: 4 },
   { id: 'lorentz', glyph: 'B', t: { de: 'Teilchen im Magnetfeld', ru: 'Частица в магнитном поле' },
     sub: { de: 'Lorentzkraft: Kreisbahn, Radius r = mv/(qB)', ru: 'Сила Лоренца: окружность, радиус r = mv/(qB)' },
     cards: ['lorentz', 'ablenkung'], topics: [] },
@@ -36,7 +36,7 @@ const SIM_META = [
     cards: [], topics: ['conv', 'distr', 'dderiv', 'fund'] },
 ];
 // experiments that are finished (each one lives in sims/<id>.js)
-const SIM_READY = new Set(['feld', 'brechung']);
+const SIM_READY = new Set(['feld', 'brechung', 'spalt']);
 const simList = () => SIM_META.filter(m => SIM_READY.has(m.id));
 const SIM_UI = {
   de: { title: 'Experimente', eyebrow: 'Physik zum Anfassen', sub: 'Ziehen, schieben, ausprobieren. Jedes Experiment gehört zu Karten oder Themen – und hat kleine Aufgaben, die sich selbst abhaken.',
