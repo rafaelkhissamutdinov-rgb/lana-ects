@@ -186,7 +186,7 @@ button:active { transform: scale(.97); }
 #btn-nein { background: linear-gradient(180deg, #ff9db3, #f06a8a); color: #3a0716; box-shadow: 0 12px 30px -12px rgba(255, 127, 159, .7); }
 #btn-will {
   grid-column: 1 / -1; font-size: 1.05rem; padding: 14px 22px;
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink);
+  background: linear-gradient(180deg, var(--cta, var(--gold-hi)), var(--cta, var(--gold))); color: var(--cta-ink, var(--gold-ink));
   box-shadow: 0 14px 34px -12px rgba(244, 200, 106, .65), 0 1px 0 rgba(255, 255, 255, .5) inset;
 }
 
@@ -254,7 +254,7 @@ button:active { transform: scale(.97); }
 .frage-zurueck { text-align: center; font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 5vw, 1.45rem); margin: 20px 0 0; }
 .wahl { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; align-items: center; }
 .wahl button { width: 100%; max-width: 330px; }
-.wahl .go-schach { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); }
+.wahl .go-schach { background: linear-gradient(180deg, var(--cta, var(--gold-hi)), var(--cta, var(--gold))); color: var(--cta-ink, var(--gold-ink)); }
 .wahl .go-tutorium { background: var(--surface-3); }
 
 /* ---------- study sections (Analysis 3, E2) ---------- */
@@ -541,7 +541,7 @@ video { display: block; width: 100%; max-height: 75vh; border-radius: var(--r-m)
 .sheet .sh-choice { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
 .sheet .sh-choice button { flex: 1 1 auto; white-space: nowrap; font-size: .95rem; padding: 11px 14px; background: var(--surface-3); }
 .sheet .sh-choice .sh-danger { background: linear-gradient(180deg, #ff8d9c, #e85a6e); color: #3a0510; }
-.sheet .sh-choice .sh-undo { background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); }
+.sheet .sh-choice .sh-undo { background: linear-gradient(180deg, var(--cta, var(--gold-hi)), var(--cta, var(--gold))); color: var(--cta-ink, var(--gold-ink)); }
 .sheet .sh-go { width: 100%; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -578,7 +578,7 @@ body[data-screen="stern"] { padding: 0; overflow: hidden; }
 .sky-time label { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; color: var(--text-2); white-space: nowrap; min-width: 150px; }
 .sky-time input { flex: 1; accent-color: var(--gold); min-width: 0; }
 .sky-actions { display: flex; gap: 8px; }
-.sky-main { flex: 1; min-width: 0; font-size: .92rem; padding: 11px 14px; background: linear-gradient(180deg, var(--gold-hi), var(--gold)); color: var(--gold-ink); }
+.sky-main { flex: 1; min-width: 0; font-size: .92rem; padding: 11px 14px; background: linear-gradient(180deg, var(--cta, var(--gold-hi)), var(--cta, var(--gold))); color: var(--cta-ink, var(--gold-ink)); }
 .sky-main span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sky-main b { background: rgba(43, 31, 6, .16); border-radius: 999px; padding: 0 7px; font-size: .78rem; }
 .sky-main b:empty { display: none; }
@@ -698,16 +698,22 @@ body[data-screen="stern"] { padding: 0; }
 @keyframes blobdrift { to { transform: translate(9vmax, 7vmax) scale(1.15); } }
 #bg canvas { z-index: 1; }
 .emo-layer { position: absolute; inset: -30px; z-index: 2; pointer-events: none; will-change: transform; }
-.emo { position: absolute; line-height: 1; user-select: none; -webkit-user-select: none; pointer-events: none;
+.emo { position: absolute; width: var(--s); height: var(--s); line-height: 1; user-select: none; -webkit-user-select: none; pointer-events: none;
   animation: bob var(--dur) ease-in-out var(--delay) infinite alternate; transform: rotate(var(--rot)); }
-@keyframes bob { from { transform: translateY(0) rotate(var(--rot)); } to { transform: translateY(-14px) rotate(calc(var(--rot) * -1)); } }
-.emo-l0 .emo { filter: blur(1.8px) saturate(.9); opacity: .42; }
-.emo-l1 .emo { opacity: .82; }
-.emo-l2 .emo { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, .18)); }
+@keyframes bob { from { transform: translate(0, 0) rotate(var(--rot)); } to { transform: translate(var(--dx, 0), -16px) rotate(calc(var(--rot) * -1)); } }
+.emo img, .emo .emo-txt { display: block; width: 100%; height: 100%; opacity: 0; transform: scale(.2) translateY(30%); }
+.emo .emo-txt { font-size: calc(var(--s) * .86); text-align: center; }
+.emo .in { animation: emoin .9s cubic-bezier(.25, 1.5, .45, 1) var(--in, 0s) both; }
+@keyframes emoin { 0% { opacity: 0; transform: scale(.2) translateY(30%) rotate(-20deg); } 60% { opacity: 1; transform: scale(1.12) translateY(-4%) rotate(6deg); } 100% { opacity: 1; transform: none; } }
+.emo-l0 .emo { filter: blur(2px) saturate(.85); opacity: .38; }
+.emo-l1 .emo { opacity: .85; }
+.emo-l2 .emo { filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .22)) drop-shadow(0 2px 3px rgba(0, 0, 0, .12)); }
 body.emo-live .emo { pointer-events: auto; cursor: pointer; }
 .emo.pop { animation: emopop .6s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes emopop { 35% { transform: scale(1.55) rotate(18deg); } 70% { transform: scale(.92) rotate(-6deg); } }
-.emo-spark { position: fixed; z-index: 4; pointer-events: none; font-size: 22px; line-height: 1; }
+@keyframes emopop { 35% { transform: scale(1.45) rotate(16deg); } 70% { transform: scale(.92) rotate(-6deg); } }
+.emo-spark { position: fixed; z-index: 4; pointer-events: none; width: 26px; height: 26px; font-size: 22px; line-height: 1; }
+.emo-spark img { width: 100%; height: 100%; display: block; }
+@media (prefers-reduced-motion: reduce) { .emo, .emo .in { animation: none; } .emo img, .emo .emo-txt { opacity: 1; transform: none; } }
 
 /* ---------- cards on light days ---------- */
 [data-mode="light"] .card { background: rgba(255, 255, 255, .74); border-color: rgba(255, 255, 255, .7); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); }
@@ -720,8 +726,8 @@ body.emo-live .emo { pointer-events: auto; cursor: pointer; }
 
 /* ---------- soft, pressable buttons (no neon gradients) ---------- */
 .btn-gold, .e2-big, .primary, .fc-show, .weiter, .sh-go, #btn-will {
-  background: var(--gold); color: var(--gold-ink); border: 0;
-  box-shadow: 0 4px 0 var(--gold-d), 0 12px 20px -12px var(--gold-d);
+  background: var(--cta, var(--gold)); color: var(--cta-ink, var(--gold-ink)); border: 0;
+  box-shadow: 0 4px 0 var(--cta-d, var(--gold-d)), 0 12px 20px -12px var(--cta-d, var(--gold-d));
 }
 #btn-ja { background: #4fc685; color: #fff; box-shadow: 0 4px 0 #34995f, 0 12px 20px -12px #34995f; }
 #btn-nein { background: #ff6f83; color: #fff; box-shadow: 0 4px 0 #d34b5f, 0 12px 20px -12px #d34b5f; }
