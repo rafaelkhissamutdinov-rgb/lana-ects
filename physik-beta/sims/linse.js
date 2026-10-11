@@ -53,7 +53,7 @@ SIMS.def('linse', {
       if (im.f > 0 && im.b > 0 && isFinite(im.b) && Math.abs(im.V) > 1.1) api.check(0);
       if (im.f > 0 && Math.abs(im.g - 2 * im.f) < .06) api.check(1);
       if (im.f > 0 && im.g < im.f - .05) api.check(2);
-      if (im.f < 0) { tried = true; api.check(3); }
+      if (im.f < 0) api.check(3);
     }
     hud();
     return {
